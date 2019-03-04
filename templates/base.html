@@ -13,7 +13,7 @@
 	</script>
 
 	<!--less-->
-	<link rel="stylesheet/less" type="text/css" href="styles.less" />
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/base.less"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
 	<!--Bootstrap-->
 	<link rel="stylesheet" 
@@ -21,7 +21,8 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
 		crossorigin="anonymous">
 
-
+    {% block style %}
+    {% endblock %}
 </head>
 <body>
 {% include "header.html" %}
