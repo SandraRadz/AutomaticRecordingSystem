@@ -1,8 +1,9 @@
 @import "variables.less";
 
-@planMargin: 100px;
+@fontSize: 20px;
+@planMargin: 400px;
 .mainInfo{
-    margin: 10px 10px 10px @planMargin+10;
+    margin: 100px @planMargin+10 10px @planMargin+10;
 }
 .themeDescription{
     margin: 10px 0px;
@@ -14,13 +15,13 @@
 .tagName{
     font-weight: bold;
     line-height: normal;
-    font-size: 28px;
+    font-size: @fontSize;
     color: @fontColor;
     display: inline;
 }
 .tagValue{
     line-height: normal;
-    font-size: 28px; 
+    font-size: @fontSize; 
     color: @fontColor;
     display: inline;
 }
