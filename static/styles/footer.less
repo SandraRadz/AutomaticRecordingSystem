@@ -1,12 +1,17 @@
-@import "colors.less";
-@import "fonts.less";
+@import "variables.less";
 
-.footer_main{
+.footer-bar{
     background-color: @mainColor;
-    height: 200px;
+    height: 20px;
+    width: 100%;
     width: auto;
-}
-.footer_text{
-    font-family: @fontFamily;
-    font-style: @fontStyle;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    text-align: center;
+
+    .footer-text{
+      color: white;
+    }
 }

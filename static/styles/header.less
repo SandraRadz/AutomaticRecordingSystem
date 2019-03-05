@@ -1,14 +1,17 @@
-@import "colors.less";
+@import "variables.less";
 
-
-.mainMenu{
+.main-menu{
   background-color: @mainColor;
-  height: 75px;
+  height: @headerHeight;
   width: auto;
   color: white;
   padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 25px;
+  padding-right: 40px;
+  padding-top: 25px;
+  position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
 
   .name{
     height: 100%;
@@ -34,3 +37,4 @@
 
   }
 }
+

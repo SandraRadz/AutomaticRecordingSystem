@@ -11,10 +11,14 @@
 		crossorigin="anonymous">
 	</script>
 
+
 	<!--less-->
     <link rel="stylesheet/less" type="text/css" href="/static/styles/base.less"/>
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/header.less"/>
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/footer.less"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
-	
+
+
 	<!--Bootstrap-->
 	<link
 		rel="stylesheet"
@@ -27,11 +31,14 @@
     {% block style %}
     {% endblock %}
 
+
 </head>
 <body>
 {% include "header.html" %}
+<div class="main-part">
 {% block content %}
 {% endblock %}
+</div>
 {% include "footer.html" %}
 </body>
 </html>
