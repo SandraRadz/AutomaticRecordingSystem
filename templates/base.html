@@ -5,26 +5,23 @@
     <meta charset="UTF-8">
     <title>Система електронного запису</title>
 
+	{% block style %}
+	<link rel="stylesheet/less" type="text/css" href="/static/styles/base.less"/>
+	<link rel="stylesheet/less" type="text/css" href="/static/styles/plans.less"/>
+	<link rel="stylesheet/less" type="text/css" href="/static/styles/main.less"/>
+	{% endblock %}
+	<!--less-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+	
+	<!--Bootstrap-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+	
     <!--jQuery-->
 	<script
 		src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous">
 	</script>
-
-	<!--less-->
-	<link rel="stylesheet/less" type="text/css" href="/static/styles/base.less"/>
-	<link rel="stylesheet/less" type="text/css" href="/static/styles/plans.less"/>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
-	
-	<!--Bootstrap-->
-	<link rel="stylesheet" 
-		ref="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-		crossorigin="anonymous">
-
-    {% block style %}
-    {% endblock %}
 
 </head>
 <body>
