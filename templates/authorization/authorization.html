@@ -1,9 +1,31 @@
-{%  extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Система електронного запису</title>
 
-{% block content %}
+	<!--less-->
+    {% block style %}
+    {% endblock %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/authorization.less"/>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+
+<!--Bootstrap-->
+	<link
+		rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+		crossorigin="anonymous">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+</head>
+<body>
 <div class = "auth">
     <a href="/theme" class="btn btn-warning btn-block">
         Вхід через Office 365
     </a>
 </div>
-{% endblock content %}
+</body>
