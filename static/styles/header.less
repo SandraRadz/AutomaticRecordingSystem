@@ -6,25 +6,40 @@
   height: @headerHeight;
   width: auto;
   color: white;
-  padding-left: 40px;
-  padding-right: 40px;
   padding-top: 25px;
   position: fixed;
-    top: 0px;
-    right: 0px;
-    left: 0px;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  min-width: 550px;
 
+
+  .block{
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .menu-item{
+    horiz-align: right;
+
+  }
   .name{
-    height: 100%;
     font-size: 18px;
+
   }
 
     .item{
-        display: inline-block;
+      display: inline-block;
       text-align: right;
+      padding-right: 20px;
     }
     .exit{
-        padding-right: 0px;
+        padding-left: 40px;
+      display: inline-block;
+      text-align: right;
+      position: absolute;
+      right: 40px;
+
       .username{
          font-size: 12px;
       }
@@ -42,3 +57,77 @@
 
 }
 
+@media screen and (min-width: 1310px) {
+  .title{
+    padding-right: 650px;
+
+  }
+}
+@media screen and (max-width: 1310px) {
+  .title{
+    padding-right: 550px;
+
+  }
+}
+
+@media screen and (max-width: 1210px) {
+  .title{
+    padding-right: 450px;
+
+  }
+}
+
+@media screen and (max-width: 1110px) {
+  .title{
+    padding-right: 350px;
+
+  }
+}
+
+@media screen and (min-width: 1010px) {
+.main-menu{
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+@media screen and (max-width: 1010px) {
+  .title{
+    padding-right: 250px;
+
+  }
+  .main-menu{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+@media screen and (max-width: 910px) {
+  .title{
+    padding-right: 150px;
+
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .title{
+    padding-right: 100px;
+
+  }
+
+  .main-menu{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media screen and (min-width: 710px) {
+  .title{
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .title{
+    visibility: hidden;
+    padding: 0px;
+    width: 0px;
+  }
+}
