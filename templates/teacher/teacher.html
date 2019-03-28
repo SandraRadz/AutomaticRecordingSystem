@@ -5,5 +5,78 @@
 {% endblock style %}
 
 {% block content %}
-teacher
+<section class="container plan-section">
+    <div class="teacher-info">
+        <span class="teacher-info__avatar"></span>
+        <div class="teacher-info__list">
+            <div class="teacher-info__item teacher-info__name">Бублик Володимир Васильович</div>
+            <div class="teacher-info__item teacher-info__email">o.radzievska@ukma.edu.ua</div>
+            <div class="teacher-info__item">Кафедра мультымедиа</div>
+            <div class="teacher-info__item">Завідувач кафедри</div>
+            <div class="teacher-info__item">доцент</div>
+            <div class="teacher-info__item teacher-info__room">каб. 1-302</div>
+            <div class="teacher-info__item">+380747399237</div>
+            <div class="teacher-info__item teacher-info__load">Навантаження: <span>4 теми</span></div>
+        </div>
+    </div>
+    <div class="themes-list">
+        <div>Створено <span>3 теми</span></div>
+        <div class="theme-item">
+            <div class="theme-item__header theme-item__header--edit">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
+
+            </div>
+        </div>
+        <div class="theme-item">
+            <div class="theme-item__header theme-item__header--edit">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span>
+                </div>
+                <div class="theme-item__body">
+
+                </div>
+            </div>
+            <div class="theme-item__body">
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Спеціальності</span>
+                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
+                </div>
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Галузі</span>
+                    <div> SQL, Бази Даних, АІС, ER</div>
+                </div>
+                <div class="theme-item__student-list-block">
+                    <ul class="theme-item__student-list">
+                        <li class="theme-item__field theme-item_col-names">
+                            <div class="theme-item__plan-field-col">ПІБ</div>
+                            <div class="theme-item__plan-field-col-narrow">Рік</div>
+                            <div class="theme-item__plan-field-col">Спеціальність</div>
+                            <div class="theme-item__plan-field-col">Статус</div>
+                            <div class="theme-item__empty-col"></div>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__plan-field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__plan-field-col-narrow">3</div>
+                            <div class="theme-item__plan-field-col">Компютерні науки</div>
+                            <div class="theme-item__plan-field-col">Чекає підтвердження</div>
+                            <button class="theme-item__reg-button">Затвердити</button>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__plan-field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__plan-field-col-narrow">3</div>
+                            <div class="theme-item__plan-field-col">Компютерні науки</div>
+                            <div class="theme-item__plan-field-col">Чекає підтвердження</div>
+                            <button class="theme-item__reg-button">Затвердити</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="themes-list__button">Додати</button>
+    </div>
+</section>
 {% endblock content %}

@@ -5,19 +5,189 @@
 {% endblock style %}
 
 {% block content %}
-<div class="main-part">
-    <div class="search">
-        <div class="search-item">
-            <button type="button" class="btn">Шукати за викладачем</button>
-             <input type="text" class="search-textarea" id="teacher">
+<section class="container themes-filter">
+    <div class="search-panel">
+        <div class="search-panel__item">
+            <button class="search-panel__button">Шукати за викладачем</button>
+            <input class="search-panel__input" type="text">
         </div>
-        <div class="search-item">
-            <button type="button" class="btn">Шукати за темою</button>
-             <input type="text" class="search-textarea" id="subject">
+        <div class="search-panel__item">
+            <button class="search-panel__button">Шукати за темою</button>
+            <input class="search-panel__input" type="text">
         </div>
-
     </div>
+    <div class="filter-panel">
+        <div class="filter-item">
+            <span class="filter-item__name">Кафедра</span>
+            <select class="filter-item__dropdown">
+                <option value="anything">Будь-яка</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <span class="filter-item__name">Спеціальність</span>
+            <select class="filter-item__dropdown">
+                <option value="anything">Будь-яка</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <span class="filter-item__name">Рік навчання</span>
+            <select class="filter-item__dropdown">
+                <option value="anything">Будь-яка</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <span class="filter-item__name">Складність</span>
+            <select class="filter-item__dropdown">
+                <option value="anything">Будь-яка</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <span class="filter-item__name">Статус запиту</span>
+            <select class="filter-item__dropdown">
+                <option value="anything">Будь-яка</option>
+            </select>
+        </div>
+        <button class="filter-panel__button">Фільтр</button>
+    </div>
+</section>
+<section class="container themes-choose">
+    <div class="themes-list">
+        <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span> - <span class="theme-item__teacher">Гулаєва Н. М.</span>
+                </div>
+                <div class="theme-item__reg">
+                    Записані - <span class="theme-item__student-count">3</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
 
+            </div>
+        </div>
+        <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span> - <span class="theme-item__teacher">Гулаєва Н. М.</span>
+                </div>
+                <div class="theme-item__reg">
+                    Записані - <span class="theme-item__student-count">2</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Спеціальності</span>
+                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
+                </div>
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Галузі</span>
+                    <div> SQL, Бази Даних, АІС, ER</div>
+                </div>
+                <div class="theme-item__student-list-block">
+                    <ul class="theme-item__student-list">
+                        <li class="theme-item__field theme-item_col-names">
+                            <div class="theme-item__field-col">ПІБ</div>
+                            <div class="theme-item__field-col">Рік</div>
+                            <div class="theme-item__field-col">Спеціальність</div>
+                            <div class="theme-item__field-col">Статус</div>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__field-col">3</div>
+                            <div class="theme-item__field-col">Компютерні науки</div>
+                            <div class="theme-item__field-col">Чекає підтвердження</div>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__field-col">3</div>
+                            <div class="theme-item__field-col">Компютерні науки</div>
+                            <div class="theme-item__field-col">Чекає підтвердження</div>
+                        </li>
+                    </ul>
+                </div>
+                <button class="theme-item__button">Записатися</button>
+            </div>
+        </div>
+        <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span> - <span class="theme-item__teacher">Гулаєва Н. М.</span>
+                </div>
+                <div class="theme-item__reg">
+                    Записані - <span class="theme-item__student-count">0</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
 
-</div>
+            </div>
+        </div>
+        <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span> - <span class="theme-item__teacher">Гулаєва Н. М.</span>
+                </div>
+                <div class="theme-item__reg">
+                    Записані - <span class="theme-item__student-count">2</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Спеціальності</span>
+                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
+                </div>
+                <div class="theme-item__info-box">
+                    <span class="theme-item__info-name">Галузі</span>
+                    <div> SQL, Бази Даних, АІС, ER</div>
+                </div>
+                <div class="theme-item__student-list-block">
+                    <ul class="theme-item__student-list">
+                        <li class="theme-item__field theme-item_col-names">
+                            <div class="theme-item__field-col">ПІБ</div>
+                            <div class="theme-item__field-col">Рік</div>
+                            <div class="theme-item__field-col">Спеціальність</div>
+                            <div class="theme-item__field-col">Статус</div>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__field-col">3</div>
+                            <div class="theme-item__field-col">Компютерні науки</div>
+                            <div class="theme-item__field-col">Чекає підтвердження</div>
+                        </li>
+                        <li class="theme-item__field">
+                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                            <div class="theme-item__field-col">3</div>
+                            <div class="theme-item__field-col">Компютерні науки</div>
+                            <div class="theme-item__field-col">Чекає підтвердження</div>
+                        </li>
+                    </ul>
+                </div>
+                <button class="theme-item__button">Записатися</button>
+            </div>
+        </div>
+        <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    <span>Розробка АІС для електронного запису на курсову</span> - <span class="theme-item__teacher">Гулаєва Н. М.</span>
+                </div>
+                <div class="theme-item__reg">
+                    Записані - <span class="theme-item__student-count">0</span>
+                </div>
+            </div>
+            <div class="theme-item__body">
+
+            </div>
+        </div>
+    </div>
+    <div class="pagination-panel">
+        <ul class="pagination-panel__list">
+            <li> < </li>
+            <li>1</li>
+            <li>2</li>
+            <li>...</li>
+            <li>5</li>
+            <li>6</li>
+            <li> > </li>
+        </ul>
+    </div>
+</section>
 {% endblock content %}

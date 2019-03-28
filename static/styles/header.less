@@ -1,133 +1,95 @@
 @import "variables.less";
 
-.main-menu{
-  font-family: @fontFamily;
+
+.header{
+  width: 100%;
+  max-width: 100%;
   background-color: @mainColor;
-  height: @headerHeight;
-  width: auto;
   color: white;
-  padding-top: 25px;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  min-width: 550px;
-
-
-  .block{
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  .menu-item{
-    horiz-align: right;
-
-  }
-  .name{
-    font-size: 18px;
-
-  }
-
-    .item{
-      display: inline-block;
-      text-align: right;
-      padding-right: 20px;
-    }
-    .exit{
-        padding-left: 40px;
-      display: inline-block;
-      text-align: right;
-      position: absolute;
-      right: 40px;
-
-      .username{
-         font-size: 12px;
-      }
-  }
-
-   a:link, a:visited, a:hover, a:active {
-         text-decoration: none;
-      }
-
-
-       .name{
-         font-size: 16px;
-         color: white;
-        }
-
+  box-shadow: 0px 0px 10px 5px lightblue;
 }
 
-@media screen and (min-width: 1310px) {
-  .title{
-    padding-right: 650px;
-
-  }
-}
-@media screen and (max-width: 1310px) {
-  .title{
-    padding-right: 550px;
-
-  }
-}
-
-@media screen and (max-width: 1210px) {
-  .title{
-    padding-right: 450px;
-
-  }
+.header__wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1176px;
+  padding-top: 18px;
+  //padding-bottom: 18px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media screen and (max-width: 1110px) {
-  .title{
-    padding-right: 350px;
-
-  }
+.header__logo{
+  font-weight: bold;
 }
 
-@media screen and (min-width: 1010px) {
-.main-menu{
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-}
-@media screen and (max-width: 1010px) {
-  .title{
-    padding-right: 250px;
-
-  }
-  .main-menu{
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-}
-@media screen and (max-width: 910px) {
-  .title{
-    padding-right: 150px;
-
-  }
+.navbar{
+  display: flex;
 }
 
-@media screen and (max-width: 810px) {
-  .title{
-    padding-right: 100px;
-
-  }
-
-  .main-menu{
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-@media screen and (min-width: 710px) {
-  .title{
-    visibility: visible;
-  }
+.navbar__list{
+  display: flex;
+  list-style: none;
+  margin-right: 90px;
 }
 
-@media screen and (max-width: 710px) {
-  .title{
-    visibility: hidden;
-    padding: 0px;
-    width: 0px;
-  }
+.navbar__item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__link{
+  position: relative;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.navbar__link::after{
+  content: " ";
+  position: absolute;
+  bottom: 3px;
+  left: 2px;
+  right: 2px;
+  width: 0;
+  height: 2px;
+  border-radius: 10px;
+  background-color: white;
+  opacity: 0;
+  transition: opacity .3s , width .3s;
+}
+
+.navbar__link:hover:after{
+  opacity: 1;
+  width: 100%;
+}
+
+.navbar__user-panel{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: center;
+}
+
+.navbar__login{
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  outline: 0;
+}
+
+.navbar__username{
+  position: absolute;
+  bottom: -7px;
+  right: 0;
+  font-size: 11px;
 }

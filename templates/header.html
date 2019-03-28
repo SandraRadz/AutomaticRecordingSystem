@@ -1,31 +1,18 @@
 {% load static %}
-
-<header>
-    <div class="main-menu">
-                <div class="block title">
-                   <a href="/theme" class="name"> НаУКМА
-                   </a>
-                </div>
-                <div class="block menu-item">
-                    <div class="item">
-                       <a href="/theme" class="name">ТЕМИ</a>
-                    </div>
-                    <div class="item">
-                        <a href="/plan" class="name">ПЛАН РОБОТИ</a>
-                    </div>
-                    <div class="item ">
-                        <a href="/theme" class="name">ІНФОРМАЦІЯ</a>
-                    </div>
-                    <div class="item ">
-                        <a href="/theme" class="name">ПРОФІЛЬ</a>
-                    </div>
-                </div>
-                <div class="block exit">
-                         <a href="/"  class="name">ВИХІД</a>
-                         <div class="username">
-                            <p>o.radzievska@ukma.edu.ua</p>
-                         </div>
-                </div>
-
+<header class="header">
+    <div class="header__wrapper">
+        <span class="header__logo">НаУКМА</span>
+        <nav class="header__navbar navbar">
+            <ul class="navbar__list">
+                <li class="navbar__item"><a class="navbar__link" href="/theme">Теми</a></li>
+                <li class="navbar__item"><a class="navbar__link" href="/plan">План роботи</a></li>
+                <li class="navbar__item"><a class="navbar__link" href="/theme">Інформація</a></li>
+                <li class="navbar__item"><a class="navbar__link" href="/teacher">Профіль</a></li>
+            </ul>
+            <div class="navbar__user-panel">
+                <button class="navbar__login">Вихід</button>
+                <div class="navbar__username">o.radzievka@ukma.edu.ua</div>
+            </div>
+        </nav>
     </div>
 </header>
