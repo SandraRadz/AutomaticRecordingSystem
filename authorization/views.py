@@ -3,11 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from authorization.authhelper import get_signin_url
 from django.urls import reverse
 
+
 def home(request):
-  redirect_uri = request.build_absolute_uri(reverse('theme:index'))
-  sign_in_url = get_signin_url(redirect_uri)
-  return render(request,'authorization/authorization.html',{"signin_url":sign_in_url})
-  #return HttpResponse('<a href="' + sign_in_url +'">Click here to sign in and view your mail</a>')
+    redirect_uri = request.build_absolute_uri(reverse('theme:index'))
+    sign_in_url = get_signin_url(redirect_uri)
+    return render(request, 'authorization/authorization.html', {"signin_url": sign_in_url})
+    # return HttpResponse('<a href="' + sign_in_url +'">Click here to sign in and view your mail</a>')
+
 
 def gettoken(request):
-  return HttpResponse('gettoken view')
+    return HttpResponse('gettoken view')

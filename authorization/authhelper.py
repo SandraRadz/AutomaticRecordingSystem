@@ -18,18 +18,19 @@ authorize_url = '{0}{1}'.format(authority, '/common/oauth2/v2.0/authorize?{0}')
 token_url = '{0}{1}'.format(authority, '/common/oauth2/v2.0/token')
 
 # The scopes required by the app
-scopes = [ 'openid',
-           'User.Read',
-           'Mail.Read' ]
+scopes = ['openid',
+          'User.Read',
+          'Mail.Read']
+
 
 def get_signin_url(redirect_uri):
-  # Build the query parameters for the signin url
-  params = { 'client_id': client_id,
-             'redirect_uri': redirect_uri,
-             'response_type': 'code',
-             'scope': ' '.join(str(i) for i in scopes)
-            }
+    # Build the query parameters for the signin url
+    params = {'client_id': client_id,
+              'redirect_uri': redirect_uri,
+              'response_type': 'code',
+              'scope': ' '.join(str(i) for i in scopes)
+              }
 
-  signin_url = authorize_url.format(urlencode(params))
+    signin_url = authorize_url.format(urlencode(params))
 
-  return signin_url
+    return signin_url
