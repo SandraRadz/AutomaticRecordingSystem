@@ -20,8 +20,8 @@ from authorization import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('authorization.urls')),
     path('theme/', include('theme.urls')),
-    path('', views.home, name='home'),
     path('authorization/', include('authorization.urls', namespace='authorization')),
     path('plan/', include('plan.urls')),
     path('teacher/', include('teacher.urls')),
