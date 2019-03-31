@@ -5,5 +5,5 @@ from theme.views import *
 app_name = 'theme'
 
 urlpatterns = [
-    path('', ThemeListView.as_view())
+    path('', ThemeListView.as_view(), name="theme")
 ]
