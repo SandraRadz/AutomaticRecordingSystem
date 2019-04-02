@@ -12,6 +12,7 @@ def home(request):
     context = {'signin_url': sign_in_url}
     return render(request, 'authorization/authorization.html', context)
 
+
 def gettoken(request):
     auth_code = request.GET['code']
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
@@ -21,7 +22,7 @@ def gettoken(request):
     request.session['mail'] = info['mail']
     username = info['mail'].split('@')[0]
     if not User.objects.filter(username=username).exists():
-        user = User.objects.create_user(username,info['mail'])
+        user = User.objects.create_user(username, info['mail'])
         user.first_name = info['displayName'].split(' ')[1]
         user.last_name = info['displayName'].split(' ')[0]
         user.save()
