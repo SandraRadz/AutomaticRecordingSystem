@@ -30,4 +30,4 @@ def gettoken(request):
         user.first_name = info['displayName'].split(' ')[1]
         user.last_name = info['displayName'].split(' ')[0]
         user.save()
-    return HttpResponseRedirect('../theme/')
+    return HttpResponseRedirect('../../theme/')
