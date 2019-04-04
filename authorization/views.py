@@ -13,6 +13,10 @@ def home(request):
     return render(request, 'authorization/authorization.html', context)
 
 
+def exit(request):
+    request.session.pop('mail')
+    return HttpResponseRedirect('../authorization/')
+
 def gettoken(request):
     auth_code = request.GET['code']
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))

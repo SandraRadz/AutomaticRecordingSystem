@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
     path('gettoken/', views.gettoken, name='gettoken'),
+    path('exit/', views.exit),
 ]
