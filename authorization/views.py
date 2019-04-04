@@ -21,7 +21,7 @@ def gettoken(request):
     request.session['mail'] = info['mail']
     username = info['mail'].split('@')[0]
     if not User.objects.filter(username=username).exists():
-        user = User.objects.create_user(username,info['mail'])
+        user = User.objects.create_user(username, info['mail'])
         user.first_name = info['displayName'].split(' ')[1]
         user.last_name = info['displayName'].split(' ')[0]
         user.save()

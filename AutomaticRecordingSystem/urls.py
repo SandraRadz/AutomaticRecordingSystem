@@ -16,13 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from authorization import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authorization.urls')),
     path('theme/', include('theme.urls')),
-    path('authorization/', include('authorization.urls', namespace='authorization')),
+    path('authorization/', include('authorization.urls')),
     path('plan/', include('plan.urls')),
     path('teacher/', include('teacher.urls')),
     path('student/', include('student.urls'))
