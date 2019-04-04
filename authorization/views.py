@@ -12,6 +12,7 @@ def home(request):
     context = {'signin_url': sign_in_url}
     return render(request, 'authorization/authorization.html', context)
 
+
 def gettoken(request):
     auth_code = request.GET['code']
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
