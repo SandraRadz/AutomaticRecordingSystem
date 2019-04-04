@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -6,8 +7,10 @@ from django.db import models
 class Faculty(models.Model):
     faculty_name = models.CharField(max_length=250, unique=True)
     dean = models.CharField(max_length=250)
-
-    # TO DO write more information
+    dean_contact = models.TextField(null=True, blank=True)
+    dean_office = models.CharField(max_length=250, null=True, blank=True)
+    deanery_contact = models.TextField(null=True, blank=True)
+    deanery_office = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.faculty_name
@@ -15,6 +18,9 @@ class Faculty(models.Model):
 
 class Department(models.Model):
     department_name = models.CharField(max_length=250, unique=True)
+    head_of_department = models.CharField(max_length=250)
+    office = models.CharField(max_length=250, null=True, blank=True)
+    phone = models.CharField(max_length=250, null=True, blank=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, to_field='faculty_name')
 
     # TO DO write more information
@@ -50,24 +56,34 @@ class BranchOfKnowledge(models.Model):
 
 
 class Teacher(models.Model):
-    teacher_name = models.CharField(max_length=35, unique=True)
-    office_365_email = models.EmailField()
+    teacher_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     additional_email = models.EmailField(null=True, blank=True)
     degree = models.CharField(max_length=50, null=True, blank=True)
-    # TO DO write more information
-    # naukovuy stypin
-    # posada
+    position = models.CharField(max_length=50, null=True, blank=True)
+    academic_status = models.CharField(max_length=50, null=True, blank=True)
     office = models.CharField(max_length=250, null=True, blank=True)
     phone = models.CharField(max_length=250, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
     branch = models.ManyToManyField(BranchOfKnowledge)
 
     def __str__(self):
-        return self.teacher_name
+        return self.teacher_id.name
+
+
+class Methodist(models.Model):
+    methodist_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    additional_email = models.EmailField(null=True, blank=True)
+    office = models.CharField(max_length=250, null=True, blank=True)
+    phone = models.CharField(max_length=250, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
+
+    def __str__(self):
+        return self.methodist_id.name
 
 
 class CountOfHour(models.Model):
     id = models.AutoField(primary_key=True)
     count_of_themes = models.SmallIntegerField()
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, to_field='teacher_name')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
+

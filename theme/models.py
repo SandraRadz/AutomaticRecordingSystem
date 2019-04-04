@@ -8,6 +8,7 @@ from teacher.models import BranchOfKnowledge
 
 class WriteWork(models.Model):
     work_name = models.CharField(max_length=500, unique=True)
+    english_work_name = models.CharField(max_length=500, unique=True)
     student = models.ManyToManyField(Student, through='Record')
     year_of_study = models.SmallIntegerField()
     previous_version = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
@@ -25,7 +26,7 @@ class Record(models.Model):
         ('REJECTED', 'відхилено викладачем'),
         ('BLOCKED', 'затверджено на іншу тему')
     )
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, to_field='student_name')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     work = models.ForeignKey(WriteWork, on_delete=models.CASCADE, to_field='work_name')
     status = models.CharField(max_length=10, choices=STATUS_TITLE)
     date_of_record = models.DateTimeField(auto_now_add=True)
