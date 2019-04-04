@@ -16,7 +16,7 @@ class ThemeListView(ListView):
     model = WriteWork
 
     def get(self, *args, **kwargs):
-        if 'email' not in self.request.session:
+        if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
         return super(ThemeListView, self).get(*args, **kwargs)
 
