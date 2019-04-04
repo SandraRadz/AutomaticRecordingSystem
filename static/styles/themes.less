@@ -1,0 +1,173 @@
+@import "variables.less";
+
+.search-panel{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.search-panel__item{
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  margin-top: 20px;
+}
+
+.search-panel__button{
+  flex-basis: 20%;
+  background-color: @mainColor;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.search-panel__input{
+  flex-basis: 77%;
+  border: 1px solid @backgroundGreyColor;
+  border-radius: 5px;
+  outline: 0;
+  padding-left: 10px;
+}
+
+/* filter-panel */
+
+.filter-panel{
+  display: flex;
+  margin-top: 20px;
+}
+
+.filter-item{
+  display: flex;
+  flex-direction: column;
+  padding-right: 30px;
+  flex-grow: 1;
+}
+
+.filter-item__name{
+  color: black;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.filter-item__dropdown{
+  border: 1px solid @backgroundGreyColor;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.filter-panel__button{
+  width: 140px;
+  height: 40px;
+  padding: 10px;
+  margin-top: auto;
+  text-align: center;
+  background-color: @mainColor;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.themes-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-item{
+  margin-bottom: 15px;
+}
+
+.theme-item:hover{
+  cursor: pointer;
+}
+
+.theme-item__header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  padding-left: 30px;
+  background-color: @backgroundBlueColor;
+  border-radius: 5px;
+}
+
+.theme-item__teacher{
+  font-weight: bold;
+}
+
+.theme-item__reg{
+  background-color: @secondBlueColor;
+  color: white;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.theme-item__body{
+  padding: 20px 10px 10px;
+  border: 2px solid gray;
+  border-top: 0;
+}
+
+
+.theme-item__info-box{
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border: 2px solid @backgroundGreyColor;
+  border-radius: 5px;
+}
+
+.theme-item__student-list-block{
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border: 2px solid @backgroundGreyColor;
+  border-radius: 5px;
+}
+
+.theme-item__student-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-item__field{
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.theme-item_col-names{
+  font-weight: bold;
+}
+
+.theme-item__field-col{
+  flex-basis: 25%;
+}
+
+.theme-item__button{
+  width: 140px;
+  height: 40px;
+  padding: 10px;
+  margin-left: auto;
+  text-align: center;
+  background-color: @mainColor;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/*pagination panel*/
+.pagination-panel__list{
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+.pagination-panel__list li{
+  color: @mainColor;
+  padding: 5px 10px;
+  border: 1px solid @backgroundGreyColor;
+  border: 1px solid @backgroundGreyColor;
+}

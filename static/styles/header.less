@@ -1,0 +1,100 @@
+@import "variables.less";
+
+
+.header{
+  width: 100%;
+  max-width: 100%;
+  background-color: @mainColor;
+  color: white;
+}
+
+.header__wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1176px;
+  padding-top: 18px;
+  //padding-bottom: 18px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header__logo{
+  font-weight: bold;
+      align-items: center;
+}
+
+.navbar{
+  display: flex;
+}
+
+.navbar__list{
+  display: flex;
+  list-style: none;
+  margin-right: 90px;
+}
+
+.navbar__item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__link{
+  position: relative;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.navbar__link::after{
+  content: " ";
+  position: absolute;
+  bottom: 3px;
+  left: 2px;
+  right: 2px;
+  width: 0;
+  height: 2px;
+  border-radius: 10px;
+  background-color: white;
+  opacity: 0;
+  transition: opacity .3s , width .3s;
+}
+
+.navbar__link:hover:after{
+  opacity: 1;
+  width: 100%;
+}
+
+.navbar__link:hover{
+  text-decoration: none;
+  color: white;
+}
+
+.navbar__user-panel{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: center;
+}
+
+.navbar__login{
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  outline: 0;
+}
+
+.navbar__username{
+  position: absolute;
+  bottom: -7px;
+  right: 0;
+  font-size: 11px;
+}

@@ -1,0 +1,54 @@
+@import "variables.less";
+
+@fontSize: 20px;
+@planMargin: 400px;
+.mainInfo{
+    margin: 100px @planMargin+10 10px @planMargin+10;
+}
+.themeDescription{
+    margin: 10px 0px;
+}
+.tagName, .tagValue, .plan {
+    font-family: @fontFamily;
+    font-style: @fontStyle;
+}
+.tagName{
+    font-weight: bold;
+    line-height: normal;
+    font-size: @fontSize;
+    color: @fontColor;
+    display: inline;
+}
+.tagValue{
+    line-height: normal;
+    font-size: @fontSize; 
+    color: @fontColor;
+    display: inline;
+}
+.line{
+    border-bottom: 1px solid #807979;
+    margin: 20px @planMargin+10;
+}
+.plan{
+    margin-left: @planMargin;
+    margin-right: @planMargin;
+}
+.deadline{
+    font-weight: bold;
+    line-height: normal;
+    margin: 10px;
+}
+.point{
+    margin: 10px;
+    border-radius: 4px;
+    border: 1px solid #DBDADA;
+    box-sizing: border-box
+   
+}
+.description{
+    margin: 10px 60px;
+}
+.main{
+    background-color: @backgroundBlueColor;
+    border: 2px solid #DDEAF6;
+}
