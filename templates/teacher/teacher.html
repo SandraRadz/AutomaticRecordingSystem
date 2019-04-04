@@ -9,8 +9,8 @@
     <div class="teacher-info">
         <span class="teacher-info__avatar"></span>
         <div class="teacher-info__list">
-            <div class="teacher-info__item teacher-info__name">Бублик Володимир Васильович</div>
-            <div class="teacher-info__item teacher-info__email">o.radzievska@ukma.edu.ua</div>
+            <div class="teacher-info__item teacher-info__name">{{ request.session.fullName }}</div>
+            <div class="teacher-info__item teacher-info__email">{{ request.session.mail }}</div>
             <div class="teacher-info__item">Кафедра мультымедиа</div>
             <div class="teacher-info__item">Завідувач кафедри</div>
             <div class="teacher-info__item">доцент</div>

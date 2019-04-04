@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 # Create your models here.
 from teacher.models import Department
 from teacher.models import StudentGroup
+
 
 class Student(models.Model):
     student_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -13,5 +13,4 @@ class Student(models.Model):
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.student_id.name
-
+        return str(self.student_id)

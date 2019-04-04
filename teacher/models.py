@@ -67,7 +67,7 @@ class Teacher(models.Model):
     branch = models.ManyToManyField(BranchOfKnowledge)
 
     def __str__(self):
-        return self.teacher_id.name
+        return str(self.teacher_id)
 
 
 class Methodist(models.Model):
@@ -78,7 +78,7 @@ class Methodist(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
 
     def __str__(self):
-        return self.methodist_id.name
+        return str(self.methodist_id)
 
 
 class CountOfHour(models.Model):
