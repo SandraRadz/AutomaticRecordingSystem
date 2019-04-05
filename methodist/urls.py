@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from methodist.views import MethodistListView
+
 
 urlpatterns = [
-    path('', views.index, name="methodist")
+    path('', MethodistListView.as_view())
 ]

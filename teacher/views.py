@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
-from django.views.generic import DetailView, ListView
+from django.views.generic import ListView
 
 from teacher.models import Teacher
 
