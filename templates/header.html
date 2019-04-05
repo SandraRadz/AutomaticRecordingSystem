@@ -10,7 +10,7 @@
                 <div class="navbar__item"><a class="navbar__link" href="/theme">Теми</a></div>
                 <div class="navbar__item"><a class="navbar__link" href="/plan">План роботи</a></div>
                 <div class="navbar__item"><a class="navbar__link" href="/theme">Інформація</a></div>
-                <div class="navbar__item"><a class="navbar__link" href="/teacher">Профіль</a></div>
+                <div class="navbar__item"><a class="navbar__link" href="/{{ request.session.role}}">Профіль</a></div>
             </div>
             <div class="navbar__user-panel">
                 <button class="navbar__login"><a class="navbar__link" href="/exit">Вихід</a></button>

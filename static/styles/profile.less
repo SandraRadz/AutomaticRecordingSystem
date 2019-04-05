@@ -1,0 +1,195 @@
+@import "variables.less";
+
+.plan-section{
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.info-part {
+    flex-basis: 50%;
+}
+
+.profile-info__avatar{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: @mainColor;
+    border-radius: 50px;
+}
+
+.profile-info{
+    display: flex;
+    flex-basis: 40%;
+}
+
+.profile-info__list{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.theme-item__header--edit{
+    position: relative;
+}
+
+.theme-item__header--edit::after{
+    content: "Edit";
+    position: absolute;
+    top: 0;
+    right: -50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    width: 42px;
+    background-color: lightblue;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.profile-info__name{
+    font-weight: bold;
+}
+
+.profile-info__item{
+    margin-bottom: 10px;
+}
+
+.themes-list{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 55%;
+}
+
+.themes-list__button{
+    width: 140px;
+    height: 40px;
+    padding: 10px;
+    margin-right: auto;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 3px 3px 7px 0px lightblue;
+}
+
+.theme-item__plan-field-col{
+    display: flex;
+    align-items: center;
+    flex-basis: 28.3%;
+    font-size: 12px;
+}
+
+.theme-item__plan-field-col-narrow{
+    display: flex;
+    align-items: center;
+    flex-basis: 7%;
+    font-size: 12px;
+}
+
+.theme-item__empty-col{
+    flex-basis: 78px;
+}
+
+.theme-item__reg-button{
+    height: 25px;
+    padding: 5px 3px;
+    background-color: @secondBlueColor;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+}
+
+
+.theme-item{
+    margin-bottom: 15px;
+}
+
+.theme-item__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    padding-left: 30px;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+}
+
+.theme-item__teacher{
+    font-weight: bold;
+}
+
+.theme-item__reg{
+    background-color: lightblue;
+    color: white;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.theme-item--opened .theme-item__body{
+    display: flex;
+}
+
+.theme-item__body{
+    display: none;
+    flex-direction: column;
+    padding: 20px 10px 10px;
+    border: 2px solid gray;
+    border-top: 0;
+}
+
+
+.theme-item__info-box{
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 2px solid #dbdbdb;
+    border-radius: 5px;
+}
+
+.theme-item__student-list-block{
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 2px solid #dbdbdb;
+    border-radius: 5px;
+}
+
+
+.theme-item__student-list{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .theme-item__field{
+    display: flex;
+    margin-bottom: 5px;
+  }
+  
+  .theme-item_col-names{
+    font-weight: bold;
+  }
+  
+  .theme-item__field-col{
+    flex-basis: 25%;
+  }
+  
+  .theme-item__button{
+    width: 140px;
+    height: 40px;
+    padding: 10px;
+    margin-left: auto;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 3px 3px 7px 0px lightblue;
+  }
+
+  .teacher_button{
+     width: 140px;
+    height: 40px;
+  }

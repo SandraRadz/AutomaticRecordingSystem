@@ -1,0 +1,25 @@
+{%  extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+<section class="container plan-section">
+    <div class="profile-info">
+        <span class="profile-info__avatar"></span>
+        <div class="profile-info__list">
+            <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+            <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+            <div class="profile-info__item">Кафедра мультымедиа</div>
+            <div class="profile-info__item">Завідувач кафедри</div>
+            <div class="profile-info__item">доцент</div>
+            <div class="profile-info__item profile-info__room">каб. 1-302</div>
+            <div class="profile-info__item">+380747399237</div>
+        </div>
+    </div>
+
+
+    </div>
+</section>
+{% endblock content %}
