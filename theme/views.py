@@ -7,12 +7,8 @@ from django.views.generic import ListView
 from theme.models import WriteWork
 
 
-def index(request):
-    return render(request, 'themes/themes.html')
-
-
 class ThemeListView(ListView):
-    template_name = 'themes/themes.html'
+    template_name = 'themes/themes_teacher.html'
     model = WriteWork
 
     def get(self, *args, **kwargs):
