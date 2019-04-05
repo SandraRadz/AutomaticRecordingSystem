@@ -19,8 +19,11 @@ class TeacherListView(ListView):
     model = Teacher
 
     def get(self, *args, **kwargs):
+
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
+        if not self.request.session['role'] == 'teacher':
+            return HttpResponseRedirect('../teacher/')
         return super(TeacherListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):

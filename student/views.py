@@ -20,7 +20,7 @@ class StudentListView(ListView):
     def get(self, *args, **kwargs):
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if not self.request.session.role == 'student':
+        if not self.request.session['role'] == 'student':
             return HttpResponseRedirect('../student/')
         return super(StudentListView, self).get(*args, **kwargs)
 
