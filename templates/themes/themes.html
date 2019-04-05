@@ -7,14 +7,14 @@
 {% block content %}
 <section class="container themes-filter">
     <div class="search-panel">
-        <div class="search-panel__item">
-            <button class="search-panel__button">Шукати за викладачем</button>
-            <input class="search-panel__input" type="text">
-        </div>
-        <div class="search-panel__item">
-            <button class="search-panel__button">Шукати за темою</button>
-            <input class="search-panel__input" type="text">
-        </div>
+        <form class="search-panel__item">
+            <button class="search-panel__button" formmethod="get">Шукати за викладачем</button>
+            <input class="search-panel__input" type="text" name="teacher_name">
+        </form>
+        <form class="search-panel__item">
+            <button class="search-panel__button" formmethod="get">Шукати за темою</button>
+            <input class="search-panel__input" type="text" name="work_name">
+        </form>
     </div>
     <div class="filter-panel">
         <div class="filter-item">
@@ -100,7 +100,7 @@
             </div>
         </div>
         {% empty %}
-            <li>Ще немає тем...</li>
+            <div>Nothing to show!</div>
         {% endfor %}
 
         </div>
