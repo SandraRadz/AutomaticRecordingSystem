@@ -16,6 +16,8 @@ def home(request):
 
 
 def exit(request):
+    if 'mail' not in request.session:
+        return HttpResponseRedirect('../authorization/')
     request.session.pop('mail')
     request.session.pop('fullName')
     return HttpResponseRedirect('../authorization/')
@@ -30,8 +32,7 @@ def gettoken(request):
     username = info['mail'].split('@')[0]
     if not User.objects.filter(username=username).exists():
         user = User.objects.create_user(username, info['mail'])
-        user.first_name = info['displayName'].split(' ')[1]
-        user.last_name = info['displayName'].split(' ')[0]
+        user.first_name = info['displayName']
         user.save()
     user = User.objects.get(username=username)
     request.session['mail'] = info['mail']
