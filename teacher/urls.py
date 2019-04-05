@@ -1,7 +1,9 @@
 from django.conf.urls import url
+
+from teacher.views import  TeacherListView
 from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', TeacherListView.as_view())
 ]

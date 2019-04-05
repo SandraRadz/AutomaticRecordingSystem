@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from teacher.models import Teacher
 
@@ -14,16 +14,14 @@ def index(request):
     return render(request, 'teacher/teacher.html')
 
 
-class TeacherDetailView(DetailView):
+class TeacherListView(ListView):
     template_name = 'teacher/teacher.html'
     model = Teacher
 
     def get(self, *args, **kwargs):
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if 'role' != 'teacher':
-            return HttpResponseRedirect('../authorization/')
-        return super(TeacherDetailView, self).get(*args, **kwargs)
+        return super(TeacherListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
