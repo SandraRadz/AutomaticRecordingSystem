@@ -8,7 +8,7 @@ from theme.models import WriteWork
 
 
 class ThemeListView(ListView):
-    template_name = 'themes/themes_teacher.html'
+    template_name = 'themes/themes.html'
     model = WriteWork
 
     def get(self, *args, **kwargs):

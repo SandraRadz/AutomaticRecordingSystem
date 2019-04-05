@@ -6,7 +6,6 @@
 
 {% block content %}
 <section class="container themes-filter">
-    <div>TEACHER</div>
     <div class="search-panel">
         <div class="search-panel__item">
             <button class="search-panel__button">Шукати за викладачем</button>
@@ -92,10 +91,12 @@
                             <div class="theme-item__field-col">3</div>
                             <div class="theme-item__field-col">Компютерні науки</div>
                             <div class="theme-item__field-col">Чекає підтвердження</div>
-                            <button class="theme-item__button teacher_button">Підтвердити</button>
                         </li>
                     </ul>
                 </div>
+                {% if request.session.role == "student" %}
+                <button class="theme-item__button">Записатися</button>
+                {% endif %}
             </div>
         </div>
         {% empty %}
