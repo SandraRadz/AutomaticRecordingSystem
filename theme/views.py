@@ -8,10 +8,6 @@ from theme.models import WriteWork
 from teacher.models import CountOfHour
 from django.contrib.auth.models import User
 
-def index(request):
-    return render(request, 'themes/themes.html')
-
-
 class ThemeListView(ListView):
     template_name = 'themes/themes.html'
     model = WriteWork

@@ -94,7 +94,9 @@
                         </li>
                     </ul>
                 </div>
+                {% if request.session.role == "student" %}
                 <button class="theme-item__button">Записатися</button>
+                {% endif %}
             </div>
         </div>
         {% empty %}
