@@ -74,6 +74,7 @@ class Teacher(models.Model):
     phone = models.CharField(max_length=250, null=True, blank=True)
     additional_email = models.EmailField(null=True, blank=True)
     send_email = models.BooleanField(default=True)
+    google_scholar = models.CharField(max_length=150, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
     branch = models.ManyToManyField(BranchOfKnowledge)
 
