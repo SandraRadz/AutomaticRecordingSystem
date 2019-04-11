@@ -15,11 +15,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Student',
+            name='Methodist',
             fields=[
-                ('student_id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('average_mark', models.FloatField(blank=True, null=True)),
+                ('methodist_id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
                 ('additional_email', models.EmailField(blank=True, max_length=254, null=True)),
+                ('office', models.CharField(max_length=250)),
+                ('phone', models.CharField(max_length=250)),
                 ('send_email', models.BooleanField(default=True)),
             ],
         ),

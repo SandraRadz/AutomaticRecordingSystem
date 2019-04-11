@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
-from teacher.models import Methodist
+from methodist.models import Methodist
 from django.views.generic import ListView
 
 

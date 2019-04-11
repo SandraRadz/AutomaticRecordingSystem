@@ -5,8 +5,8 @@ from django.urls import reverse
 from authorization.authhelper import get_signin_url, get_token_from_code
 from authorization.outlookservice import get_me
 from student.models import Student
-from teacher.models import Teacher, Methodist
-
+from teacher.models import Teacher
+from methodist.models import Methodist
 
 def home(request):
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
