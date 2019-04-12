@@ -8,6 +8,7 @@ from student.models import Student
 from teacher.models import Teacher
 from methodist.models import Methodist
 
+
 def home(request):
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
     sign_in_url = get_signin_url(redirect_uri)
