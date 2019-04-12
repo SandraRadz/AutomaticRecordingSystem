@@ -11,7 +11,7 @@ class Methodist(models.Model):
     office = models.CharField(max_length=250)
     phone = models.CharField(max_length=250)
     send_email = models.BooleanField(default=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.methodist_id)

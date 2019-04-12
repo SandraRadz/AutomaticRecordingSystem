@@ -22,7 +22,7 @@ class Department(models.Model):
     head_of_department = models.CharField(max_length=250)
     office = models.CharField(max_length=250, null=True, blank=True)
     phone = models.CharField(max_length=250, null=True, blank=True)
-    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, to_field='faculty_name')
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.department_name
@@ -34,7 +34,7 @@ class Specialty(models.Model):
     specialty_code = models.SmallIntegerField()
     branch_code = models.SmallIntegerField()
     branch_name = models.CharField(max_length=250, unique=True, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.specialty_name
@@ -44,12 +44,12 @@ class StudentGroup(models.Model):
     # we need id there to choose groups id in student table
     id = models.AutoField(primary_key=True)
     year_of_entry = models.SmallIntegerField()
-    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, to_field='specialty_name')
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
 
 
 class Protection(models.Model):
     speciality_group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
-    teacher_department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
+    teacher_department = models.ForeignKey(Department, on_delete=models.CASCADE)
     date_of_pre_protection = models.DateTimeField(null=True, blank=True)
     date_of_confirmation = models.DateTimeField(null=True, blank=True)
 
@@ -75,7 +75,7 @@ class Teacher(models.Model):
     additional_email = models.EmailField(null=True, blank=True)
     send_email = models.BooleanField(default=True)
     google_scholar = models.CharField(max_length=150, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, to_field='department_name')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     branch = models.ManyToManyField(BranchOfKnowledge)
 
     def __str__(self):

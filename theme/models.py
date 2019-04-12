@@ -28,7 +28,7 @@ class Record(models.Model):
         ('BLOCKED', 'затверджено на іншу тему')
     )
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    work = models.ForeignKey(WriteWork, on_delete=models.CASCADE, to_field='work_name')
+    work = models.ForeignKey(WriteWork, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_TITLE)
     date_of_record = models.DateTimeField(auto_now_add=True)
     date_of_confirmation = models.DateTimeField(null=True, blank=True)
