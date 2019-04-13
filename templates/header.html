@@ -3,7 +3,7 @@
 <header class="header">
     <div class="header__wrapper">
         <div class="header__navbar navbar">
-        <div class="header__logo navbar__item">НаУКМА</div>
+            <div class="header__logo navbar__item"><a class="navbar__link_without_line" href="/theme">НаУКМА</a></div>
         </div>
         <div class="header__navbar navbar">
             <div class="navbar__list">
@@ -13,7 +13,7 @@
                 <div class="navbar__item"><a class="navbar__link" href="/{{ request.session.role}}/{{ request.session.email}}">Профіль</a></div>
             </div>
             <div class="navbar__user-panel">
-                <button class="navbar__login"><a class="navbar__link" href="/exit">Вихід</a></button>
+                <button class="navbar__login"><a class="navbar__link_without_line" href="/exit">Вихід</a></button>
                 <div class="navbar__username">{{ request.session.mail}}</div>
             </div>
         </div>
