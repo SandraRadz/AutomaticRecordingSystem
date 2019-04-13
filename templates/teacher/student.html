@@ -11,11 +11,12 @@
         <div class="profile-info__list">
             <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
             <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
-            <div class="profile-info__item">Кафедра мультымедиа</div>
-            <div class="profile-info__item">Завідувач кафедри</div>
-            <div class="profile-info__item">доцент</div>
-            <div class="profile-info__item profile-info__room">каб. 1-302</div>
-            <div class="profile-info__item">+380747399237</div>
+            {% if student.average_mark %}
+            <div class="profile-info__item">Середній бал: {{ student.average_mark }}</div>
+            {% endif %}
+        {% if student.additional_email %}
+            <div class="profile-info__item">Додаткова пошта: {{ student.additional_email }}</div>
+        {% endif %}
         </div>
     </div>
 

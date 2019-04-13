@@ -28,4 +28,5 @@ class TeacherListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['teacher'] = Teacher.objects.get(pk=self.request.session['user_id'])
         return context

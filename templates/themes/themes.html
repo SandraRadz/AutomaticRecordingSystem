@@ -1,120 +1,125 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/themes.less"/>
 {% endblock style %}
 
 {% block content %}
-<section class="container themes-filter">
-    <div class="search-panel">
-        <form class="search-panel__item">
-            <button class="search-panel__button" formmethod="get">Шукати за викладачем</button>
-            <input class="search-panel__input" type="text" name="teacher_name">
-        </form>
-        <form class="search-panel__item">
-            <button class="search-panel__button" formmethod="get">Шукати за темою</button>
-            <input class="search-panel__input" type="text" name="work_name">
-        </form>
-    </div>
-    <div class="filter-panel">
-        <div class="filter-item">
-            <span class="filter-item__name">Кафедра</span>
-            <select class="filter-item__dropdown">
-                <option value="anything">Будь-яка</option>
-            </select>
+    <section class="container themes-filter">
+        <div class="search-panel">
+            <form class="search-panel__item">
+                <button class="search-panel__button" formmethod="get">Шукати за викладачем</button>
+                <input class="search-panel__input" type="text" name="teacher_name">
+            </form>
+            <form class="search-panel__item">
+                <button class="search-panel__button" formmethod="get">Шукати за темою</button>
+                <input class="search-panel__input" type="text" name="work_name">
+            </form>
         </div>
-        <div class="filter-item">
-            <span class="filter-item__name">Спеціальність</span>
-            <select class="filter-item__dropdown">
-                <option value="anything">Будь-яка</option>
-            </select>
-        </div>
-        <div class="filter-item">
-            <span class="filter-item__name">Рік навчання</span>
-            <select class="filter-item__dropdown">
-                <option value="anything">Будь-яка</option>
-            </select>
-        </div>
-        <div class="filter-item">
-            <span class="filter-item__name">Складність</span>
-            <select class="filter-item__dropdown">
-                <option value="anything">Будь-яка</option>
-            </select>
-        </div>
-        <div class="filter-item">
-            <span class="filter-item__name">Статус запиту</span>
-            <select class="filter-item__dropdown">
-                <option value="anything">Будь-яка</option>
-            </select>
-        </div>
-        <button class="filter-panel__button">Фільтр</button>
-    </div>
-</section>
-<section class="container themes-choose">
-    <div class="themes-list">
-
-        {% for theme in object_list %}
-        <div class="theme-item">
-            <div class="theme-item__header"  data-toggle="collapse" aria-expanded="false" data-target="#theme-det-{{theme.id}}">
-                <div class="theme-item__info">
-                    <span>{{ theme.work_name }}</span> - <span class="theme-item__teacher">{{theme.teacher_hour.teacher.teacher_id}}</span>
-                </div>
-                <div class="theme-item__reg">
-                    Записані - <span class="theme-item__student-count">3</span>
-                </div>
+        <div class="filter-panel">
+            <div class="filter-item">
+                <span class="filter-item__name">Кафедра</span>
+                <select class="filter-item__dropdown">
+                    <option value="anything">Будь-яка</option>
+                </select>
             </div>
-            <div class="collapse theme-item__body" id="theme-det-{{theme.id}}">
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Спеціальності</span>
-                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
-                </div>
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Галузі</span>
-                    <div> SQL, Бази Даних, АІС, ER</div>
-                </div>
-                <div class="theme-item__student-list-block">
-                    <ul class="theme-item__student-list">
-                        <li class="theme-item__field theme-item_col-names">
-                            <div class="theme-item__field-col">ПІБ</div>
-                            <div class="theme-item__field-col">Рік</div>
-                            <div class="theme-item__field-col">Спеціальність</div>
-                            <div class="theme-item__field-col">Статус</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                    </ul>
-                </div>
-                {% if request.session.role == "student" %}
-                <button class="theme-item__button">Записатися</button>
-                {% endif %}
+            <div class="filter-item">
+                <span class="filter-item__name">Спеціальність</span>
+                <select class="filter-item__dropdown">
+                    <option value="anything">Будь-яка</option>
+                </select>
             </div>
+            <div class="filter-item">
+                <span class="filter-item__name">Рік навчання</span>
+                <select class="filter-item__dropdown">
+                    <option value="anything">Будь-яка</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <span class="filter-item__name">Складність</span>
+                <select class="filter-item__dropdown">
+                    <option value="anything">Будь-яка</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <span class="filter-item__name">Статус запиту</span>
+                <select class="filter-item__dropdown">
+                    <option value="anything">Будь-яка</option>
+                </select>
+            </div>
+            <button class="filter-panel__button">Фільтр</button>
         </div>
-        {% empty %}
-            <div>Nothing to show!</div>
-        {% endfor %}
+    </section>
+    <section class="container themes-choose">
+        <div class="themes-list">
+
+            {% for theme in object_list %}
+                <div class="theme-item">
+                    <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
+                         data-target="#theme-det-{{ theme.id }}">
+                        <div class="theme-item__info">
+                            <span>{{ theme.work_name }}</span> - <span
+                                class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id }}</span>
+                        </div>
+                        <div class="theme-item__reg">
+                            Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
+                        </div>
+                    </div>
+                    <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
+                        <div class="theme-item__info-box">
+                            <span class="theme-item__info-name">Спеціальності</span>
+                            <div>{{ theme.teacher_offer.specialty.specialty.specialty_name }}
+                                - {{ theme.teacher_offer.specialty.year_of_entry }}</div>
+                        </div>
+                        <div class="theme-item__info-box">
+                            <span class="theme-item__info-name">Галузі</span>
+                            <div>
+                                {% for branch in theme.branch.get_queryset %}
+                                    {{ branch }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% if theme.student.count > 0 %}
+                        <div class="theme-item__student-list-block">
+                            <ul class="theme-item__student-list">
+                                <li class="theme-item__field theme-item_col-names">
+                                    <div class="theme-item__field-col">ПІБ</div>
+                                    <div class="theme-item__field-col">Рік</div>
+                                    <div class="theme-item__field-col">Спеціальність</div>
+                                    <div class="theme-item__field-col">Статус</div>
+                                </li>
+                                <li class="theme-item__field">
+                                    <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                                    <div class="theme-item__field-col">3</div>
+                                    <div class="theme-item__field-col">Компютерні науки</div>
+                                    <div class="theme-item__field-col">Чекає підтвердження</div>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                        {% if request.session.role == "student" %}
+                            <form>
+                            <button class="theme-item__button" formmethod="get">Записатися</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div>Nothing to show!</div>
+            {% endfor %}
 
         </div>
-    </div>
-    <div class="pagination-panel">
-        <ul class="pagination-panel__list">
-            <li> < </li>
-            <li>1</li>
-            <li>2</li>
-            <li>...</li>
-            <li>5</li>
-            <li>6</li>
-            <li> > </li>
-        </ul>
-    </div>
-</section>
+        </div>
+        <div class="pagination-panel">
+            <ul class="pagination-panel__list">
+                <li> <</li>
+                <li>1</li>
+                <li>2</li>
+                <li>...</li>
+                <li>5</li>
+                <li>6</li>
+                <li> ></li>
+            </ul>
+        </div>
+    </section>
 {% endblock content %}

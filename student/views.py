@@ -1,16 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 # Create your views here.
-from django.views.generic import DetailView, ListView
+from django.views.generic import ListView
 
 from student.models import Student
-
-
-def index(request):
-    if 'mail' not in request.session:
-        return HttpResponseRedirect('../authorization/')
-    return HttpResponse('<h1>Student page</h1>')
 
 
 class StudentListView(ListView):
@@ -25,5 +18,6 @@ class StudentListView(ListView):
         return super(StudentListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        context['student'] = Student.objects.get(pk=self.request.session['user_id'])
         return context

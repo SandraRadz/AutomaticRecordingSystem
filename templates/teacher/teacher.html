@@ -1,74 +1,91 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
 {% endblock style %}
 
 {% block content %}
-<section class="container plan-section">
-    <div class="profile-info">
-        <span class="profile-info__avatar"></span>
-        <div class="profile-info__list">
-            <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-            <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
-            <div class="profile-info__item">Кафедра мультымедиа</div>
-            <div class="profile-info__item">Завідувач кафедри</div>
-            <div class="profile-info__item">доцент</div>
-            <div class="profile-info__item profile-info__room">каб. 1-302</div>
-            <div class="profile-info__item">+380747399237</div>
-        </div>
-    </div>
-    <div class="themes-list">
-        <div>Створено <span>3 теми</span></div>
-
-
-        <div class="theme-item">
-            <div class="theme-item__header"  data-toggle="collapse" aria-expanded="false" data-target="#theme-det-1">
-                <div class="theme-item__info">
-                    <span>name</span>
-                </div>
-                <div class="theme-item__reg">
-                    Записані - <span class="theme-item__student-count">3</span>
-                </div>
-            </div>
-            <div class="collapse theme-item__body" id="theme-det-1">
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Спеціальності</span>
-                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
-                </div>
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Галузі</span>
-                    <div> SQL, Бази Даних, АІС, ER</div>
-                </div>
-                <div class="theme-item__student-list-block">
-                    <ul class="theme-item__student-list">
-                        <li class="theme-item__field theme-item_col-names">
-                            <div class="theme-item__field-col">ПІБ</div>
-                            <div class="theme-item__field-col">Рік</div>
-                            <div class="theme-item__field-col">Спеціальність</div>
-                            <div class="theme-item__field-col">Статус</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                    </ul>
-                </div>
-                <button class="theme-item__button">Записатися</button>
+    <section class="container plan-section">
+        <div class="profile-info">
+            <span class="profile-info__avatar"></span>
+            <div class="profile-info__list">
+                <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+                <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                {% if  teacher.degree %}
+                    <div class="profile-info__item">Вчене звання: {{ teacher.degree }}</div>
+                {% endif %}
+                {% if  teacher.academic_status %}
+                    <div class="profile-info__item">Науковий ступінь: {{ teacher.academic_status }}</div>
+                {% endif %}
+                {% if  teacher.position %}
+                    <div class="profile-info__item">Посада: {{ teacher.position }}</div>
+                {% endif %}
+                {% if  teacher.google_scholar %}
+                    <div class="profile-info__item">Google scholar: {{ teacher.google_scholar }}</div>
+                {% endif %}
+                {% if  teacher.phone %}
+                    <div class="profile-info__item">Номер телефону: {{ teacher.phone }}</div>
+                {% endif %}
+                {% if  teacher.office %}
+                    <div class="profile-info__item">Кабінет: {{ teacher.office }}</div>
+                {% endif %}
+                {% if  teacher.additional_email %}
+                    <div class="profile-info__item">Додаткова пошта: {{ teacher.additional_email }}</div>
+                {% endif %}
             </div>
         </div>
+        <div class="themes-list">
+            <div>Створено <span>3 теми</span></div>
+
+
+            <div class="theme-item">
+                <div class="theme-item__header" data-toggle="collapse" aria-expanded="false" data-target="#theme-det-1">
+                    <div class="theme-item__info">
+                        <span>name</span>
+                    </div>
+                    <div class="theme-item__reg">
+                        Записані - <span class="theme-item__student-count">3</span>
+                    </div>
+                </div>
+                <div class="collapse theme-item__body" id="theme-det-1">
+                    <div class="theme-item__info-box">
+                        <span class="theme-item__info-name">Спеціальності</span>
+                        <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3
+                        </div>
+                    </div>
+                    <div class="theme-item__info-box">
+                        <span class="theme-item__info-name">Галузі</span>
+                        <div> SQL, Бази Даних, АІС, ER</div>
+                    </div>
+                    <div class="theme-item__student-list-block">
+                        <ul class="theme-item__student-list">
+                            <li class="theme-item__field theme-item_col-names">
+                                <div class="theme-item__field-col">ПІБ</div>
+                                <div class="theme-item__field-col">Рік</div>
+                                <div class="theme-item__field-col">Спеціальність</div>
+                                <div class="theme-item__field-col">Статус</div>
+                            </li>
+                            <li class="theme-item__field">
+                                <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                                <div class="theme-item__field-col">3</div>
+                                <div class="theme-item__field-col">Компютерні науки</div>
+                                <div class="theme-item__field-col">Чекає підтвердження</div>
+                            </li>
+                            <li class="theme-item__field">
+                                <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                                <div class="theme-item__field-col">3</div>
+                                <div class="theme-item__field-col">Компютерні науки</div>
+                                <div class="theme-item__field-col">Чекає підтвердження</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="theme-item__button">Записатися</button>
+                </div>
+            </div>
 
 
         </div>
         <button class="themes-list__button">Додати</button>
-    </div>
-</section>
+        </div>
+    </section>
 {% endblock content %}
