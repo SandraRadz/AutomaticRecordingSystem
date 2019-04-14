@@ -1,8 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 
+from student.models import Student
 from teacher.models import Teacher, TopicOffer
-from theme.models import WriteWork
+from theme.models import WriteWork, Record
 from django.contrib.auth.models import User
 
 
@@ -22,6 +23,11 @@ class ThemeListView(ListView):
         return context
 
     def get_queryset(self, **kwargs):
+        if self.request.GET.get('theme_id') is not None:
+            theme_id = self.request.GET.get('theme_id')
+            theme = WriteWork.objects.get(pk=theme_id)
+            student = Student.objects.get(pk=self.request.session['user_id'])
+            record = Record.objects.get_or_create(student=student, work=theme)
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(username__icontains=self.request.GET.get('teacher_name'))\
                 .values_list('id', flat=True)

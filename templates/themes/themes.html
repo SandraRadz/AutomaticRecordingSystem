@@ -3,7 +3,9 @@
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/themes.less"/>
 {% endblock style %}
-
+{% block script %}
+    <!--<script src="/static/js/main.js"></script>-->
+{% endblock %}
 {% block content %}
     <section class="container themes-filter">
         <div class="search-panel">
@@ -79,27 +81,29 @@
                                 {% endfor %}
                             </div>
                         </div>
-                    {% if theme.student.count > 0 %}
-                        <div class="theme-item__student-list-block">
-                            <ul class="theme-item__student-list">
-                                <li class="theme-item__field theme-item_col-names">
-                                    <div class="theme-item__field-col">ПІБ</div>
-                                    <div class="theme-item__field-col">Рік</div>
-                                    <div class="theme-item__field-col">Спеціальність</div>
-                                    <div class="theme-item__field-col">Статус</div>
-                                </li>
-                                <li class="theme-item__field">
-                                    <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                                    <div class="theme-item__field-col">3</div>
-                                    <div class="theme-item__field-col">Компютерні науки</div>
-                                    <div class="theme-item__field-col">Чекає підтвердження</div>
-                                </li>
-                            </ul>
-                        </div>
-                    {% endif %}
+                        {% if theme.student.count > 0 %}
+                            <div class="theme-item__student-list-block">
+                                <ul class="theme-item__student-list">
+                                    <li class="theme-item__field theme-item_col-names">
+                                        <div class="theme-item__field-col">ПІБ</div>
+                                        <div class="theme-item__field-col">Рік</div>
+                                        <div class="theme-item__field-col">Спеціальність</div>
+                                        <div class="theme-item__field-col">Статус</div>
+                                    </li>
+                                    <li class="theme-item__field">
+                                        <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
+                                        <div class="theme-item__field-col">3</div>
+                                        <div class="theme-item__field-col">Компютерні науки</div>
+                                        <div class="theme-item__field-col">Чекає підтвердження</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
                         {% if request.session.role == "student" %}
                             <form>
-                            <button class="theme-item__button" formmethod="get">Записатися</button>
+                                <button class="theme-item__button" name="theme_id" value="{{ theme.id }}"
+                                        formmethod="get">Записатися
+                                </button>
                             </form>
                         {% endif %}
                     </div>
