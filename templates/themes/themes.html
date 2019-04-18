@@ -3,9 +3,7 @@
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/themes.less"/>
 {% endblock style %}
-{% block script %}
-    <!--<script src="/static/js/main.js"></script>-->
-{% endblock %}
+
 {% block content %}
     <section class="container themes-filter">
         <div class="search-panel">
@@ -109,7 +107,7 @@
                     </div>
                 </div>
             {% empty %}
-                <div>Nothing to show!</div>
+                <div>Ще немає створених тем</div>
             {% endfor %}
 
         </div>

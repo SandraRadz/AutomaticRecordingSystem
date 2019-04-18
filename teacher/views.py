@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView
 
 from teacher.models import Teacher
+from theme.models import WriteWork
 
 
 def index(request):
@@ -29,4 +30,6 @@ class TeacherListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['teacher'] = Teacher.objects.get(pk=self.request.session['user_id'])
+        context['work_count'] = Teacher.objects.get(pk=self.request.session['user_id'])
+        context['themes_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__teacher_id=self.request.session['user_id'])
         return context
