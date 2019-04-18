@@ -1,1 +1,39 @@
+@import "variables";
 
+body{
+  background-image: url(../images/auth_background.jpg);
+}
+
+
+.auth-custom{
+  position: fixed;
+  top: 50%;
+  left:50%;
+  transform: translate(-45%,-210%);
+  width: 350px;
+}
+
+.auth-button{
+  height: 50px;
+  padding: 25px 60px;
+  background-color: @mainColor;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.auth-button:hover{
+  text-decoration: none;
+  color: white;
+}
+
+.auth-button:after{
+  text-decoration: none;
+  color: white;
+}
+
+.auth-button:hover:after{
+  text-decoration: none;
+  color: white;
+}
