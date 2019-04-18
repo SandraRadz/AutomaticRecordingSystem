@@ -10,6 +10,8 @@ from methodist.models import Methodist
 
 
 def home(request):
+    if 'mail' in request.session:
+        return HttpResponseRedirect('../theme/')
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
     sign_in_url = get_signin_url(redirect_uri)
     context = {'signin_url': sign_in_url}
@@ -30,13 +32,18 @@ def gettoken(request):
     token = get_token_from_code(auth_code, redirect_uri)
     access_token = token['access_token']
     info = get_me(access_token)
-    username = info['mail'].split('@')[0]
+    mail = None
+    if info['mail']:
+        mail = info['mail']
+    else:
+        mail = info['userPrincipalName']
+    username = mail.split('@')[0]
     if not User.objects.filter(username=username).exists():
         user = User.objects.create_user(username, info['mail'])
         user.first_name = info['displayName']
         user.save()
     user = User.objects.get(username=username)
-    request.session['mail'] = info['mail']
+    request.session['mail'] = mail#info['mail']
     request.session['fullName'] = info['displayName']
     role = None
     if Student.objects.filter(student_id=user.id).exists():
