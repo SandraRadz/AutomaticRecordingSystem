@@ -46,4 +46,5 @@ def gettoken(request):
     elif Methodist.objects.filter(methodist_id=user.id).exists():
         role = 'methodist'
     request.session['role'] = role
+    request.session['user_id'] = user.id
     return HttpResponseRedirect('../../theme/')

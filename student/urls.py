@@ -1,7 +1,4 @@
-from django.conf.urls import url
-
-from student.views import  StudentListView
-from . import views
+from student.views import StudentListView
 from django.urls import path
 
 urlpatterns = [

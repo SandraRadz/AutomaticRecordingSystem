@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.db import connection
-# Create your views here.
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView
-from theme.models import WriteWork
+
+from student.models import Student
+from teacher.models import Teacher, TopicOffer
+from theme.models import WriteWork, Record
 from django.contrib.auth.models import User
+
 
 class ThemeListView(ListView):
     template_name = 'themes/themes.html'
@@ -22,14 +23,18 @@ class ThemeListView(ListView):
         return context
 
     def get_queryset(self, **kwargs):
-        """if self.request.GET.get('teacher_name') is not None:
-            name = self.request.GET.get('teacher_name')
-            cursor = connection.cursor()
-            queryset = cursor.execute("SELECT * FROM (theme_writework INNER JOIN teacher_countofhour "
-                                      "ON theme_writework.teacher_hour_id = teacher_countofhour.id) "
-                                      "INNER JOIN auth_user ON teacher_id = auth_user.id "
-                                      "WHERE auth_user.first_name LIKE '%"+name+"%'")
-            return queryset"""
+        if self.request.GET.get('theme_id') is not None:
+            theme_id = self.request.GET.get('theme_id')
+            theme = WriteWork.objects.get(pk=theme_id)
+            student = Student.objects.get(pk=self.request.session['user_id'])
+            record = Record.objects.get_or_create(student=student, work=theme)
+        if self.request.GET.get('teacher_name') is not None:
+            users = User.objects.filter(username__icontains=self.request.GET.get('teacher_name'))\
+                .values_list('id', flat=True)
+            teachers = Teacher.objects.filter(teacher_id__in=users).values_list('teacher_id', flat=True)
+            places = TopicOffer.objects.filter(teacher__in=teachers).values_list('id', flat=True)
+            queryset = WriteWork.objects.filter(teacher_offer__in=places)
+            return queryset
         if self.request.GET.get('work_name') is not None:
             queryset = WriteWork.objects.filter(work_name__icontains=self.request.GET.get('work_name'))
             return queryset
