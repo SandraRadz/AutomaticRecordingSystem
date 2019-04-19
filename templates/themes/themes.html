@@ -105,13 +105,13 @@
                                     </button>
                                 </form>
                             {% else %}
-                            <form>
-                                <button class="theme-item__button" name="theme_id" value="{{ theme.id }}"
-                                        formmethod="get">Записатися
-                                </button>
-                            </form>
+                                <form>
+                                    <button class="theme-item__button" name="theme_id" value="{{ theme.id }}"
+                                            formmethod="get">Записатися
+                                    </button>
+                                </form>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
                     </div>
                 </div>
             {% empty %}
