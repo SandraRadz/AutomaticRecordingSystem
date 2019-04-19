@@ -20,7 +20,9 @@
             <div class="filter-item">
                 <span class="filter-item__name">Кафедра</span>
                 <select class="filter-item__dropdown">
-                    <option value="anything">Будь-яка</option>
+                    {% for cathedra in cathedras %}
+                    <option value="anything">{{ cathedra.department_name }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="filter-item">
@@ -88,12 +90,16 @@
                                         <div class="theme-item__field-col">Спеціальність</div>
                                         <div class="theme-item__field-col">Статус</div>
                                     </li>
-                                    <li class="theme-item__field">
-                                        <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                                        <div class="theme-item__field-col">3</div>
-                                        <div class="theme-item__field-col">Компютерні науки</div>
-                                        <div class="theme-item__field-col">Чекає підтвердження</div>
-                                    </li>
+                                    {% for record in all_records %}
+                                        {% if record.work.id == theme.id %}
+                                        <li class="theme-item__field">
+                                            <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
+                                            <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
+                                            <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
+                                            <div class="theme-item__field-col">{{ record.status }}</div>
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
                                 </ul>
                             </div>
                         {% endif %}

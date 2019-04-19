@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 
 from student.models import Student
-from teacher.models import Teacher, TopicOffer
+from teacher.models import Teacher, TopicOffer, Department
 from theme.models import WriteWork, Record
 from django.contrib.auth.models import User
 
@@ -22,6 +22,9 @@ class ThemeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = User
+        all_records = Record.objects.all()
+        context['all_records'] = all_records
+        context['cathedras'] = Department.objects.all()
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
