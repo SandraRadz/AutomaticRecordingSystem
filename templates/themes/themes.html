@@ -59,7 +59,7 @@
                          data-target="#theme-det-{{ theme.id }}">
                         <div class="theme-item__info">
                             <span>{{ theme.work_name }}</span> - <span
-                                class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id }}</span>
+                                class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
                         </div>
                         <div class="theme-item__reg">
                             Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
