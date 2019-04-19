@@ -29,7 +29,8 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
             student = Student.objects.get(pk=self.request.session['user_id'])
-            record = Record.objects.create(student=self.request.session['user_id'], work=theme_id, status="WAIT")
+            record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
+
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(username__icontains=self.request.GET.get('teacher_name'))\
                 .values_list('id', flat=True)
