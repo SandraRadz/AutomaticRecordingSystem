@@ -1,12 +1,10 @@
-import datetime
-
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 
 from student.models import Student
-from teacher.models import Teacher, TopicOffer, Department
+from teacher.models import Teacher, TopicOffer, Department, BranchOfKnowledge
 from theme.models import WriteWork, Record
-from django.contrib.auth.models import User
 
 
 class ThemeListView(ListView):
@@ -25,6 +23,8 @@ class ThemeListView(ListView):
         all_records = Record.objects.all()
         context['all_records'] = all_records
         context['cathedras'] = Department.objects.all()
+        context['branches'] = BranchOfKnowledge.objects.all()
+        context['statuses'] = dict(Record.STATUS_TITLE).values()
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
@@ -32,6 +32,16 @@ class ThemeListView(ListView):
         return context
 
     def get_queryset(self, **kwargs):
+        if self.request.GET.get('department') is not None or self.request.GET.get(
+                'branch') is not None or self.request.GET.get('status') is not None:
+            department = self.request.GET.get('department')
+            branch = self.request.GET.get('branch')
+            status = self.request.GET.get('status')
+            queryset = None
+            if department != 'anything':
+                dep = Department.objects.get(department_name=department)
+                queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep)
+            return queryset
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme')

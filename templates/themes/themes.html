@@ -16,41 +16,38 @@
                 <input class="search-panel__input" type="text" name="work_name">
             </form>
         </div>
-        <div class="filter-panel">
-            <div class="filter-item">
-                <span class="filter-item__name">Кафедра</span>
-                <select class="filter-item__dropdown">
-                    {% for cathedra in cathedras %}
-                    <option value="anything">{{ cathedra.department_name }}</option>
-                    {% endfor %}
-                </select>
+        <form>
+            <div class="filter-panel">
+                <div class="filter-item">
+                    <span class="filter-item__name">Кафедра</span>
+                    <select class="filter-item__dropdown" name="department">
+                        <option value="anything">---</option>
+                        {% for cathedra in cathedras %}
+                            <option value="{{ cathedra.department_name }}">{{ cathedra.department_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <span class="filter-item__name">Галузі</span>
+                    <select class="filter-item__dropdown" name="branch">
+                        <option value="anything">---</option>
+                        {% for branch in branches %}
+                            <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <span class="filter-item__name">Статус запиту</span>
+                    <select class="filter-item__dropdown" name="status">
+                        <option value="anything">---</option>
+                        {% for status in statuses %}
+                            <option value="{{ status }}">{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="filter-panel__button" formmethod="get">Фільтр</button>
             </div>
-            <div class="filter-item">
-                <span class="filter-item__name">Спеціальність</span>
-                <select class="filter-item__dropdown">
-                    <option value="anything">Будь-яка</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <span class="filter-item__name">Рік навчання</span>
-                <select class="filter-item__dropdown">
-                    <option value="anything">Будь-яка</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <span class="filter-item__name">Складність</span>
-                <select class="filter-item__dropdown">
-                    <option value="anything">Будь-яка</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <span class="filter-item__name">Статус запиту</span>
-                <select class="filter-item__dropdown">
-                    <option value="anything">Будь-яка</option>
-                </select>
-            </div>
-            <button class="filter-panel__button">Фільтр</button>
-        </div>
+        </form>
     </section>
     <section class="container themes-choose">
         <div class="themes-list">
@@ -92,12 +89,12 @@
                                     </li>
                                     {% for record in all_records %}
                                         {% if record.work.id == theme.id %}
-                                        <li class="theme-item__field">
-                                            <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
-                                            <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
-                                            <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
-                                            <div class="theme-item__field-col">{{ record.status }}</div>
-                                        </li>
+                                            <li class="theme-item__field">
+                                                <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
+                                                <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
+                                                <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
+                                                <div class="theme-item__field-col">{{ record.status }}</div>
+                                            </li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
