@@ -34,6 +34,6 @@ class Record(models.Model):
     date_of_confirmation = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.student + self.work
+        return self.student.student_id.username + ' - ' + self.work.work_name
 
 
