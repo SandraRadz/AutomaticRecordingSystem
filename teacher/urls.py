@@ -1,6 +1,8 @@
-from teacher.views import TeacherListView
+from teacher import views
+from teacher.views import TeacherListView, createTheme
 from django.urls import path
 
 urlpatterns = [
-    path('', TeacherListView.as_view())
+    path('', TeacherListView.as_view()),
+    path('newTheme', createTheme)
 ]

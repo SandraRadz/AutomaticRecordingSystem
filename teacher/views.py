@@ -1,10 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-
-
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
+from teacher.forms import NewTheme
 from teacher.models import Teacher
 from theme.models import WriteWork
 
@@ -33,3 +33,18 @@ class TeacherListView(ListView):
         context['work_count'] = Teacher.objects.get(pk=self.request.session['user_id'])
         context['themes_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__teacher_id=self.request.session['user_id'])
         return context
+
+@csrf_exempt
+def createTheme(request):
+    if request.method == 'POST':
+        form = NewTheme(request.POST)
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/teacher/')
+
+    else:
+        form = NewTheme()
+
+    return render(request, 'teacher/new_theme.html', {'form': form})

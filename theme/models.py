@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -7,13 +9,13 @@ from teacher.models import BranchOfKnowledge
 
 
 class WriteWork(models.Model):
-    work_name = models.CharField(max_length=500, unique=True)
-    english_work_name = models.CharField(max_length=500, unique=True)
-    year_of_work = models.SmallIntegerField()
+    work_name = models.CharField(max_length=500)
+    english_work_name = models.CharField(max_length=500, null=True, blank=True)
+    year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     note = models.TextField(null=True, blank=True)
     student = models.ManyToManyField(Student, through='Record')
     previous_version = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-    branch = models.ManyToManyField(BranchOfKnowledge)
+    branch = models.ManyToManyField(BranchOfKnowledge, blank=True)
     teacher_offer = models.ForeignKey(TopicOffer, on_delete=models.CASCADE)
 
     def __str__(self):

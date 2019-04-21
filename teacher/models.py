@@ -76,7 +76,7 @@ class Teacher(models.Model):
     send_email = models.BooleanField(default=True)
     google_scholar = models.CharField(max_length=150, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    branch = models.ManyToManyField(BranchOfKnowledge, null=True, blank=True)
+    branch = models.ManyToManyField(BranchOfKnowledge, blank=True)
 
     def __str__(self):
         return str(self.teacher_id)
