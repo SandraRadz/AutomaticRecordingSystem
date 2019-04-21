@@ -1,12 +1,10 @@
-import datetime
-
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 
 from student.models import Student
-from teacher.models import Teacher, TopicOffer
+from teacher.models import Teacher, TopicOffer, Department, BranchOfKnowledge
 from theme.models import WriteWork, Record
-from django.contrib.auth.models import User
 
 
 class ThemeListView(ListView):
@@ -22,6 +20,11 @@ class ThemeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = User
+        all_records = Record.objects.all()
+        context['all_records'] = all_records
+        context['cathedras'] = Department.objects.all()
+        context['branches'] = BranchOfKnowledge.objects.all()
+        context['statuses'] = dict(Record.STATUS_TITLE).values()
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
@@ -29,6 +32,25 @@ class ThemeListView(ListView):
         return context
 
     def get_queryset(self, **kwargs):
+        if self.request.GET.get('department') is not None or self.request.GET.get(
+                'branch') is not None or self.request.GET.get('status') is not None:
+            department = self.request.GET.get('department')
+            branch = self.request.GET.get('branch')
+            status = self.request.GET.get('status')
+            queryset = []
+            if department != 'anything':
+                dep = Department.objects.get(department_name=department)
+                queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep)
+            if branch != 'anything':
+                br = BranchOfKnowledge.objects.get(branch_name=branch)
+                query = WriteWork.objects.filter(branch__branch_name=br)
+                queryset = list(set(query) & set(queryset)) if queryset else query
+            if status != 'anything':
+                sts = dict(Record.STATUS_TITLE)
+                st = [key for key, value in sts.items() if value == status][0]
+                query = WriteWork.objects.filter(pk__in=Record.objects.filter(status=st).values_list('work', flat=True))
+                queryset = list(set(query) & set(queryset)) if queryset else query
+            return queryset
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme')
