@@ -38,19 +38,24 @@ class ThemeListView(ListView):
             branch = self.request.GET.get('branch')
             status = self.request.GET.get('status')
             queryset = []
+            empty = True
             if department != 'anything':
                 dep = Department.objects.get(department_name=department)
                 queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep)
+                empty = False
             if branch != 'anything':
                 br = BranchOfKnowledge.objects.get(branch_name=branch)
                 query = WriteWork.objects.filter(branch__branch_name=br)
                 queryset = list(set(query) & set(queryset)) if queryset else query
+                empty = False
             if status != 'anything':
                 sts = dict(Record.STATUS_TITLE)
                 st = [key for key, value in sts.items() if value == status][0]
                 query = WriteWork.objects.filter(pk__in=Record.objects.filter(status=st).values_list('work', flat=True))
                 queryset = list(set(query) & set(queryset)) if queryset else query
-            return queryset
+                empty = False
+            if not empty:
+                return queryset
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme')
