@@ -1,74 +1,46 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
 {% endblock style %}
 
 {% block content %}
-<section class="container plan-section">
-    <div class="profile-info">
-        <span class="profile-info__avatar"></span>
-        <div class="profile-info__list">
-            <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-            <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
-            <div class="profile-info__item">Кафедра мультымедиа</div>
-            <div class="profile-info__item">Завідувач кафедри</div>
-            <div class="profile-info__item">доцент</div>
-            <div class="profile-info__item profile-info__room">каб. 1-302</div>
-            <div class="profile-info__item">+380747399237</div>
-        </div>
-    </div>
-    <div class="themes-list">
-        <div>Створено <span>3 теми</span></div>
-
-
-        <div class="theme-item">
-            <div class="theme-item__header"  data-toggle="collapse" aria-expanded="false" data-target="#theme-det-1">
-                <div class="theme-item__info">
-                    <span>name</span>
-                </div>
-                <div class="theme-item__reg">
-                    Записані - <span class="theme-item__student-count">3</span>
-                </div>
-            </div>
-            <div class="collapse theme-item__body" id="theme-det-1">
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Спеціальності</span>
-                    <div> Інженерія програмного забезпечення - 3, Комп'ютерні науки та інформаційні технології - 3</div>
-                </div>
-                <div class="theme-item__info-box">
-                    <span class="theme-item__info-name">Галузі</span>
-                    <div> SQL, Бази Даних, АІС, ER</div>
-                </div>
-                <div class="theme-item__student-list-block">
-                    <ul class="theme-item__student-list">
-                        <li class="theme-item__field theme-item_col-names">
-                            <div class="theme-item__field-col">ПІБ</div>
-                            <div class="theme-item__field-col">Рік</div>
-                            <div class="theme-item__field-col">Спеціальність</div>
-                            <div class="theme-item__field-col">Статус</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                        <li class="theme-item__field">
-                            <div class="theme-item__field-col">Пірог РУслана Русланівна</div>
-                            <div class="theme-item__field-col">3</div>
-                            <div class="theme-item__field-col">Компютерні науки</div>
-                            <div class="theme-item__field-col">Чекає підтвердження</div>
-                        </li>
-                    </ul>
-                </div>
-                <button class="theme-item__button">Записатися</button>
+    <section class="container plan-section">
+        <div class="profile-info">
+            <span class="profile-info__avatar"></span>
+            <div class="profile-info__list">
+                <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+                <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                <div class="profile-info__item">{{ methodist.department }}</div>
+                <div class="profile-info__item">{{ methodist.additional_email }}</div>
+                <div class="profile-info__item">cabinet № {{ methodist.office }}</div>
+                <div class="profile-info__item profile-info__room">{{ methodist.phone }}</div>
             </div>
         </div>
-
-
+        <div>
+            <form>
+                <div>Teacher:</div>
+                <select class="filter-item__dropdown" name="teacher" required="required">
+                    <option value="anything">---</option>
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.teacher_id.id }}">{{ teacher.teacher_id.first_name }}</option>
+                    {% endfor %}
+                </select><br>
+                <div>Year of entry:</div>
+                <input type="number" min="2010" max="2018" name="year" required="required"><br>
+                <div>Year of course:</div>
+                <input type="number" min="2" max="6" name="yearW" required="required"><br>
+                <div>Specialty:</div>
+                <select class="filter-item__dropdown" name="specialty" required="required">
+                    <option value="anything">---</option>
+                    {% for specialty in specialties %}
+                        <option value="{{ specialty.specialty_name }}">{{ specialty.specialty_name }}</option>
+                    {% endfor %}
+                </select><br>
+                <div>Amount of works:</div>
+                <input type="number" name="amount" min="0" required="required"><br><br>
+                <button class="filter-panel__button" formmethod="get">Призначити</button>
+            </form>
         </div>
-        <button class="themes-list__button">Додати</button>
-    </div>
-</section>
+    </section>
 {% endblock content %}

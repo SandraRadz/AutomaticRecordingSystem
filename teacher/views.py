@@ -31,8 +31,10 @@ class TeacherListView(ListView):
         context = super().get_context_data(**kwargs)
         context['teacher'] = Teacher.objects.get(pk=self.request.session['user_id'])
         context['work_count'] = Teacher.objects.get(pk=self.request.session['user_id'])
-        context['themes_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__teacher_id=self.request.session['user_id'])
+        context['themes_list'] = WriteWork.objects.all().filter(
+            teacher_offer__teacher__teacher_id=self.request.session['user_id'])
         return context
+
 
 @csrf_exempt
 def createTheme(request):
@@ -46,5 +48,4 @@ def createTheme(request):
 
     else:
         form = NewTheme()
-
     return render(request, 'teacher/new_theme.html', {'form': form})
