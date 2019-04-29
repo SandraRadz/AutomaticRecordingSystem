@@ -78,6 +78,14 @@
                                 {% endfor %}
                             </div>
                         </div>
+                    {% if theme.note %}
+                    <div class="theme-item__info-box">
+                            <span class="theme-item__info-name">Примітка</span>
+                            <div>
+                                    {{ theme.note }}
+                            </div>
+                        </div>
+                    {% endif %}
                         {% if theme.student.count > 0 %}
                             <div class="theme-item__student-list-block">
                                 <ul class="theme-item__student-list">
