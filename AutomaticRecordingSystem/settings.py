@@ -83,8 +83,19 @@ WSGI_APPLICATION = 'AutomaticRecordingSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'db.sqlite3'),
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(PROJECT_DIR, 'db.sqlite3'),
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'auto_record',
+         'USER': 'root',
+         'PASSWORD': 'root',
+         'HOST': 'localhost',
+         'PORT': '3306',
+         'TEST': {
+          'CHARSET': 'utf8',
+          'COLLATION': 'utf8_general_ci',
+         }
+
     }
 }
 
