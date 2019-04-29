@@ -1,7 +1,6 @@
-from django.conf.urls import url
-from . import views
+from plan.views import PlanListView
 from django.urls import path
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', PlanListView.as_view())
 ]
