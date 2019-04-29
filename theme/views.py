@@ -68,7 +68,7 @@ class ThemeListView(ListView):
             record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
 
         if self.request.GET.get('teacher_name') is not None:
-            users = User.objects.filter(username__icontains=self.request.GET.get('teacher_name')) \
+            users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \
                 .values_list('id', flat=True)
             teachers = Teacher.objects.filter(teacher_id__in=users).values_list('teacher_id', flat=True)
             places = TopicOffer.objects.filter(teacher__in=teachers).values_list('id', flat=True)
