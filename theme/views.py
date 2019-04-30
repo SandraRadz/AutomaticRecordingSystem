@@ -1,3 +1,6 @@
+import smtplib
+import ssl
+
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
@@ -56,6 +59,7 @@ class ThemeListView(ListView):
                 empty = False
             if not empty:
                 return queryset
+
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme')
@@ -66,9 +70,10 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
             record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
+            send_email(student, theme)
 
         if self.request.GET.get('teacher_name') is not None:
-            users = User.objects.filter(username__icontains=self.request.GET.get('teacher_name')) \
+            users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \
                 .values_list('id', flat=True)
             teachers = Teacher.objects.filter(teacher_id__in=users).values_list('teacher_id', flat=True)
             places = TopicOffer.objects.filter(teacher__in=teachers).values_list('id', flat=True)
@@ -78,3 +83,19 @@ class ThemeListView(ListView):
             queryset = WriteWork.objects.filter(work_name__icontains=self.request.GET.get('work_name'))
             return queryset
         return WriteWork.objects.all()
+
+
+def send_email(student, theme):
+    port = 465
+    smtp_server = "smtp.gmail.com"
+    sender_email = "naukma.recording@gmail.com"
+    receiver_email = User.objects.get(pk=theme.teacher_offer.teacher_id).email
+    password = 'naukma912'
+    message = 'Доброго дня! Щойно на вашу тему "' + theme.work_name + '" записався студент ' + User.objects.get(
+        pk=student.pk).first_name + '.\nДля того, щоб закріпити його за даною темою, перейдіть на сайт ' \
+                                    'автоматизованого запису та зробіть це на сторінці свого профілю!'
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+        server.quit()
