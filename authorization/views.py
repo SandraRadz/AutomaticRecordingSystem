@@ -11,7 +11,7 @@ from methodist.models import Methodist
 
 def home(request):
     if 'mail' in request.session:
-        return HttpResponseRedirect('../theme/')
+        return HttpResponseRedirect('../')
     redirect_uri = request.build_absolute_uri(reverse('authorization:gettoken'))
     sign_in_url = get_signin_url(redirect_uri)
     context = {'signin_url': sign_in_url}
@@ -54,4 +54,4 @@ def gettoken(request):
         role = 'methodist'
     request.session['role'] = role
     request.session['user_id'] = user.id
-    return HttpResponseRedirect('../../theme/')
+    return HttpResponseRedirect('../../')
