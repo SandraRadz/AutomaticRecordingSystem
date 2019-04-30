@@ -33,6 +33,10 @@
     <div class="themes_creator">
         <div class="themes-list">
             <div class="theme_num" >Запланована кількість робіт <span> хххххх </span> </div>
+        {% for offer in teacher_offer %}
+        <div>print</div>
+        <div>{{ offer.count_of_themes }}</div>
+    {% endfor %}
             {% for theme in themes_list %}
             <div class="theme-item">
                     <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
@@ -97,7 +101,7 @@
                 <div>Nothing to show!</div>
             {% endfor %}
         </div>
-            <a href="newTheme" class="themes-list__button">Додати</a>
+            <a href="new_theme" class="themes-list__button">Додати</a>
         </div>
     </div>
     </section>

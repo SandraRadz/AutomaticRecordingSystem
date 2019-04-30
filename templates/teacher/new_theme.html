@@ -5,13 +5,13 @@
 {% endblock style %}
 
 {% block content %}
-<form action="/teacher/newTheme" method="post">
+<form action="/teacher/new_theme" method="post">
     {% csrf_token %}
-     <input type="text" placeholder="Назва" maxlength="500" name="name">
-     <input type="text" placeholder="Назва англійською" maxlength="500" name="en_name">
+     <input type="text" placeholder="Назва" maxlength="500" name="work_name">
+     <input type="text" placeholder="Назва англійською" maxlength="500" name="english_work_name">
      <textarea type="text" placeholder="Примітка" name="note"></textarea>
-
     <input type="submit" class="submit_button" value="Submit">
 </form>
+
 
 {% endblock content %}

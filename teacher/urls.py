@@ -4,5 +4,5 @@ from django.urls import path
 
 urlpatterns = [
     path('', TeacherListView.as_view()),
-    path('newTheme', createTheme)
+    path('new_theme', createTheme)
 ]

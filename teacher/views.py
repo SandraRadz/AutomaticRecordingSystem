@@ -5,14 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from teacher.forms import NewTheme
-from teacher.models import Teacher
+from teacher.models import Teacher, TopicOffer
 from theme.models import WriteWork
-
-
-def index(request):
-    if 'mail' not in request.session:
-        return HttpResponseRedirect('../authorization/')
-    return render(request, 'teacher/teacher.html')
 
 
 class TeacherListView(ListView):
@@ -20,7 +14,6 @@ class TeacherListView(ListView):
     model = Teacher
 
     def get(self, *args, **kwargs):
-
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
         if not self.request.session['role'] == 'teacher':
@@ -33,6 +26,7 @@ class TeacherListView(ListView):
         context['work_count'] = Teacher.objects.get(pk=self.request.session['user_id'])
         context['themes_list'] = WriteWork.objects.all().filter(
             teacher_offer__teacher__teacher_id=self.request.session['user_id'])
+        context['teacher_offer'] = TopicOffer.objects.all().filter(teacher__teacher_id=self.request.session['user_id'])
         return context
 
 
@@ -40,12 +34,17 @@ class TeacherListView(ListView):
 def createTheme(request):
     if request.method == 'POST':
         form = NewTheme(request.POST)
+        print("rgdfhjgkjdkjfjgdjkfjdjgdjfjgdkgdkfj")
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/teacher/')
+            teacher = Teacher.objects.get(pk=request.session['user_id'])
+            offer = TopicOffer.objects.all().filter(teacher=teacher)[0]
+            work_name = request.POST.get('work_name', '')
+            english_work_name = request.POST.get('english_work_name', '')
+            note = request.POST.get('note', '')
+            feedback_obj = WriteWork(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer)
+            feedback_obj.save()
 
+            return HttpResponseRedirect('/teacher/')
     else:
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -85,9 +87,9 @@ class Teacher(models.Model):
 class TopicOffer(models.Model):
     id = models.AutoField(primary_key=True)
     count_of_themes = models.SmallIntegerField()
-    fact_count_of_themes = models.SmallIntegerField()
+    fact_count_of_themes = models.SmallIntegerField(default=0)
     year_of_study = models.SmallIntegerField()
-    year_of_work = models.SmallIntegerField()
+    year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
 

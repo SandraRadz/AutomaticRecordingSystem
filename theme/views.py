@@ -65,6 +65,7 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme')
             theme = WriteWork.objects.get(pk=theme_id)
             Record.objects.filter(student=student, work=theme).delete()
+
         if self.request.GET.get('theme_id') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme_id')

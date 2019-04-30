@@ -13,7 +13,7 @@ class WriteWork(models.Model):
     english_work_name = models.CharField(max_length=500, null=True, blank=True)
     year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     note = models.TextField(null=True, blank=True)
-    student = models.ManyToManyField(Student, through='Record')
+    student = models.ManyToManyField(Student, through='Record', blank=True)
     previous_version = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     branch = models.ManyToManyField(BranchOfKnowledge, blank=True)
     teacher_offer = models.ForeignKey(TopicOffer, on_delete=models.CASCADE)
