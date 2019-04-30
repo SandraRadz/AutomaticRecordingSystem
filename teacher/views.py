@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from teacher.forms import NewTheme
-from teacher.models import Teacher, TopicOffer
+from teacher.models import Teacher, TopicOffer, BranchOfKnowledge
 from theme.models import WriteWork
 
 
@@ -34,15 +34,16 @@ class TeacherListView(ListView):
 def createTheme(request):
     if request.method == 'POST':
         form = NewTheme(request.POST)
-        print("rgdfhjgkjdkjfjgdjkfjdjgdjfjgdkgdkfj")
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
             offer = TopicOffer.objects.all().filter(teacher=teacher)[0]
             work_name = request.POST.get('work_name', '')
             english_work_name = request.POST.get('english_work_name', '')
             note = request.POST.get('note', '')
-            feedback_obj = WriteWork(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer)
-            feedback_obj.save()
+            previous_version = form.cleaned_data.get('previous_version', '')
+            branch = form.cleaned_data.get('branch', '')
+            feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer, previous_version=previous_version)
+            feedback_obj.branch.set(branch)
 
             return HttpResponseRedirect('/teacher/')
     else:

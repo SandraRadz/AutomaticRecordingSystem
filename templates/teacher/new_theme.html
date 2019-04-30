@@ -10,8 +10,9 @@
      <input type="text" placeholder="Назва" maxlength="500" name="work_name">
      <input type="text" placeholder="Назва англійською" maxlength="500" name="english_work_name">
      <textarea type="text" placeholder="Примітка" name="note"></textarea>
+    {{ form.branch }}
+    {{ form.previous_version }}
     <input type="submit" class="submit_button" value="Submit">
 </form>
-
 
 {% endblock content %}

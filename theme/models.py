@@ -9,8 +9,8 @@ from teacher.models import BranchOfKnowledge
 
 
 class WriteWork(models.Model):
-    work_name = models.CharField(max_length=500)
-    english_work_name = models.CharField(max_length=500, null=True, blank=True)
+    work_name = models.CharField(max_length=250, unique=True)
+    english_work_name = models.CharField(max_length=250, null=True, blank=True)
     year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     note = models.TextField(null=True, blank=True)
     student = models.ManyToManyField(Student, through='Record', blank=True)
