@@ -35,7 +35,9 @@ class TeacherListView(ListView):
         if self.request.GET.get('del_theme') is not None:
             theme_id = self.request.GET.get('del_theme')
             theme = WriteWork.objects.get(pk=theme_id)
-
+            offer = theme.teacher_offer
+            offer.fact_count_of_themes = offer.fact_count_of_themes-1
+            offer.save()
             theme.delete()
         if self.request.GET.get('choose_student') is not None:
             record_id = self.request.GET.get('choose_student')
@@ -78,7 +80,6 @@ class TeacherListView(ListView):
                     o_stud.status = 'WAIT'
                     o_stud.save()
 
-
         return Teacher.objects.all()
 
 
@@ -89,13 +90,16 @@ def createTheme(request):
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
             offer = TopicOffer.objects.all().filter(teacher=teacher)[0]
+            offer_count = offer.fact_count_of_themes
+            offer.fact_count_of_themes = offer_count+1
+            offer.save()
             work_name = request.POST.get('work_name', '')
             english_work_name = request.POST.get('english_work_name', '')
             note = request.POST.get('note', '')
             previous_version = form.cleaned_data.get('previous_version', '')
             branch = form.cleaned_data.get('branch', '')
-            feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer, previous_version=previous_version)
-            feedback_obj.branch.set(branch)
+            write_work_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer, previous_version=previous_version)
+            write_work_obj.branch.set(branch)
 
             return HttpResponseRedirect('/teacher/')
     else:

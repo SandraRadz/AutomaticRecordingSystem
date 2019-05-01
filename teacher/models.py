@@ -76,7 +76,6 @@ class Teacher(models.Model):
     phone = models.CharField(max_length=250, null=True, blank=True)
     additional_email = models.EmailField(null=True, blank=True)
     send_email = models.BooleanField(default=True)
-    google_scholar = models.CharField(max_length=150, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     branch = models.ManyToManyField(BranchOfKnowledge, blank=True)
 
@@ -93,10 +92,13 @@ class TopicOffer(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.teacher.teacher_id.first_name + " " + self.specialty.specialty.specialty_name + " - " + \
+               str(self.year_of_study) + " = " + str(self.fact_count_of_themes)+"/" + str(self.count_of_themes)
+
 
 class CountOfWork(models.Model):
     degree = models.CharField(max_length=50, null=True, blank=True)
     academic_status = models.CharField(max_length=50, null=True, blank=True)
     count_of_course_work = models.SmallIntegerField()
     count_of_qualification_work = models.SmallIntegerField()
-

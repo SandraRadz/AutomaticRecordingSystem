@@ -65,13 +65,14 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme')
             theme = WriteWork.objects.get(pk=theme_id)
             Record.objects.filter(student=student, work=theme).delete()
+            send_email_cancel(student, theme)
 
         if self.request.GET.get('theme_id') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
-            record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
-            send_email(student, theme)
+            Record.objects.get_or_create(student=student, work=theme)
+            send_email_record(student, theme)
 
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \
@@ -86,15 +87,28 @@ class ThemeListView(ListView):
         return WriteWork.objects.all()
 
 
-def send_email(student, theme):
+def send_email_record(student, theme):
     port = 465
     smtp_server = "smtp.gmail.com"
     sender_email = "naukma.recording@gmail.com"
     receiver_email = User.objects.get(pk=theme.teacher_offer.teacher_id).email
     password = 'naukma912'
-    message = 'Доброго дня! Щойно на вашу тему "' + theme.work_name + '" записався студент ' + User.objects.get(
-        pk=student.pk).first_name + '.\nДля того, щоб закріпити його за даною темою, перейдіть на сайт ' \
-                                    'автоматизованого запису та зробіть це на сторінці свого профілю!'
+    message = 'На Вашу тему "' + theme.work_name + '" записався студент ' + User.objects.get(pk=student.pk).first_name
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+        server.quit()
+
+
+def send_email_cancel(student, theme):
+    port = 465
+    smtp_server = "smtp.gmail.com"
+    sender_email = "naukma.recording@gmail.com"
+    receiver_email = User.objects.get(pk=theme.teacher_offer.teacher_id).email
+    password = 'naukma912'
+    message = 'З Вашої теми "' + theme.work_name + '" виписався студент ' + User.objects.get(
+        pk=student.pk).first_name
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(sender_email, password)
