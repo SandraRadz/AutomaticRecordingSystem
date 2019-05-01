@@ -5,10 +5,10 @@
     margin-bottom: 30px;
 }
 
-.info-part {
-    flex-basis: 50%;
-}
 
+.theme_container{
+  display: flex;
+}
 .profile-info__avatar{
     display: inline-block;
     width: 100px;
@@ -20,6 +20,8 @@
 .profile-info{
     display: flex;
     flex-basis: 40%;
+    margin-right: 10px;
+
 }
 
 .profile-info__list{
@@ -27,25 +29,6 @@
     margin-left: 20px;
 }
 
-.theme-item__header--edit{
-    position: relative;
-}
-
-.theme-item__header--edit::after{
-    content: "Edit";
-    position: absolute;
-    top: 0;
-    right: -50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 42px;
-    width: 42px;
-    background-color: lightblue;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-}
 
 .profile-info__name{
     font-weight: bold;
@@ -56,13 +39,18 @@
 }
 
 .themes_creator {
-  flex-basis: 55%;
+  flex-basis: 60%;
 }
 
 .themes-list{
     display: flex;
     flex-direction: column;
-    flex-basis: 55%;
+    flex-basis: 45%;
+
+}
+
+.form_class{
+  flex-basis: 10%;
 
 }
 
@@ -125,14 +113,16 @@
 
 .theme-item{
     margin-bottom: 15px;
+  flex-basis: 90%;
 }
 
 .theme-item__header{
     display: flex;
+  flex-basis: 70%;
     justify-content: space-between;
     align-items: center;
-  padding: 10px 15px 10px 30px;
-  background-color: #dbdbdb;
+    padding: 10px 15px 10px 30px;
+    background-color: #dbdbdb;
     border-radius: 5px;
 }
 
@@ -205,8 +195,25 @@
     color: white;
     font-weight: bold;
     border-radius: 5px;
-    box-shadow: 3px 3px 7px 0px lightblue;
   }
+
+
+  .delete_button{
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    margin-left: 15px;
+    margin-left: 10px;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    flex-basis: 5%;
+  }
+
 
   .teacher_button{
      width: 140px;

@@ -6,7 +6,7 @@ from django.views.generic import ListView
 
 from teacher.forms import NewTheme
 from teacher.models import Teacher, TopicOffer, BranchOfKnowledge
-from theme.models import WriteWork
+from theme.models import WriteWork, Record
 
 
 class TeacherListView(ListView):
@@ -27,7 +27,18 @@ class TeacherListView(ListView):
         context['themes_list'] = WriteWork.objects.all().filter(
             teacher_offer__teacher__teacher_id=self.request.session['user_id'])
         context['teacher_offer'] = TopicOffer.objects.all().filter(teacher__teacher_id=self.request.session['user_id'])
+        all_records = Record.objects.all()
+        context['all_records'] = all_records
         return context
+
+    def get_queryset(self, **kwargs):
+        if self.request.GET.get('del_theme') is not None:
+            theme_id = self.request.GET.get('del_theme')
+
+            theme = WriteWork.objects.get(pk=theme_id)
+
+            theme.delete()
+        return Teacher.objects.all()
 
 
 @csrf_exempt
