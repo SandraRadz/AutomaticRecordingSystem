@@ -78,6 +78,7 @@
                                         <div class="theme-item__field-col">Рік</div>
                                         <div class="theme-item__field-col">Спеціальність</div>
                                         <div class="theme-item__field-col">Статус</div>
+                                        <div class="theme-item__field-col"></div>
                                     </li>
                                     {% for record in all_records %}
                                         {% if record.work.id == theme.id %}
@@ -86,6 +87,21 @@
                                                 <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
                                                 <div class="theme-item__field-col">{{ record.status }}</div>
+                                                {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
+                                                    <form class="theme-item__field-col">
+                                                        <button class="choose_button" name="choose_student" value="{{ record.id }}"
+                                                             formmethod="get">Затвердити
+                                                    </button>
+                                                     </form>
+                                                {% elif record.status == 'CONFIRMED' %}
+                                                    <form class="theme-item__field-col">
+                                                        <button class="choose_button" name="cancel_student" value="{{ record.id }}"
+                                                          formmethod="get">Виписати
+                                                         </button>
+                                                    </form>
+                                                {% else %}
+                                                    <div></div>
+                                                {% endif %}
                                             </li>
                                         {% endif %}
                                     {% endfor %}

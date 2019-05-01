@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from teacher.forms import NewTheme
-from teacher.models import Teacher, TopicOffer, BranchOfKnowledge
+from teacher.models import Teacher, TopicOffer
 from theme.models import WriteWork, Record
 
 
@@ -34,10 +34,52 @@ class TeacherListView(ListView):
     def get_queryset(self, **kwargs):
         if self.request.GET.get('del_theme') is not None:
             theme_id = self.request.GET.get('del_theme')
-
             theme = WriteWork.objects.get(pk=theme_id)
 
             theme.delete()
+        if self.request.GET.get('choose_student') is not None:
+            record_id = self.request.GET.get('choose_student')
+            record = Record.objects.get(pk=record_id)
+            work = record.work_id
+            student = record.student_id
+            record.status = 'CONFIRMED'
+            record.save()
+
+            other_record_on_theme = Record.objects.all().filter(work_id=work)
+            for o_rec in other_record_on_theme:
+                if o_rec != record:
+                    if o_rec.status == 'WAIT' or record.status == 'CONFIRMED':
+                        o_rec.status = 'REJECTED'
+                        o_rec.save()
+
+            other_record_of_student = Record.objects.all().filter(student_id=student)
+            for o_stud in other_record_of_student:
+                if o_stud != record:
+                    if o_stud.status == 'WAIT':
+                        o_stud.status = 'BLOCKED'
+                        o_stud.save()
+
+        elif self.request.GET.get('cancel_student') is not None:
+            record_id = self.request.GET.get('cancel_student')
+            record = Record.objects.get(pk=record_id)
+            work = record.work_id
+            student = record.student_id
+            record.status = 'WAIT'
+            record.save()
+
+            other_record_on_theme = Record.objects.all().filter(work_id=work)
+            for o_rec in other_record_on_theme:
+                if o_rec.status == 'REJECTED' or o_rec.status == 'CONFIRMED':
+                    o_rec.status = 'WAIT'
+                    o_rec.save()
+
+            other_record_of_student = Record.objects.all().filter(student_id=student)
+            for o_stud in other_record_of_student:
+                if o_stud.status == 'BLOCKED':
+                    o_stud.status = 'WAIT'
+                    o_stud.save()
+
+
         return Teacher.objects.all()
 
 
