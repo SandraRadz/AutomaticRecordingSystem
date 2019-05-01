@@ -48,16 +48,15 @@ class TeacherListView(ListView):
             other_record_on_theme = Record.objects.all().filter(work_id=work)
             for o_rec in other_record_on_theme:
                 if o_rec != record:
-                    if o_rec.status == 'WAIT' or record.status == 'CONFIRMED':
+                    if o_rec.status != 'BLOCKED':
                         o_rec.status = 'REJECTED'
                         o_rec.save()
 
             other_record_of_student = Record.objects.all().filter(student_id=student)
             for o_stud in other_record_of_student:
                 if o_stud != record:
-                    if o_stud.status == 'WAIT':
-                        o_stud.status = 'BLOCKED'
-                        o_stud.save()
+                    o_stud.status = 'BLOCKED'
+                    o_stud.save()
 
         elif self.request.GET.get('cancel_student') is not None:
             record_id = self.request.GET.get('cancel_student')
