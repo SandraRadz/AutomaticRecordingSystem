@@ -86,7 +86,7 @@
                                                 <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
-                                                <div class="theme-item__field-col">{{ record.status }}</div>
+                                                <div class="theme-item__field-col">{{ record.get_status_display }}</div>
                                                 {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
                                                     <form class="theme-item__field-col">
                                                         <button class="choose_button" name="choose_student" value="{{ record.id }}"
