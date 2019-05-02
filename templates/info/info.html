@@ -1,12 +1,43 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block style %}
     <link rel="stylesheet/less" type="text/css" href="/static/styles/info.less"/>
 {% endblock style %}
 
 {% block content %}
-<div class="mainInfo">
-    info
-</div>
+    <div class="container mainInfo">
+        <div class="stat" id="stat">
+            <div class="statistics">
+                <div class="statistics-header collapsed" data-toggle="collapse" aria-expanded="false" data-target="#stat1">
+                    <div class="statistics-header__info">Статистика робіт за всі роки</div>
+                    <div class="statistics-header__count">Кількість робіт - {{ works.count }}</div>
+                </div>
+                <div id="stat1" class="collapse" style>
+                    <div class="statistics-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Викладач</th>
+                                <th scope="col">Тема</th>
+                                <th scope="col">Студент</th>
+                                <th scope="col">Рік</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for w in works%}
+                                <tr>
+                                <th scope="col">{{ w.work.teacher_offer.teacher.teacher_id.first_name }}</th>
+                                <th scope="col">{{ w.work.work_name }}</th>
+                                <th scope="col">{{ w.student.student_id.first_name }}</th>
+                                <th scope="col">{{ w.work.year_of_work }}</th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

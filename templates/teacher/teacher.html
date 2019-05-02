@@ -6,128 +6,127 @@
 
 {% block content %}
     <section>
-    <div class="container plan-section">
-        <div class="profile-info">
-            <span class="profile-info__avatar"></span>
-            <div class="profile-info__list">
-                <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-                <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
-                {% if  teacher.degree %}
-                    <div class="profile-info__item">Вчене звання: {{ teacher.degree }}</div>
-                {% endif %}
-                {% if  teacher.academic_status %}
-                    <div class="profile-info__item">Науковий ступінь: {{ teacher.academic_status }}</div>
-                {% endif %}
+        <div class="container plan-section">
+            <div class="profile-info">
+                <span class="profile-info__avatar"></span>
+                <div class="profile-info__list">
+                    <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+                    <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                    {% if  teacher.degree %}
+                        <div class="profile-info__item">Вчене звання: {{ teacher.degree }}</div>
+                    {% endif %}
+                    {% if  teacher.academic_status %}
+                        <div class="profile-info__item">Науковий ступінь: {{ teacher.academic_status }}</div>
+                    {% endif %}
                     <div class="profile-info__item">Посада: {{ teacher.position }}</div>
 
-                {% if  teacher.phone %}
-                    <div class="profile-info__item">Номер телефону: {{ teacher.phone }}</div>
-                {% endif %}
-                {% if  teacher.office %}
-                    <div class="profile-info__item">Кабінет: {{ teacher.office }}</div>
-                {% endif %}
-                {% if  teacher.additional_email %}
-                    <div class="profile-info__item">Додаткова пошта: {{ teacher.additional_email }}</div>
-                {% endif %}
+                    {% if  teacher.phone %}
+                        <div class="profile-info__item">Номер телефону: {{ teacher.phone }}</div>
+                    {% endif %}
+                    {% if  teacher.office %}
+                        <div class="profile-info__item">Кабінет: {{ teacher.office }}</div>
+                    {% endif %}
+                    {% if  teacher.additional_email %}
+                        <div class="profile-info__item">Додаткова пошта: {{ teacher.additional_email }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="themes_creator">
+                <div class="themes-list">
+                    <!--<div class="theme_num" >Запланована кількість робіт <span>  </span> </div>-->
+
+                    {% for theme in themes_list %}
+                        <div class="theme_container">
+                            <div class="theme-item">
+                                <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
+                                     data-target="#theme-det-{{ theme.id }}">
+                                    <div class="theme-item__info">
+                                        <span>{{ theme.work_name }}</span> - <span
+                                            class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
+                                    </div>
+                                    <div class="theme-item__reg">
+                                        Записані - <span
+                                            class="theme-item__student-count">{{ theme.student.count }}</span>
+                                    </div>
+                                </div>
+                                <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
+                                    <div class="theme-item__info-box">
+                                        <span class="theme-item__info-name">Спеціальності</span>
+                                        <div>{{ theme.teacher_offer.specialty.specialty.specialty_name }}
+                                            - {{ theme.teacher_offer.specialty.year_of_entry }}</div>
+                                    </div>
+                                    <div class="theme-item__info-box">
+                                        <span class="theme-item__info-name">Галузі</span>
+                                        <div>
+                                            {% for branch in theme.branch.get_queryset %}
+                                                {{ branch }}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% if theme.note %}
+                                        <div class="theme-item__info-box">
+                                            <span class="theme-item__info-name">Примітка</span>
+                                            <div>
+                                                {{ theme.note }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if theme.student.count > 0 %}
+                                        <div class="theme-item__student-list-block">
+                                            <ul class="theme-item__student-list">
+                                                <li class="theme-item__field theme-item_col-names">
+                                                    <div class="theme-item__field-col">ПІБ</div>
+                                                    <div class="theme-item__field-col">Рік</div>
+                                                    <div class="theme-item__field-col">Спеціальність</div>
+                                                    <div class="theme-item__field-col">Статус</div>
+                                                    <div class="theme-item__field-col"></div>
+                                                </li>
+                                                {% for record in all_records %}
+                                                    {% if record.work.id == theme.id %}
+                                                        <li class="theme-item__field">
+                                                            <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
+                                                            <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
+                                                            <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
+                                                            <div class="theme-item__field-col">{{ record.get_status_display }}</div>
+                                                            {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
+                                                                <form class="theme-item__field-col">
+                                                                    <button class="choose_button" name="choose_student"
+                                                                            value="{{ record.id }}"
+                                                                            formmethod="get">Затвердити
+                                                                    </button>
+                                                                </form>
+                                                            {% elif record.status == 'CONFIRMED' %}
+                                                                <form class="theme-item__field-col">
+                                                                    <button class="choose_button" name="cancel_student"
+                                                                            value="{{ record.id }}"
+                                                                            formmethod="get">Виписати
+                                                                    </button>
+                                                                </form>
+                                                            {% else %}
+                                                                <div></div>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <form class="form_class">
+                                <button class="delete_button" name="del_theme" value="{{ theme.id }}"
+                                        formmethod="get">Del
+                                </button>
+                            </form>
+                        </div>
+                    {% empty %}
+                        <div>Ще немає створених тем</div>
+                    {% endfor %}
+                </div>
+                <a href="new_theme" class="themes-list__button">Додати</a>
             </div>
         </div>
-    <div class="themes_creator">
-        <div class="themes-list">
-            <!--<div class="theme_num" >Запланована кількість робіт <span>  </span> </div>-->
-
-            {% for theme in themes_list %}
-                <div class="theme_container">
-                <div class="theme-item">
-                    <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
-                         data-target="#theme-det-{{ theme.id }}">
-                        <div class="theme-item__info">
-                            <span>{{ theme.work_name }}</span> - <span
-                                class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
-                        </div>
-                        <div class="theme-item__reg">
-                            Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
-                        </div>
-                    </div>
-                    <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
-                        <div class="theme-item__info-box">
-                            <span class="theme-item__info-name">Спеціальності</span>
-                            <div>{{ theme.teacher_offer.specialty.specialty.specialty_name }}
-                                - {{ theme.teacher_offer.specialty.year_of_entry }}</div>
-                        </div>
-                        <div class="theme-item__info-box">
-                            <span class="theme-item__info-name">Галузі</span>
-                            <div>
-                                {% for branch in theme.branch.get_queryset %}
-                                    {{ branch }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% if theme.note %}
-                    <div class="theme-item__info-box">
-                            <span class="theme-item__info-name">Примітка</span>
-                            <div>
-                                    {{ theme.note }}
-                            </div>
-                        </div>
-                    {% endif %}
-                        {% if theme.student.count > 0 %}
-                            <div class="theme-item__student-list-block">
-                                <ul class="theme-item__student-list">
-                                    <li class="theme-item__field theme-item_col-names">
-                                        <div class="theme-item__field-col">ПІБ</div>
-                                        <div class="theme-item__field-col">Рік</div>
-                                        <div class="theme-item__field-col">Спеціальність</div>
-                                        <div class="theme-item__field-col">Статус</div>
-                                        <div class="theme-item__field-col"></div>
-                                    </li>
-                                    {% for record in all_records %}
-                                        {% if record.work.id == theme.id %}
-                                            <li class="theme-item__field">
-                                                <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
-                                                <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
-                                                <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
-                                                <div class="theme-item__field-col">{{ record.get_status_display }}</div>
-                                                {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
-                                                    <form class="theme-item__field-col">
-                                                        <button class="choose_button" name="choose_student" value="{{ record.id }}"
-                                                             formmethod="get">Затвердити
-                                                    </button>
-                                                     </form>
-                                                {% elif record.status == 'CONFIRMED' %}
-                                                    <form class="theme-item__field-col">
-                                                        <button class="choose_button" name="cancel_student" value="{{ record.id }}"
-                                                          formmethod="get">Виписати
-                                                         </button>
-                                                    </form>
-                                                {% else %}
-                                                    <div></div>
-                                                {% endif %}
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-
-                        {% endif %}
-                    </div>
-                </div>
-                <form class="form_class">
-                                    <button class="delete_button" name="del_theme" value="{{ theme.id }}"
-                                            formmethod="get">Del
-                                    </button>
-                </form>
-
-                </div>
-
-            {% empty %}
-                <div>Ще немає створених тем</div>
-            {% endfor %}
-
-        </div>
-
-            <a href="new_theme" class="themes-list__button">Додати</a>
-        </div>
-    </div>
     </section>
 
 {% endblock content %}

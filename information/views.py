@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
 
-
 # Create your views here.
 from teacher.models import Teacher
+from theme.models import WriteWork, Record
 
 
 def index(request):
@@ -23,4 +23,7 @@ class InfoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(InfoListView, self).get_context_data(**kwargs)
+
+        works = Record.objects.filter(status='CONFIRMED')
+        context['works'] = works
         return context
