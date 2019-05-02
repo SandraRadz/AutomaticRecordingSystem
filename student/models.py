@@ -14,4 +14,4 @@ class Student(models.Model):
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.student_id)
+        return str(self.student_id.first_name)

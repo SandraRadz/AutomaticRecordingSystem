@@ -5,53 +5,40 @@
 {% endblock style %}
 
 {% block content %}
+{% if work %}
 <div class="mainInfo">
     <div class="themeDescription">
         <div class="theme tagName">Тема:</div>
-        <div class="themeName tagValue">Особливості реалізації патернів програмування засобами нових редакцій С++</div>
+        <div class="themeName tagValue">{{ work.work_name}}</div>
     </div>
     <div class="lecturerDescription">
-        <div class="lecture tagame">Викладач:</div>
-        <div class="lecturerName tagValue">Бублик Володимир Васильович</div>
+        <div class="lecture tagName">Викладач:</div>
+        <div class="lecturerName tagValue">{{ work.teacher_offer.teacher.teacher_id.first_name }}</div>
     </div>
 </div>
 <div class="line"></div>
 <div class="plan">
+
     <div class="point main">
-        <div class="deadline">1 листопада - 30 листопада </div>
-        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </div>
+        <div class="deadline">6 травня </div>
+        <div class="description">Передздача робіт на перевірку на плагіат. Принести на диску текстову, практичну частини і презентацію!</div>
     </div>
     <div class="point main">
-        <div class="deadline">1 листопада - 30 листопада </div>
-        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </div>
+        <div class="deadline">14 травня 11:40 </div>
+        <div class="description">Захист роботи </div>
     </div>
     <div class="point">
-        <div class="deadline">1 листопада - 30 листопада </div>
-        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </div>
+        <div class="deadline">16 лютого </div>
+        <div class="description">Перший розділ. Опис предметної області </div>
     </div>
     <div class="point">
-            <div class="deadline">1 листопада - 30 листопада </div>
-            <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </div>
+            <div class="deadline">10 квітня </div>
+            <div class="description">Прототип практичної частини</div>
         </div>
 </div>
+    {% else %}
+    <div class="themeDescription">
+        <div class="themeName tagValue">Інформація з'явиться тут, коли Вас затвердять на одну з тем</div>
+    </div>
+    {% endif %}
 {% endblock content %}

@@ -14,5 +14,5 @@ class Methodist(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.methodist_id)
+        return str(self.methodist_id.first_name)
 

@@ -48,6 +48,9 @@ class StudentGroup(models.Model):
     year_of_entry = models.SmallIntegerField()
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.specialty + self.work
+
 
 class Protection(models.Model):
     speciality_group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
@@ -80,7 +83,7 @@ class Teacher(models.Model):
     branch = models.ManyToManyField(BranchOfKnowledge, blank=True)
 
     def __str__(self):
-        return str(self.teacher_id)
+        return str(self.teacher_id.first_name)
 
 
 class TopicOffer(models.Model):

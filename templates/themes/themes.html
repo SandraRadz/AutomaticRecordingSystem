@@ -22,8 +22,8 @@
                     <span class="filter-item__name">Кафедра</span>
                     <select class="filter-item__dropdown" name="department">
                         <option value="anything">---</option>
-                        {% for cathedra in cathedras %}
-                            <option value="{{ cathedra.department_name }}">{{ cathedra.department_name }}</option>
+                        {% for department in departments %}
+                            <option value="{{ department.department_name }}">{{ department.department_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -60,9 +60,15 @@
                             <span>{{ theme.work_name }}</span> - <span
                                 class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
                         </div>
-                        <div class="theme-item__reg">
+                        {% if  theme.id in booked_records%}
+                        <div class="theme-item__reg_booked">
+                            Зайнята
+                        </div>
+                        {% else %}
+                            <div class="theme-item__reg">
                             Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
                         <div class="theme-item__info-box">
@@ -101,7 +107,7 @@
                                                 <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
-                                                <div class="theme-item__field-col">{{ record.status }}</div>
+                                                <div class="theme-item__field-col">{{ record.get_status_display }}</div>
                                             </li>
                                         {% endif %}
                                     {% endfor %}
@@ -109,13 +115,13 @@
                             </div>
                         {% endif %}
                         {% if request.session.role == "student" %}
-                            {% if theme.id in records %}
+                            {% if theme.id in records and  theme.id not in booked_records and not is_confirmed %}
                                 <form>
                                     <button class="theme-item__button" name="theme" value="{{ theme.id }}"
                                             formmethod="get">Виписатися
                                     </button>
                                 </form>
-                            {% else %}
+                            {% elif theme.id not in records and  theme.id not in booked_records and not is_confirmed %}
                                 <form>
                                     <button class="theme-item__button" name="theme_id" value="{{ theme.id }}"
                                             formmethod="get">Записатися

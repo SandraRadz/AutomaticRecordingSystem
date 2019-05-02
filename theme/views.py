@@ -25,13 +25,21 @@ class ThemeListView(ListView):
         context['user'] = User
         all_records = Record.objects.all()
         context['all_records'] = all_records
-        context['cathedras'] = Department.objects.all()
+        context['departments'] = Department.objects.all()
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
             context['records'] = records
+            booked_records = Record.objects.filter(status='CONFIRMED').values_list('work', flat=True)
+            context['booked_records'] = booked_records
+            this_stud_rec = Record.objects.filter(student_id=student)
+            context['is_confirmed'] = False
+            for record in this_stud_rec:
+                if record.status == 'CONFIRMED':
+                    context['is_confirmed'] = True
+
         return context
 
     def get_queryset(self, **kwargs):
@@ -65,14 +73,14 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme')
             theme = WriteWork.objects.get(pk=theme_id)
             Record.objects.filter(student=student, work=theme).delete()
-            send_email_cancel(student, theme)
+            #send_email_cancel(student, theme)
 
         if self.request.GET.get('theme_id') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
             Record.objects.get_or_create(student=student, work=theme)
-            send_email_record(student, theme)
+            #send_email_record(student, theme)
 
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \
