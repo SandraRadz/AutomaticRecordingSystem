@@ -10,4 +10,4 @@ class Plan(models.Model):
     work_name = models.ForeignKey(WriteWork, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.deadline)
+        return self.work_name.work_name+" "+str(self.deadline)

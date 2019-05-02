@@ -49,17 +49,19 @@ class StudentGroup(models.Model):
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.specialty + self.work
+        year = datetime.date.today().year - self.year_of_entry
+        return self.specialty.specialty_name + "-" + str(year)
 
 
 class Protection(models.Model):
     speciality_group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
     teacher_department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    date_of_pre_protection = models.DateTimeField(null=True, blank=True)
-    date_of_confirmation = models.DateTimeField(null=True, blank=True)
+    date_of_pre_protection = models.DateField(null=True, blank=True)
+    date_of_confirmation = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.student + self.work
+        year = datetime.date.today().year - self.speciality_group.year_of_entry
+        return self.speciality_group.specialty.specialty_name+"-"+str(year)+"  "+ self.teacher_department.department_name
 
 
 class BranchOfKnowledge(models.Model):

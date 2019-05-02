@@ -18,27 +18,30 @@
 </div>
 <div class="line"></div>
 <div class="plan">
+<!-- point main - blue-->
+{% if protection %}
+    {% if  protection.date_of_pre_protection%}
+    <div class="point main">
+        <div class="deadline"> {{ protection.date_of_pre_protection }} </div>
+        <div class="description">Передзахист</div>
+    </div>
+        {% endif %}
+    <div class="point main">
+        <div class="deadline">{{ protection.date_of_confirmation }} </div>
+        <div class="description">Захист</div>
+    </div>
+    {% endif %}
 
-    <div class="point main">
-        <div class="deadline">6 травня </div>
-        <div class="description">Передздача робіт на перевірку на плагіат. Принести на диску текстову, практичну частини і презентацію!</div>
-    </div>
-    <div class="point main">
-        <div class="deadline">14 травня 11:40 </div>
-        <div class="description">Захист роботи </div>
-    </div>
+ {% for item in plan %}
     <div class="point">
-        <div class="deadline">16 лютого </div>
-        <div class="description">Перший розділ. Опис предметної області </div>
+        <div class="deadline">{{ item.deadline }} </div>
+        <div class="description"> {{ item.description }} </div>
     </div>
-    <div class="point">
-            <div class="deadline">10 квітня </div>
-            <div class="description">Прототип практичної частини</div>
-        </div>
-</div>
-    {% else %}
+    {% endfor %}
+{% else %}
     <div class="themeDescription">
         <div class="themeName tagValue">Інформація з'явиться тут, коли Вас затвердять на одну з тем</div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endblock content %}
