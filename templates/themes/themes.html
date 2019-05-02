@@ -29,7 +29,7 @@
                 </div>
                 <div class="filter-item">
                     <span class="filter-item__name">Галузі</span>
-                    <select multiple class="filter-item__dropdown" name="branch">
+                    <select class="selectpicker filter-item__dropdown" multiple name="branch">
                         {% for branch in branches %}
                             <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                         {% endfor %}
