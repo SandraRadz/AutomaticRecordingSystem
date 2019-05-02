@@ -5,7 +5,7 @@ from theme.models import WriteWork
 
 
 class Plan(models.Model):
-    deadline = models.DateTimeField(null=True, blank=True)
+    deadline = models.DateField()
     description = models.TextField()
     work_name = models.ForeignKey(WriteWork, on_delete=models.CASCADE)
 

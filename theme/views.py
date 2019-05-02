@@ -39,7 +39,7 @@ class ThemeListView(ListView):
             for record in this_stud_rec:
                 if record.status == 'CONFIRMED':
                     context['is_confirmed'] = True
-
+                    context['user_work'] = record.work_id
         return context
 
     def get_queryset(self, **kwargs):

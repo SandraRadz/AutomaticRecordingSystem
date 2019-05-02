@@ -53,8 +53,10 @@
         <div class="themes-list">
 
             {% for theme in object_list %}
+
                 <div class="theme-item">
-                    <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
+
+                    <div class="theme-item__header {% if theme.id == user_work %} user_theme {% else %} other_theme {% endif %}" data-toggle="collapse" aria-expanded="false"
                          data-target="#theme-det-{{ theme.id }}">
                         <div class="theme-item__info">
                             <span>{{ theme.work_name }}</span> - <span
