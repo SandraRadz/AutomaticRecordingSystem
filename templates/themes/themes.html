@@ -29,20 +29,19 @@
                 </div>
                 <div class="filter-item">
                     <span class="filter-item__name">Галузі</span>
-                    <select class="filter-item__dropdown" name="branch">
-                        <option value="anything">---</option>
+                    <select multiple class="filter-item__dropdown" name="branch">
                         {% for branch in branches %}
                             <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="filter-item">
-                    <span class="filter-item__name">Статус запиту</span>
+                    <span class="filter-item__name">Статус запису</span>
                     <select class="filter-item__dropdown" name="status">
                         <option value="anything">---</option>
-                        {% for status in statuses %}
-                            <option value="{{ status }}">{{ status }}</option>
-                        {% endfor %}
+                        <option value="blocked">Затверджені теми</option>
+                        <option value="available">Незатверджені теми</option>
+                        <option value="empty">Вільні теми</option>
                     </select>
                 </div>
                 <button class="filter-panel__button" formmethod="get">Фільтр</button>
@@ -134,7 +133,7 @@
                     </div>
                 </div>
             {% empty %}
-                <div>Ще немає створених тем</div>
+                <div>Відповідних тем не знайдено!</div>
             {% endfor %}
 
         </div>
