@@ -89,19 +89,30 @@ def createTheme(request):
         form = NewTheme(request.POST)
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
-            offer = TopicOffer.objects.all().filter(teacher=teacher)[0]
-            offer_count = offer.fact_count_of_themes
-            offer.fact_count_of_themes = offer_count+1
-            offer.save()
-            work_name = request.POST.get('work_name', '')
-            english_work_name = request.POST.get('english_work_name', '')
-            note = request.POST.get('note', '')
-            previous_version = form.cleaned_data.get('previous_version', '')
-            branch = form.cleaned_data.get('branch', '')
-            write_work_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer, previous_version=previous_version)
-            write_work_obj.branch.set(branch)
-
-            return HttpResponseRedirect('/teacher/')
+            specialty = form.cleaned_data.get('specialty', '')
+            year = request.POST.get('year', '')
+            offer = TopicOffer.objects.all().filter(teacher=teacher,
+                                                    specialty__specialty__specialty_name=specialty.specialty
+                                                    .specialty.specialty_name,
+                                                    specialty__year_of_entry=year)
+            if offer:
+                offer = offer[0]
+            else:
+                return render(request, 'teacher/new_theme.html', {'form': form})
+            if offer and offer.fact_count_of_themes < offer.count_of_themes:
+                offer.fact_count_of_themes += 1
+                offer.save()
+                work_name = request.POST.get('work_name', '')
+                english_work_name = request.POST.get('english_work_name', '')
+                note = request.POST.get('note', '')
+                previous_version = form.cleaned_data.get('previous_version', '')
+                branch = form.cleaned_data.get('branch', '')
+                feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name,
+                                                        note=note, teacher_offer=offer,
+                                                        previous_version=previous_version)
+                feedback_obj.branch.set(branch)
+                return HttpResponseRedirect('/teacher/')
     else:
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})
+

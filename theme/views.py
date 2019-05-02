@@ -25,10 +25,12 @@ class ThemeListView(ListView):
         context['user'] = User
         all_records = Record.objects.all()
         context['all_records'] = all_records
-        context['departments'] = Department.objects.all()
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
         if self.request.session['role'] == 'student':
+            faculty = Student.objects.filter(student_id=self.request.session['user_id'])[
+                0].specialty.specialty.department.faculty
+            context['departments'] = Department.objects.filter(faculty=faculty)
             student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
             context['records'] = records
@@ -40,6 +42,11 @@ class ThemeListView(ListView):
                 if record.status == 'CONFIRMED':
                     context['is_confirmed'] = True
                     context['user_work'] = record.work_id
+        elif self.request.session['role'] == 'teacher':
+            faculty = Teacher.objects.filter(teacher_id=self.request.session['user_id'])[0].department.faculty
+            context['departments'] = Department.objects.filter(faculty=faculty)
+        else:
+            context['departments'] = Department.objects.all()
         return context
 
     def get_queryset(self, **kwargs):

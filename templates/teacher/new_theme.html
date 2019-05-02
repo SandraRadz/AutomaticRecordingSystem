@@ -7,11 +7,17 @@
 {% block content %}
 <form action="/teacher/new_theme" method="post">
     {% csrf_token %}
-     <input type="text" placeholder="Назва" maxlength="500" name="work_name">
-     <input type="text" placeholder="Назва англійською" maxlength="500" name="english_work_name">
-     <textarea type="text" placeholder="Примітка" name="note"></textarea>
-    {{ form.branch }}
-    {{ form.previous_version }}
+     <input type="text" placeholder="Назва" maxlength="500" name="work_name"><br><br>
+     <input type="text" placeholder="Назва англійською" maxlength="500" name="english_work_name"><br><br>
+     <textarea type="text" placeholder="Примітка" name="note"></textarea><br><br>
+    <p>Галузі:</p>
+    {{ form.branch }}<br><br>
+    <p>Попередня версія:</p>
+    {{ form.previous_version }}<br><br>
+    <p>Спеціальність:</p>
+    {{ form.specialty }}<br><br>
+    <p>Рік вступу: </p>
+    <input type="number" min="2010" max="2019" name="year" placeholder="Рік"><br><br>
     <input type="submit" class="submit_button" value="Submit">
 </form>
 
