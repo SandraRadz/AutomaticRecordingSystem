@@ -43,13 +43,20 @@ class Specialty(models.Model):
 
 
 class StudentGroup(models.Model):
+    DEGREE = (
+        ('bachelor', 'бакалавр'),
+        ('master', 'магістр')
+    )
     # we need id there to choose groups id in student table
     id = models.AutoField(primary_key=True)
     year_of_entry = models.SmallIntegerField()
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
+    degree = models.CharField(max_length=10, choices=DEGREE, default='bachelor')
 
     def __str__(self):
         year = datetime.date.today().year - self.year_of_entry
+        if self.degree == 'master':
+           year = year + 4
         return self.specialty.specialty_name + "-" + str(year)
 
 
