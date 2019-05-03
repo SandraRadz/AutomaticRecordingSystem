@@ -27,11 +27,13 @@ class ThemeListView(ListView):
         context['all_records'] = all_records
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
+        context['theme_list'] = WriteWork.objects.all()
         if self.request.session['role'] == 'student':
+            student = Student.objects.get(pk=self.request.session['user_id'])
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__specialty=student.specialty_id)
             faculty = Student.objects.filter(student_id=self.request.session['user_id'])[
                 0].specialty.specialty.department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
-            student = Student.objects.get(pk=self.request.session['user_id'])
             records = Record.objects.filter(student_id=student).values_list('work', flat=True)
             context['records'] = records
             booked_records = Record.objects.filter(status='CONFIRMED').values_list('work', flat=True)
