@@ -1,6 +1,7 @@
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
+import datetime
 
 from methodist.models import Methodist
 # Create your views here.
@@ -29,21 +30,25 @@ class MethodistListView(ListView):
         context = super().get_context_data(**kwargs)
         methodist = Methodist.objects.get(pk=self.request.session['user_id'])
         context['methodist'] = methodist
+        context['years'] = StudentGroup.objects.filter(
+            specialty__department__faculty=methodist.department.faculty).values_list('year_of_entry',
+                                                                                     flat=True).distinct()
         context['teachers'] = Teacher.objects.filter(department=methodist.department)
         spec = Specialty.objects.filter(department__faculty=methodist.department.faculty)
         context['specialties'] = spec
         return context
 
     def get_queryset(self, **kwargs):
-        if self.request.GET.get('teacher') != 'anything' and self.request.GET.get(
-                'specialty') != 'anything' and self.request.GET.get(
-            'teacher') is not None and self.request.GET.get(
-            'amount') is not None and self.request.GET.get('year') is not None and self.request.GET.get(
-            'specialty') is not None and self.request.GET.get('yearW') is not None:
+        if self.request.GET.get('teacher') != 'anything' and \
+                self.request.GET.get('specialty') != 'anything' and \
+                self.request.GET.get('year') != 'anything' and \
+                self.request.GET.get('teacher') is not None and \
+                self.request.GET.get('amount') is not None and \
+                self.request.GET.get('year') is not None and \
+                self.request.GET.get('specialty') is not None:
             teacher = Teacher.objects.filter(teacher_id=self.request.GET.get('teacher'))
             amount = self.request.GET.get('amount')
             year = self.request.GET.get('year')
-            yearW = self.request.GET.get('yearW')
             if teacher:
                 if not checkTeacher(self.request.GET.get('teacher'), amount, 2019, True):
                     teacher = None
@@ -52,14 +57,15 @@ class MethodistListView(ListView):
             if not teacher or not specialty:
                 return HttpResponseRedirect('../theme')
             res = TopicOffer.objects.get_or_create(count_of_themes=amount, fact_count_of_themes=0, year_of_study=year,
-                                                   year_of_work=2019, teacher=teacher[0], specialty=specialty[0])
+                                                   year_of_work=datetime.datetime.now().year, teacher=teacher[0],
+                                                   specialty=specialty[0])
         return Methodist.objects.all()
 
 
 def checkTeacher(teacher_id, amount, year, coursework):
     teacher_amount = \
-    TopicOffer.objects.filter(teacher__teacher_id=teacher_id, year_of_work=year).aggregate(Sum('count_of_themes'))[
-        'count_of_themes__sum']
+        TopicOffer.objects.filter(teacher__teacher_id=teacher_id, year_of_work=year).aggregate(Sum('count_of_themes'))[
+            'count_of_themes__sum']
     if not teacher_amount:
         teacher_amount = 0
     teacher = Teacher.objects.get(pk=teacher_id)

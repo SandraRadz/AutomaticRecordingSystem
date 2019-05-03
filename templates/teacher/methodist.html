@@ -30,9 +30,12 @@
                     </select>
                 <br>
                 <div>Year of entry:</div>
-                <input type="number" class="form-control" min="2010" max="2018" name="year" required="required"><br>
-                <div>Year of course:</div>
-                <input type="number" class="form-control" min="2" max="6" name="yearW" required="required"><br>
+                <select class="selectpicker" name="year" required="required">
+                    <option value="anything">---</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select><br>
                 <div>Specialty:</div>
                 <select class="selectpicker" name="specialty" required="required">
                     <option value="anything">---</option>
