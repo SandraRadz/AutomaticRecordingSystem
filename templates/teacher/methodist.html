@@ -13,7 +13,7 @@
                 <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
                 <div class="profile-info__item">{{ methodist.department }}</div>
                 {% if  methodist.additional_email %}
-                <div class="profile-info__item">{{ methodist.additional_email }}</div>
+                    <div class="profile-info__item">{{ methodist.additional_email }}</div>
                 {% endif %}
                 <div class="profile-info__item">Кабінет: {{ methodist.office }}</div>
                 <div class="profile-info__item profile-info__room">Телефон: {{ methodist.phone }}</div>
@@ -22,26 +22,27 @@
         <div>
             <form>
                 <div>Teacher:</div>
-                <select class="filter-item__dropdown" name="teacher" required="required">
-                    <option value="anything">---</option>
-                    {% for teacher in teachers %}
-                        <option value="{{ teacher.teacher_id.id }}">{{ teacher.teacher_id.first_name }}</option>
-                    {% endfor %}
-                </select><br>
+                    <select class="selectpicker" name="teacher" required="required">
+                        <option value="anything">---</option>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.teacher_id.id }}">{{ teacher.teacher_id.first_name }}</option>
+                        {% endfor %}
+                    </select>
+                <br>
                 <div>Year of entry:</div>
-                <input type="number" min="2010" max="2018" name="year" required="required"><br>
+                <input type="number" class="form-control" min="2010" max="2018" name="year" required="required"><br>
                 <div>Year of course:</div>
-                <input type="number" min="2" max="6" name="yearW" required="required"><br>
+                <input type="number" class="form-control" min="2" max="6" name="yearW" required="required"><br>
                 <div>Specialty:</div>
-                <select class="filter-item__dropdown" name="specialty" required="required">
+                <select class="selectpicker" name="specialty" required="required">
                     <option value="anything">---</option>
                     {% for specialty in specialties %}
                         <option value="{{ specialty.specialty_name }}">{{ specialty.specialty_name }}</option>
                     {% endfor %}
                 </select><br>
                 <div>Amount of works:</div>
-                <input type="number" name="amount" min="0" required="required"><br><br>
-                <button class="filter-panel__button" formmethod="get">Призначити</button>
+                <input type="number" class="form-control" name="amount" min="0" required="required"><br><br>
+                <button class="btn btn-primary" formmethod="get">Призначити</button>
             </form>
         </div>
     </section>

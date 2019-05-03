@@ -40,7 +40,8 @@ class PlanListView(ListView):
             student = Student.objects.get(pk=user_id)
             group = student.specialty
             department = work.teacher_offer.teacher.department
-            prot = Protection.objects.all().filter(speciality_group=group, teacher_department=department)
+            prot = Protection\
+                .objects.all().filter(speciality_group=group, teacher_department=department)
             if prot:
                 protection = prot[0]
             else:

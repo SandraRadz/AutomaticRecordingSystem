@@ -29,7 +29,7 @@
                 </div>
                 <div class="filter-item">
                     <span class="filter-item__name">Галузі теми</span>
-                    <select class="selectpicker filter-item__dropdown" multiple name="branch">
+                    <select class="selectpicker filter-item__dropdown" multiple data-actions-box="true" name="branch">
                         {% for branch in branches %}
                             <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                         {% endfor %}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="filter-item">
                     <span class="filter-item__name">Наукові інтереси</span>
-                    <select class="selectpicker filter-item__dropdown" multiple name="interests">
+                    <select class="selectpicker filter-item__dropdown" multiple data-actions-box="true" name="interests">
                         {% for branch in branches %}
                             <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                         {% endfor %}
