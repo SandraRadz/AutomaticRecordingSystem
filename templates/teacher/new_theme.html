@@ -5,20 +5,23 @@
 {% endblock style %}
 
 {% block content %}
-    <form action="/teacher/new_theme" method="post">
-        {% csrf_token %}
-        <input type="text" placeholder="Назва" maxlength="500" name="work_name"><br><br>
-        <input type="text" placeholder="Назва англійською" maxlength="500" name="english_work_name"><br><br>
-        <textarea type="text" placeholder="Примітка" name="note"></textarea><br><br>
-        <p>Галузі:</p>
-        {{ form.branch }}<br><br>
-        <p>Попередня версія:</p>
-        {{ form.previous_version }}<br><br>
-        <p>Спеціальність:</p>
-        {{ form.specialty }}<br><br>
-        <p>Рік вступу: </p>
-        <input type="number" min="2010" max="2019" name="year" placeholder="Рік"><br><br>
-        <input type="submit" class="submit_button" value="Submit">
-    </form>
+    <div class="container">
+        <form action="/teacher/new_theme" method="post">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="Назва" maxlength="500" name="work_name"><br><br>
+            <input type="text" class="form-control" placeholder="Назва англійською" maxlength="500"
+                   name="english_work_name"><br><br>
+            <textarea type="text" class="form-control" placeholder="Примітка" name="note"></textarea><br><br>
+            <p>Галузі:</p>
+            {{ form.branch }}<br><br>
+            <p>Попередня версія:</p>
+            {{ form.previous_version }}<br><br>
+            <p>Спеціальність:</p>
+            {{ form.specialty }}<br><br>
+            <p>Рік вступу: </p>
+            <input type="number" class="form-control" min="2010" max="2019" name="year" placeholder="Рік"><br><br>
+            <input type="submit" class="submit_button btn btn-primary" value="Submit">
+        </form>
+    </div>
 
 {% endblock content %}

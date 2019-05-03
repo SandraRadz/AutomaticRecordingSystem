@@ -53,9 +53,11 @@ class ThemeListView(ListView):
 
     def get_queryset(self, **kwargs):
         if self.request.GET.get('department') is not None or self.request.GET.get(
-                'branch') is not None or self.request.GET.get('status') is not None:
+                'branch') is not None or self.request.GET.get('status') is not None or \
+                self.request.GET.get('interests') is not None:
             department = self.request.GET.get('department')
             branches = self.request.GET.getlist('branch')
+            interests = self.request.GET.getlist('interests')
             status = self.request.GET.get('status')
             queryset = []
             empty = True
@@ -64,8 +66,12 @@ class ThemeListView(ListView):
                 queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep)
                 empty = False
             if branches:
-                # brs = BranchOfKnowledge.objects.filter(branch_name__in=branches)
                 query = WriteWork.objects.filter(branch__branch_name__in=branches).distinct()
+                queryset = list(set(query) & set(queryset)) if queryset else query
+                empty = False
+            if interests:
+                query = WriteWork.objects.filter(
+                    teacher_offer__teacher__in=Teacher.objects.filter(branch__branch_name__in=interests))
                 queryset = list(set(query) & set(queryset)) if queryset else query
                 empty = False
             if status != 'anything':

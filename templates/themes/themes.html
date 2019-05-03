@@ -28,8 +28,16 @@
                     </select>
                 </div>
                 <div class="filter-item">
-                    <span class="filter-item__name">Галузі</span>
-                    <select class="selectpicker filter-item__dropdown" multiple name="branch">
+                    <span class="filter-item__name">Галузі теми</span>
+                    <select class="selectpicker filter-item__dropdown" multiple data-actions-box="true" name="branch">
+                        {% for branch in branches %}
+                            <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <span class="filter-item__name">Наукові інтереси</span>
+                    <select class="selectpicker filter-item__dropdown" multiple data-actions-box="true" name="interests">
                         {% for branch in branches %}
                             <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                         {% endfor %}
@@ -55,20 +63,21 @@
 
                 <div class="theme-item">
 
-                    <div class="theme-item__header {% if theme.id == user_work %} user_theme {% else %} other_theme {% endif %}" data-toggle="collapse" aria-expanded="false"
+                    <div class="theme-item__header {% if theme.id == user_work %} user_theme {% else %} other_theme {% endif %}"
+                         data-toggle="collapse" aria-expanded="false"
                          data-target="#theme-det-{{ theme.id }}">
                         <div class="theme-item__info">
                             <span>{{ theme.work_name }}</span> - <span
                                 class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
                         </div>
-                        {% if  theme.id in booked_records%}
-                        <div class="theme-item__reg_booked">
-                            Зайнята
-                        </div>
+                        {% if  theme.id in booked_records %}
+                            <div class="theme-item__reg_booked">
+                                Зайнята
+                            </div>
                         {% else %}
                             <div class="theme-item__reg">
-                            Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
-                        </div>
+                                Записані - <span class="theme-item__student-count">{{ theme.student.count }}</span>
+                            </div>
                         {% endif %}
                     </div>
                     <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
@@ -80,14 +89,14 @@
                                 {% endfor %}
                             </div>
                         </div>
-                    {% if theme.note %}
-                    <div class="theme-item__info-box">
-                            <span class="theme-item__info-name">Примітка</span>
-                            <div>
+                        {% if theme.note %}
+                            <div class="theme-item__info-box">
+                                <span class="theme-item__info-name">Примітка</span>
+                                <div>
                                     {{ theme.note }}
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
+                        {% endif %}
                         {% if theme.student.count > 0 %}
                             <div class="theme-item__student-list-block">
                                 <ul class="theme-item__student-list">
