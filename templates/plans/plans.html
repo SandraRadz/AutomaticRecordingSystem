@@ -5,6 +5,7 @@
 {% endblock style %}
 
 {% block content %}
+  {%  if request.session.role == "student" %}
 {% if work %}
 <div class="mainInfo">
     <div class="themeDescription">
@@ -44,4 +45,5 @@
     </div>
 </div>
 {% endif %}
+    {% endif %}
 {% endblock content %}

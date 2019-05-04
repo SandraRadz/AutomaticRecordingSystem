@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 
+from methodist.models import Methodist
 from student.models import Student
 from teacher.models import Teacher, TopicOffer, Department, BranchOfKnowledge
 from theme.models import WriteWork, Record
@@ -45,8 +46,13 @@ class ThemeListView(ListView):
                     context['is_confirmed'] = True
                     context['user_work'] = record.work_id
         elif self.request.session['role'] == 'teacher':
-            faculty = Teacher.objects.filter(teacher_id=self.request.session['user_id'])[0].department.faculty
+            user_department = Teacher.objects.get(pk=self.request.session['user_id']).department
+            faculty = user_department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__department=user_department)
+        elif self.request.session['role'] == 'methodist':
+            user_department = Methodist.objects.get(pk=self.request.session['user_id']).department
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__department=user_department)
         else:
             context['departments'] = Department.objects.all()
         return context

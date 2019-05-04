@@ -29,27 +29,15 @@
                     {% if  teacher.additional_email %}
                         <div class="profile-info__item">Додаткова пошта: {{ teacher.additional_email }}</div>
                     {% endif %}
-                </div>
-            </div>
-            <div class="themes_creator">
-                <div class="themes-list">
-                    <div class="theme-container">
-                        <div class="theme-item">
-                            <div class="theme-item__header" data-toggle="collapse" aria-expanded="false"
-                                 data-target="#stat1">
-                                <div class="theme-item__info">Навантаження</div>
-                                <div class="theme-item__reg">Cпеціальності
-                                    - {{ teacher_offer_bach.count|add:teacher_offer_mag.count }}</div>
-                            </div>
-                            <div id="stat1" class="collapse theme-item__body" style>
+
+                <div class="theme-offer-container">
                                 <div class="theme-item__info-box">
                                     <span class="theme-item__info-name">Курсові роботи</span>
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Спеціальність - рік</th>
-                                            <th scope="col">Кількість створених</th>
-                                            <th scope="col">Кількість виділених</th>
+                                            <th scope="col">Спеціальність</th>
+                                            <th scope="col">Кількість тем</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -57,8 +45,8 @@
                                             <tr>
                                                 <th scope="col">{{ t.specialty.specialty.specialty_name }}
                                                     - {{ t.year_of_study }}</th>
-                                                <th scope="col">{{ t.fact_count_of_themes }}</th>
-                                                <th scope="col">{{ t.count_of_themes }}</th>
+                                                <th scope="col" style="text-align: center">{{ t.fact_count_of_themes }}/{{ t.count_of_themes }}</th>
+
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -69,9 +57,8 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Спеціальність - рік</th>
-                                            <th scope="col">Кількість створених</th>
-                                            <th scope="col">Кількість виділених</th>
+                                            <th scope="col">Спеціальність</th>
+                                            <th scope="col">Кількість тем</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -79,17 +66,18 @@
                                             <tr>
                                                 <th scope="col">{{ t.specialty.specialty.specialty_name }}
                                                     - {{ t.year_of_study }}</th>
-                                                <th scope="col">{{ t.fact_count_of_themes }}</th>
-                                                <th scope="col">{{ t.count_of_themes }}</th>
+                                                <th scope="col" style="text-align: center">{{ t.fact_count_of_themes }}/ {{ t.count_of_themes }}</th>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                </div>
 
+            </div>
+            <div class="themes_creator">
+                <div class="themes-list">
                     {% for theme in themes_list %}
                         <div class="theme_container">
                             <div class="theme-item">

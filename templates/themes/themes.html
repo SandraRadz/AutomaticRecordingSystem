@@ -81,6 +81,14 @@
                         {% endif %}
                     </div>
                     <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
+                    {%  if request.session.role != "student" %}
+                      <div class="theme-item__info-box">
+                            <span class="theme-item__info-name">Галузі</span>
+                            <div>
+                                {{ theme.teacher_offer.specialty }}
+                            </div>
+                        </div>
+                    {% endif %}
                         <div class="theme-item__info-box">
                             <span class="theme-item__info-name">Галузі</span>
                             <div>

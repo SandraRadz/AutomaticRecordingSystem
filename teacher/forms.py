@@ -15,4 +15,3 @@ class NewTheme(forms.Form):
     specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all().distinct(), required=True,
                                        to_field_name="specialty",
                                        widget=forms.Select(attrs={'class': "selectpicker"}))
-    year = forms.IntegerField(label='Рік вступу')

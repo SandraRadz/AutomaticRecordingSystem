@@ -15,7 +15,7 @@ def index(request):
 
 
 class MethodistListView(ListView):
-    template_name = 'teacher/methodist.html'
+    template_name = 'methodist/methodist.html'
     model = Methodist
 
     def get(self, *args, **kwargs):
