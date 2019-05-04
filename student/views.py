@@ -7,7 +7,7 @@ from student.models import Student
 
 
 class StudentListView(ListView):
-    template_name = 'teacher/student.html'
+    template_name = 'student/student.html'
     model = Student
 
     def get(self, *args, **kwargs):

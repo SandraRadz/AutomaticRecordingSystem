@@ -9,7 +9,7 @@ from teacher.models import BranchOfKnowledge
 
 
 class WriteWork(models.Model):
-    work_name = models.CharField(max_length=250, unique=True)
+    work_name = models.CharField(max_length=250)
     english_work_name = models.CharField(max_length=250, null=True, blank=True)
     year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     note = models.TextField(null=True, blank=True)

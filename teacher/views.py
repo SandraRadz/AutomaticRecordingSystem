@@ -95,11 +95,10 @@ def createTheme(request):
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
             specialty = form.cleaned_data.get('specialty', '')
-            year = request.POST.get('year', '')
             offer = TopicOffer.objects.all().filter(teacher=teacher,
                                                     specialty__specialty__specialty_name=specialty.specialty
                                                     .specialty.specialty_name,
-                                                    specialty__year_of_entry=year)
+                                                    specialty__year_of_entry=specialty.specialty.year_of_entry)
             if offer:
                 offer = offer[0]
             else:

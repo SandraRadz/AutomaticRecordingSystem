@@ -59,7 +59,7 @@
     <section class="container themes-choose">
         <div class="themes-list">
 
-            {% for theme in object_list %}
+            {% for theme in theme_list %}
 
                 <div class="theme-item">
 
@@ -81,11 +81,14 @@
                         {% endif %}
                     </div>
                     <div class="collapse theme-item__body" id="theme-det-{{ theme.id }}">
-                        <div class="theme-item__info-box">
-                            <span class="theme-item__info-name">Спеціальності</span>
-                            <div>{{ theme.teacher_offer.specialty.specialty.specialty_name }}
-                                - {{ theme.teacher_offer.specialty.year_of_entry }}</div>
+                    {%  if request.session.role != "student" %}
+                      <div class="theme-item__info-box">
+                            <span class="theme-item__info-name">Галузі</span>
+                            <div>
+                                {{ theme.teacher_offer.specialty }}
+                            </div>
                         </div>
+                    {% endif %}
                         <div class="theme-item__info-box">
                             <span class="theme-item__info-name">Галузі</span>
                             <div>
