@@ -25,5 +25,13 @@ class InfoListView(ListView):
         context = super(InfoListView, self).get_context_data(**kwargs)
 
         works = Record.objects.filter(status='CONFIRMED')
-        context['works'] = works
+        years = works.values_list('work__year_of_work', flat=True).distinct()
+        stats = {}
+        for y in years:
+            arr = []
+            for w in works:
+                if w.work.year_of_work == y:
+                    arr.append(w)
+            stats[y] = arr
+        context['stats'] = stats
         return context
