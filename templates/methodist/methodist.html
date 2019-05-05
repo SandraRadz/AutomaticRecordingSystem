@@ -24,7 +24,7 @@
         <div class="new-topic-offer">
             <form action="/methodist/" method="post">
             {% csrf_token %}
-                <div>Teacher:</div>
+                <div>Викладач:</div>
                     <select class="selectpicker" name="teacher" required="required">
                         <option value="anything">---</option>
                         {% for teacher in teachers %}
@@ -32,21 +32,21 @@
                         {% endfor %}
                     </select>
                 <br>
-             <div>Specialty:</div>
+             <div>Спеціальність:</div>
                 <select class="selectpicker" name="specialty" required="required">
                     <option value="anything">---</option>
                     {% for specialty in specialties %}
                         <option value="{{ specialty.specialty_name }}">{{ specialty.specialty_name }}</option>
                     {% endfor %}
                 </select><br>
-                <div>Year of study:</div>
+                <div>Рік навчання:</div>
                 <select class="selectpicker" name="year" required="required">
                     <option value="anything">---</option>
                     {% for year in years %}
                         <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
                 </select><br>
-                <div>Amount of works:</div>
+                <div>Кількість тем:</div>
                 <input type="number" class="form-control" name="amount" min="0" required="required" style="width: 220px"><br><br>
                 <button class="themes-list__button" formmethod="get">Додати</button>
             </form>

@@ -45,7 +45,10 @@ class PlanListView(ListView):
         elif self.request.session['role'] == 'methodist':
             methodist = Methodist.objects.get(pk=user_id)
             department = Department.objects.get(pk=methodist.department.id)
+            protection = Protection.objects.filter(teacher_department=department)
+            context['protection'] = protection
             groups = StudentGroup.objects.filter(specialty__department=department)
+
         return context
 
 

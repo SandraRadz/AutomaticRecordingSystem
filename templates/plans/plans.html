@@ -54,11 +54,13 @@
     <div class="point">
        <div class="plan-container">
            <div class="deadline">{{ item.deadline }} </div>
+         {%  if request.session.role == "teacher" %}
            <form class="form_class">
                                 <button class="delete_button" name="del_item" value="{{ item.id }}"
                                         formmethod="get"><i class="glyphicon glyphicon-remove"></i>
                                 </button>
            </form>
+           {% endif %}
         </div>
         <div class="description"> {{ item.description }} </div>
     </div>
@@ -69,5 +71,6 @@
      {%  if request.session.role == "teacher" %}
             <a href="/plan/{{ work.id }}/add" class="add-plan-item__button">Додати</a>
      {% endif %}
+
 
 {% endblock content %}
