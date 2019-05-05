@@ -19,7 +19,6 @@
                         <div class="profile-info__item">Науковий ступінь: {{ teacher.academic_status }}</div>
                     {% endif %}
                     <div class="profile-info__item">Посада: {{ teacher.position }}</div>
-
                     {% if  teacher.phone %}
                         <div class="profile-info__item">Номер телефону: {{ teacher.phone }}</div>
                     {% endif %}
@@ -167,7 +166,7 @@
                         <div>Ще немає створених тем</div>
                     {% endfor %}
                 </div>
-                <a href="new_theme" class="themes-list__button">Додати</a>
+                <a href="new_theme" class="themes-list__button" >Додати</a>
             </div>
         </div>
     </section>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+    <div class="container">
+        <form action={{ request.path }} method="post">
+            {% csrf_token %}
+             <p>Дедлайн:</p>
+            {{ form.deadline }}<br><br>
+            <textarea type="text" class="form-control" placeholder="Опис" name="description"></textarea><br><br>
+
+            <input type="submit" class="submit_button themes-list__button" value="Створити">
+        </form>
+    </div>
+
+{% endblock content %}
