@@ -44,7 +44,7 @@ class TeacherListView(ListView):
             offer.fact_count_of_themes = offer.fact_count_of_themes-1
             offer.save()
             theme.delete()
-        if self.request.GET.get('choose_student') is not None:
+        elif self.request.GET.get('choose_student') is not None:
             record_id = self.request.GET.get('choose_student')
             record = Record.objects.get(pk=record_id)
             work = record.work_id
@@ -111,10 +111,10 @@ def createTheme(request):
                 note = request.POST.get('note', '')
                 previous_version = form.cleaned_data.get('previous_version', '')
                 branch = form.cleaned_data.get('branch', '')
-                feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name,
+                write_work_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name,
                                                         note=note, teacher_offer=offer,
                                                         previous_version=previous_version)
-                feedback_obj.branch.set(branch)
+                write_work_obj.branch.set(branch)
                 return HttpResponseRedirect('/teacher/')
     else:
         form = NewTheme()

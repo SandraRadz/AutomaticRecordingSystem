@@ -10,8 +10,8 @@
             <div class="profile-info">
                 <span class="profile-info__avatar"></span>
                 <div class="profile-info__list">
-                    <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-                    <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                    <div class="profile-info__item profile-info__name">{{ teacher.teacher_id.first_name }}</div>
+                    <div class="profile-info__item profile-info__email">{{ teacher.teacher_id.email }}</div>
                     {% if  teacher.degree %}
                         <div class="profile-info__item">Вчене звання: {{ teacher.degree }}</div>
                     {% endif %}
@@ -159,7 +159,7 @@
                             </div>
                             <form class="form_class">
                                 <button class="delete_button" name="del_theme" value="{{ theme.id }}"
-                                        formmethod="get">Del
+                                        formmethod="get"><i class="glyphicon glyphicon-remove"></i>
                                 </button>
                             </form>
                         </div>
