@@ -19,7 +19,7 @@
           {% elif  request.session.role == "teacher" %}
           <div class="lecturerDescription">
         <div class="lecture tagName">Студент:</div>
-        <div class="lecturerName tagValue"></div>
+        <div class="lecturerName tagValue">{{ student_record }}</div>
     </div>
           {% else %}
              <div class="lecturerDescription">
@@ -28,7 +28,7 @@
     </div>
           <div class="lecturerDescription">
         <div class="lecture tagName">Студент:</div>
-        <div class="lecturerName tagValue"></div>
+        <div class="lecturerName tagValue">{{ student_record }}</div>
     </div>
           {% endif %}
 </div>
@@ -58,14 +58,7 @@
 
 
      {%  if request.session.role == "teacher" %}
-      <div class="plan_container">
-      {%  for work in work_titles %}
-                    <a href="{{ work.id }}" class="theme-item__header" name="work_id">
-                        <div class="theme-item__info">
-                            <span>{{ work.work_name }}</span>
-                        </div>
-                    </a>
-      {% endfor %}
-      </div>
+            <a href="/plan/{{ work.id }}/add" class="add-plan-item__button">Додати</a>
      {% endif %}
+
 {% endblock content %}

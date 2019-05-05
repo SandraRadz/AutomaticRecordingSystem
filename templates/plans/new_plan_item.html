@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+    <div class="container">
+        <form action={{ request.path }} method="post">
+            {% csrf_token %}
+            <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            <textarea type="text" class="form-control" placeholder="Опис" name="description"></textarea><br><br>
+
+            <input type="submit" class="submit_button themes-list__button" value="Створити">
+        </form>
+    </div>
+
+{% endblock content %}
