@@ -68,7 +68,9 @@ class Protection(models.Model):
 
     def __str__(self):
         year = datetime.date.today().year - self.speciality_group.year_of_entry
-        return self.speciality_group.specialty.specialty_name+"-"+str(year)+"  "+ self.teacher_department.department_name
+        if datetime.date.today().month >= 9:
+            year = year+1
+        return self.speciality_group.specialty.specialty_name+"-"+str(year)+"  " + self.teacher_department.department_name
 
 
 class BranchOfKnowledge(models.Model):
