@@ -66,6 +66,10 @@ class PlanItemListView(ListView):
                 print(self.kwargs.get('plan_url'))
                 if str(work) != self.kwargs.get('plan_url'):
                     return HttpResponseRedirect('/plan/' + str(work))
+        if self.request.GET.get('del_item') is not None:
+            del_item = self.request.GET.get('del_item')
+            plan_item = Plan.objects.get(pk=del_item)
+            plan_item.delete()
         return super(PlanItemListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -73,7 +77,7 @@ class PlanItemListView(ListView):
         work_url = self.kwargs.get('plan_url')
         work = WriteWork.objects.get(pk=work_url)
         context['work'] = work
-        plan_list = Plan.objects.all().filter(work_name_id=work.id)
+        plan_list = Plan.objects.all().filter(work_name_id=work.id).order_by('deadline')
         context['plan'] = plan_list
         student_record = Record.objects.filter(work_id=work_url, status='CONFIRMED')
         if student_record:
@@ -93,11 +97,15 @@ class PlanItemListView(ListView):
 
 @csrf_exempt
 def addPlanItem(request, plan_url):
-    work_url = request.path
-    print(work_url)
     if request.method == 'POST':
-
-                return HttpResponseRedirect('/plan/')
+        form = NewPlanItem(request.POST)
+        if form.is_valid():
+            work = WriteWork.objects.get(pk=plan_url)
+            deadline=request.POST.get('deadline', '')
+            description=request.POST.get('description', '')
+            plan_item=Plan.objects.create(work_name=work, deadline=deadline, description=description)
+            plan_item.save()
+            return HttpResponseRedirect('/plan/'+str(plan_url))
     else:
         form = NewPlanItem()
     return render(request, 'plans/new_plan_item.html', {'form': form})

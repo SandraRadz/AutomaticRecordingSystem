@@ -8,12 +8,8 @@
     <div class="container">
         <form action={{ request.path }} method="post">
             {% csrf_token %}
-            <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
+             <p>Дедлайн:</p>
+            {{ form.deadline }}<br><br>
             <textarea type="text" class="form-control" placeholder="Опис" name="description"></textarea><br><br>
 
             <input type="submit" class="submit_button themes-list__button" value="Створити">

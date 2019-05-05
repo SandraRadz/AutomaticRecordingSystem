@@ -50,10 +50,19 @@
 
 
  {% for item in plan %}
+
     <div class="point">
-        <div class="deadline">{{ item.deadline }} </div>
+       <div class="plan-container">
+           <div class="deadline">{{ item.deadline }} </div>
+           <form class="form_class">
+                                <button class="delete_button" name="del_item" value="{{ item.id }}"
+                                        formmethod="get"><i class="glyphicon glyphicon-remove"></i>
+                                </button>
+           </form>
+        </div>
         <div class="description"> {{ item.description }} </div>
     </div>
+
     {% endfor %}
 
 
