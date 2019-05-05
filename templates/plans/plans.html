@@ -5,17 +5,32 @@
 {% endblock style %}
 
 {% block content %}
-  {%  if request.session.role == "student" %}
-{% if work %}
+
 <div class="mainInfo">
     <div class="themeDescription">
         <div class="theme tagName">Тема:</div>
         <div class="themeName tagValue">{{ work.work_name}}</div>
     </div>
+      {%  if request.session.role == "student" %}
     <div class="lecturerDescription">
         <div class="lecture tagName">Викладач:</div>
         <div class="lecturerName tagValue">{{ work.teacher_offer.teacher.teacher_id.first_name }}</div>
     </div>
+          {% elif  request.session.role == "teacher" %}
+          <div class="lecturerDescription">
+        <div class="lecture tagName">Студент:</div>
+        <div class="lecturerName tagValue"></div>
+    </div>
+          {% else %}
+             <div class="lecturerDescription">
+        <div class="lecture tagName">Викладач:</div>
+        <div class="lecturerName tagValue">{{ work.teacher_offer.teacher.teacher_id.first_name }}</div>
+    </div>
+          <div class="lecturerDescription">
+        <div class="lecture tagName">Студент:</div>
+        <div class="lecturerName tagValue"></div>
+    </div>
+          {% endif %}
 </div>
 <div class="line"></div>
 <div class="plan">
@@ -33,17 +48,24 @@
     </div>
     {% endif %}
 
+
  {% for item in plan %}
     <div class="point">
         <div class="deadline">{{ item.deadline }} </div>
         <div class="description"> {{ item.description }} </div>
     </div>
     {% endfor %}
-{% else %}
-    <div class="themeDescription">
-        <div class="themeName tagValue">Інформація з'явиться тут, коли Вас затвердять на одну з тем</div>
-    </div>
-</div>
-{% endif %}
-    {% endif %}
+
+
+     {%  if request.session.role == "teacher" %}
+      <div class="plan_container">
+      {%  for work in work_titles %}
+                    <a href="{{ work.id }}" class="theme-item__header" name="work_id">
+                        <div class="theme-item__info">
+                            <span>{{ work.work_name }}</span>
+                        </div>
+                    </a>
+      {% endfor %}
+      </div>
+     {% endif %}
 {% endblock content %}

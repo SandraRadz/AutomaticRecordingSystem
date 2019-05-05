@@ -1,3 +1,4 @@
+import datetime
 import smtplib
 import ssl
 
@@ -29,9 +30,18 @@ class ThemeListView(ListView):
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
         context['theme_list'] = WriteWork.objects.all()
+        year_of_work = datetime.date.today().year
+        if datetime.date.today().month >= 9:
+            year_of_work = year_of_work + 1
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__specialty=student.specialty_id)
+            study_year = datetime.date.today().year-student.specialty.year_of_entry
+            if datetime.date.today().month >= 9:
+                study_year = study_year + 1
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
+                                                                   teacher_offer__year_of_study=study_year,
+                                                                   teacher_offer__specialty=student.specialty_id)
+
             faculty = Student.objects.filter(student_id=self.request.session['user_id'])[
                 0].specialty.specialty.department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
@@ -49,10 +59,12 @@ class ThemeListView(ListView):
             user_department = Teacher.objects.get(pk=self.request.session['user_id']).department
             faculty = user_department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__department=user_department)
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
+                                                                   teacher_offer__teacher__department=user_department)
         elif self.request.session['role'] == 'methodist':
             user_department = Methodist.objects.get(pk=self.request.session['user_id']).department
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__teacher__department=user_department)
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
+                                                                   teacher_offer__teacher__department=user_department)
         else:
             context['departments'] = Department.objects.all()
         return context

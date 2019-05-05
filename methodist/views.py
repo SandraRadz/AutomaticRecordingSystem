@@ -70,8 +70,6 @@ class MethodistListView(ListView):
                 if datetime.datetime.now().month > 9:
                     year_of_entry = year_of_entry + 1
 
-
-
             specialty_obj = StudentGroup.objects.filter(year_of_entry=year_of_entry,
                                                     specialty__specialty_name=specialty, degree=degree)[0]
             if not checkAmount(teacher, amount, year):
