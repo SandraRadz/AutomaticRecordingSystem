@@ -47,7 +47,6 @@ class StudentGroup(models.Model):
         ('bachelor', 'бакалавр'),
         ('master', 'магістр')
     )
-    # we need id there to choose groups id in student table
     id = models.AutoField(primary_key=True)
     year_of_entry = models.SmallIntegerField()
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
@@ -117,3 +116,6 @@ class CountOfWork(models.Model):
     academic_status = models.CharField(max_length=50, null=True, blank=True)
     count_of_course_work = models.SmallIntegerField()
     count_of_qualification_work = models.SmallIntegerField()
+
+    def __str__(self):
+        return self.degree+" "+self.academic_status

@@ -8,7 +8,7 @@ from methodist.models import Methodist
 from plan.forms import NewPlanItem
 from plan.models import Plan
 from student.models import Student
-from teacher.models import StudentGroup, Department, Protection, Teacher
+from teacher.models import StudentGroup, Department, Protection, Teacher, Faculty
 from theme.models import Record, WriteWork
 
 
@@ -45,11 +45,32 @@ class PlanListView(ListView):
         elif self.request.session['role'] == 'methodist':
             methodist = Methodist.objects.get(pk=user_id)
             department = Department.objects.get(pk=methodist.department.id)
+            faculty = Faculty.objects.get(pk=methodist.department.faculty.id)
             protection = Protection.objects.filter(teacher_department=department)
             context['protection'] = protection
-            groups = StudentGroup.objects.filter(specialty__department=department)
-
+            groups = StudentGroup.objects.filter(specialty__department__faculty=faculty)
+            context['groups'] = groups
         return context
+
+    def get_queryset(self, **kwargs):
+        if self.request.GET.get('del_date') is not None:
+            del_id = self.request.GET.get('del_date')
+            date_item = Protection.objects.get(pk=del_id)
+            date_item.delete()
+        user_id = self.request.session['user_id']
+        methodist = Methodist.objects.get(pk=user_id)
+        department = Department.objects.get(pk=methodist.department.id)
+        group_id = self.request.GET.get('group')
+        pre_protection = self.request.GET.get('pre-protection')
+        protection = self.request.GET.get('protection')
+        if group_id != 'anything' and pre_protection and protection:
+            group = StudentGroup.objects.get(pk=int(group_id))
+            if Protection.objects.filter(speciality_group=group).count() == 0:
+                Protection.objects.create(speciality_group=group, teacher_department=department,
+                                          date_of_pre_protection=pre_protection,
+                                          date_of_confirmation=protection)
+
+        return Methodist.objects.all()
 
 
 class PlanItemListView(ListView):
@@ -76,6 +97,7 @@ class PlanItemListView(ListView):
         return super(PlanItemListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        user_id = self.request.session['user_id']
         context = super(PlanItemListView, self).get_context_data(**kwargs)
         work_url = self.kwargs.get('plan_url')
         work = WriteWork.objects.get(pk=work_url)
