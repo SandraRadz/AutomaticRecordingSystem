@@ -1,9 +1,12 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
-
+import smtplib
+import ssl
+from student.models import Student
 from teacher.forms import NewTheme
 from teacher.models import Teacher, TopicOffer, StudentGroup
 from theme.models import WriteWork, Record
@@ -52,6 +55,7 @@ class TeacherListView(ListView):
             student = record.student_id
             record.status = 'CONFIRMED'
             record.save()
+            send_email(student, work)
 
             other_record_on_theme = Record.objects.all().filter(work_id=work)
             for o_rec in other_record_on_theme:
@@ -121,3 +125,18 @@ def createTheme(request):
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})
 
+
+def send_email(st, w):
+    work = WriteWork.objects.filter(pk=w)[0]
+    port = 465
+    smtp_server = "smtp.gmail.com"
+    sender_email = "naukma.recording@gmail.com"
+    receiver_email = User.objects.get(pk=st).email
+    password = 'naukma912'
+    message = 'Вітаємо! Вас було затверджено на тему "' + work.work_name + '".'
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+        server.quit()
+    return
