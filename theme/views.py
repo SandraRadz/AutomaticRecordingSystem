@@ -59,7 +59,7 @@ class ThemeListView(ListView):
             user_department = Teacher.objects.get(pk=self.request.session['user_id']).department
             faculty = user_department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
-            context = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
+            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
                                                                    teacher_offer__teacher__department=user_department)
         elif self.request.session['role'] == 'methodist':
             user_department = Methodist.objects.get(pk=self.request.session['user_id']).department
