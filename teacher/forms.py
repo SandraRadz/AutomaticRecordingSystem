@@ -12,6 +12,5 @@ class NewTheme(forms.Form):
                                             widget=forms.SelectMultiple(attrs={'class': "selectpicker"}))
     previous_version = forms.ModelChoiceField(queryset=WriteWork.objects.all(), required=False,
                                               widget=forms.Select(attrs={'class': "selectpicker"}))
-    specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all().distinct(), required=True,
-                                       to_field_name="specialty",
+    specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all(), required=True,
                                        widget=forms.Select(attrs={'class': "selectpicker"}))
