@@ -18,6 +18,7 @@
         </div>
         <form>
             <div class="filter-panel">
+            {% if request.session.role != "student" %}
                 <div class="filter-item">
                     <span class="filter-item__name">Кафедра</span>
                     <select class="filter-item__dropdown" name="department">
@@ -27,6 +28,7 @@
                         {% endfor %}
                     </select>
                 </div>
+            {% endif %}
                 <div class="filter-item">
                     <span class="filter-item__name">Галузі теми</span>
                     <select class="selectpicker filter-item__dropdown" multiple data-actions-box="true" name="branch">
@@ -59,7 +61,7 @@
     <section class="container themes-choose">
         <div class="themes-list">
 
-            {% for theme in theme_list %}
+            {% for theme in object_list  %}
 
                 <div class="theme-item">
 

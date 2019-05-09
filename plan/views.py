@@ -1,25 +1,18 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 # Create your views here.
-from methodist.models import Methodist
 from plan.forms import NewPlanItem
 from plan.models import Plan
-from student.models import Student
-from teacher.models import StudentGroup, Department, Protection, Teacher, Faculty
+from teacher.models import Protection, Teacher
 from theme.models import Record, WriteWork
 
 
-def index(request):
-    if 'mail' not in request.session:
-        return HttpResponseRedirect('../authorization/')
-    return render(request, 'plans/plans.html')
-
 
 class PlanListView(ListView):
-    template_name = 'plans/plan_helper.html'
+    template_name = 'plans/plan_list.html'
     model = Plan
 
     def get(self, *args, **kwargs):
@@ -32,6 +25,8 @@ class PlanListView(ListView):
                 user_record = user_record[0]
                 work = user_record.work_id
                 return HttpResponseRedirect('/plan/' + str(work))
+        if self.request.session['role'] == 'methodist':
+            return HttpResponseRedirect('/deadline/')
         return super(PlanListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -41,40 +36,11 @@ class PlanListView(ListView):
             teacher = Teacher.objects.get(pk=user_id)
             context['work_titles'] = WriteWork.objects.filter(teacher_offer__teacher=teacher)
             context['plan_items'] = Plan.objects.filter(work_name__teacher_offer__teacher_id=user_id)
-
-        elif self.request.session['role'] == 'methodist':
-            methodist = Methodist.objects.get(pk=user_id)
-            department = Department.objects.get(pk=methodist.department.id)
-            faculty = Faculty.objects.get(pk=methodist.department.faculty.id)
-            protection = Protection.objects.filter(teacher_department=department)
-            context['protection'] = protection
-            groups = StudentGroup.objects.filter(specialty__department__faculty=faculty)
-            context['groups'] = groups
         return context
-
-    def get_queryset(self, **kwargs):
-        if self.request.GET.get('del_date') is not None:
-            del_id = self.request.GET.get('del_date')
-            date_item = Protection.objects.get(pk=del_id)
-            date_item.delete()
-        user_id = self.request.session['user_id']
-        methodist = Methodist.objects.get(pk=user_id)
-        department = Department.objects.get(pk=methodist.department.id)
-        group_id = self.request.GET.get('group')
-        pre_protection = self.request.GET.get('pre-protection')
-        protection = self.request.GET.get('protection')
-        if group_id != 'anything' and pre_protection and protection:
-            group = StudentGroup.objects.get(pk=int(group_id))
-            if Protection.objects.filter(speciality_group=group).count() == 0:
-                Protection.objects.create(speciality_group=group, teacher_department=department,
-                                          date_of_pre_protection=pre_protection,
-                                          date_of_confirmation=protection)
-
-        return Methodist.objects.all()
 
 
 class PlanItemListView(ListView):
-    template_name = 'plans/plans.html'
+    template_name = 'plans/plan_item.html'
     model = Plan
 
     def get(self, *args, **kwargs):
@@ -86,8 +52,6 @@ class PlanItemListView(ListView):
             if user_record:
                 user_record = user_record[0]
                 work = user_record.work_id
-                print(work)
-                print(self.kwargs.get('plan_url'))
                 if str(work) != self.kwargs.get('plan_url'):
                     return HttpResponseRedirect('/plan/' + str(work))
         if self.request.GET.get('del_item') is not None:
@@ -126,12 +90,11 @@ def addPlanItem(request, plan_url):
         form = NewPlanItem(request.POST)
         if form.is_valid():
             work = WriteWork.objects.get(pk=plan_url)
-            deadline=request.POST.get('deadline', '')
-            description=request.POST.get('description', '')
-            plan_item=Plan.objects.create(work_name=work, deadline=deadline, description=description)
+            deadline = request.POST.get('deadline', '')
+            description = request.POST.get('description', '')
+            plan_item = Plan.objects.create(work_name=work, deadline=deadline, description=description)
             plan_item.save()
-            return HttpResponseRedirect('/plan/'+str(plan_url))
+            return HttpResponseRedirect('/plan/' + str(plan_url))
     else:
         form = NewPlanItem()
     return render(request, 'plans/new_plan_item.html', {'form': form})
-

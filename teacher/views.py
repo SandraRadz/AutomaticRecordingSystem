@@ -97,6 +97,7 @@ class TeacherListView(ListView):
 def createTheme(request):
     if request.method == 'POST':
         form = NewTheme(request.POST)
+
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
             specialty = form.cleaned_data.get('specialty', '')

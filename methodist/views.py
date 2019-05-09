@@ -11,12 +11,6 @@ from methodist.models import Methodist
 from teacher.models import Teacher, StudentGroup, Specialty, TopicOffer, CountOfWork
 
 
-def index(request):
-    if 'mail' not in request.session:
-        return HttpResponseRedirect('../authorization/')
-    return HttpResponse('<h1>Methodist page</h1>')
-
-
 class MethodistListView(ListView):
     template_name = 'methodist/methodist.html'
     model = Methodist
@@ -71,7 +65,7 @@ class MethodistListView(ListView):
                     year_of_entry = year_of_entry + 1
 
             specialty_obj = StudentGroup.objects.filter(year_of_entry=year_of_entry,
-                                                    specialty__specialty_name=specialty, degree=degree)[0]
+                                                        specialty__specialty_name=specialty, degree=degree)[0]
             if not checkAmount(teacher, amount, year):
                 print("too much themes")
                 return HttpResponseRedirect('../theme')
@@ -79,38 +73,32 @@ class MethodistListView(ListView):
                 print("Specialty")
                 return HttpResponseRedirect('../theme')
             TopicOffer.objects.create(count_of_themes=amount, fact_count_of_themes=0, year_of_study=year,
-                                             teacher=teacher,
-                                             specialty=specialty_obj)
+                                      teacher=teacher,
+                                      specialty=specialty_obj)
         return Methodist.objects.all()
 
 
 def checkAmount(teacher, amount, year):
     counts = CountOfWork.objects.get(degree=teacher.degree, academic_status=teacher.academic_status)
-    cource_norm = counts.count_of_course_work
-    qualif_norm = counts.count_of_qualification_work
+    if counts:
+        cource_norm = counts.count_of_course_work
+        qualif_norm = counts.count_of_qualification_work
+    else:
+        cource_norm = 8
+        qualif_norm = 8
     cource_fact = TopicOffer.objects.filter(Q(teacher=teacher, year_of_study=1) | Q(teacher=teacher, year_of_study=2) |
-                                        Q(teacher=teacher, year_of_study=3) |
-                                        Q(teacher=teacher, year_of_study=5)).aggregate(Sum('count_of_themes'))[
-            'count_of_themes__sum']
+                                            Q(teacher=teacher, year_of_study=3) |
+                                            Q(teacher=teacher, year_of_study=5)).aggregate(Sum('count_of_themes'))[
+        'count_of_themes__sum']
     qualif_fact = TopicOffer.objects.filter(Q(teacher=teacher, year_of_study=4) |
                                             Q(teacher=teacher, year_of_study=6)).aggregate(Sum('count_of_themes'))[
         'count_of_themes__sum']
+    if not cource_fact:
+        cource_fact = 0
+    if not qualif_fact:
+        qualif_fact = 0
     if year == 4 or year == 6:
-        return qualif_norm >= qualif_fact+int(amount)
-    return cource_norm >= cource_fact+int(amount)
+        return qualif_norm >= qualif_fact + int(amount)
+    return cource_norm >= cource_fact + int(amount)
 
 
-
-def checkTeacher(teacher_id, amount, year, coursework):
-    teacher_amount = \
-        TopicOffer.objects.filter(teacher__teacher_id=teacher_id, year_of_study=year).aggregate(Sum('count_of_themes'))[
-            'count_of_themes__sum']
-    if not teacher_amount:
-        teacher_amount = 0
-    teacher = Teacher.objects.get(pk=teacher_id)
-    counts = CountOfWork.objects.get(degree=teacher.degree, academic_status=teacher.academic_status)
-    if coursework:
-        max_amount = counts.count_of_course_work
-    else:
-        max_amount = counts.count_of_qualification_work
-    return int(amount) + teacher_amount <= max_amount

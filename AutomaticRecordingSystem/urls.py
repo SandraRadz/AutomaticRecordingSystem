@@ -27,4 +27,5 @@ urlpatterns = [
     path('methodist/', include('methodist.urls')),
     path('information/', include('information.urls')),
     path('exit/', exit),
+    path('deadline/', include('deadline.urls'))
 ]

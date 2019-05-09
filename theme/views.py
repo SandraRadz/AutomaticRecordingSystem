@@ -109,6 +109,7 @@ class ThemeListView(ListView):
             if not empty:
                 return queryset
 
+
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
             theme_id = self.request.GET.get('theme')
