@@ -29,19 +29,19 @@ class ThemeListView(ListView):
         context['all_records'] = all_records
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
-        context['theme_list'] = WriteWork.objects.all()
         year_of_work = datetime.date.today().year
         if datetime.date.today().month >= 9:
             year_of_work = year_of_work + 1
         if self.request.session['role'] == 'student':
             student = Student.objects.get(pk=self.request.session['user_id'])
-            study_year = datetime.date.today().year-student.specialty.year_of_entry
+            study_year = datetime.date.today().year - student.specialty.year_of_entry
             if datetime.date.today().month >= 9:
                 study_year = study_year + 1
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
+            context['object_list'] = context['object_list'].filter(year_of_work=datetime.datetime.now().year,
+                                                                   teacher_offer__year_of_work=year_of_work,
                                                                    teacher_offer__year_of_study=study_year,
-                                                                   teacher_offer__specialty=student.specialty_id)
-
+                                                                   teacher_offer__specialty=student.specialty_id) \
+                if type(context['object_list']) != list else context['object_list']
             faculty = Student.objects.filter(student_id=self.request.session['user_id'])[
                 0].specialty.specialty.department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
@@ -59,12 +59,16 @@ class ThemeListView(ListView):
             user_department = Teacher.objects.get(pk=self.request.session['user_id']).department
             faculty = user_department.faculty
             context['departments'] = Department.objects.filter(faculty=faculty)
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
-                                                                   teacher_offer__teacher__department=user_department)
+            context['object_list'] = context['object_list'].filter(year_of_work=datetime.datetime.now().year,
+                                                                   teacher_offer__year_of_work=year_of_work,
+                                                                   teacher_offer__teacher__department=user_department) \
+                if type(context['object_list']) != list else context['object_list']
         elif self.request.session['role'] == 'methodist':
             user_department = Methodist.objects.get(pk=self.request.session['user_id']).department
-            context['theme_list'] = WriteWork.objects.all().filter(teacher_offer__year_of_work=year_of_work,
-                                                                   teacher_offer__teacher__department=user_department)
+            context['object_list'] = context['object_list'].filter(year_of_work=datetime.datetime.now().year,
+                                                                   teacher_offer__year_of_work=year_of_work,
+                                                                   teacher_offer__teacher__department=user_department) \
+                if type(context['object_list']) != list else context['object_list']
         else:
             context['departments'] = Department.objects.all()
         return context
@@ -79,36 +83,41 @@ class ThemeListView(ListView):
             status = self.request.GET.get('status')
             queryset = []
             empty = True
-            if department != 'anything':
+            if department != 'anything' and department is not None:
                 dep = Department.objects.get(department_name=department)
-                queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep)
+                queryset = WriteWork.objects.filter(teacher_offer__teacher__department=dep,
+                                                    year_of_work=datetime.datetime.now().year)
                 empty = False
             if branches:
-                query = WriteWork.objects.filter(branch__branch_name__in=branches).distinct()
+                query = WriteWork.objects.filter(branch__branch_name__in=branches,
+                                                 year_of_work=datetime.datetime.now().year)
                 queryset = list(set(query) & set(queryset)) if queryset else query
                 empty = False
             if interests:
                 query = WriteWork.objects.filter(
-                    teacher_offer__teacher__in=Teacher.objects.filter(branch__branch_name__in=interests))
+                    teacher_offer__teacher__in=Teacher.objects.filter(branch__branch_name__in=interests),
+                    year_of_work=datetime.datetime.now().year)
                 queryset = list(set(query) & set(queryset)) if queryset else query
                 empty = False
             if status != 'anything':
                 query = None
                 if status == 'blocked':
-                    query = WriteWork.objects.filter(
-                        pk__in=Record.objects.filter(status='CONFIRMED').values_list('work', flat=True))
+                    query = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year,
+                                                     pk__in=Record.objects.filter(status='CONFIRMED').values_list(
+                                                         'work', flat=True))
                 elif status == 'available':
-                    query = WriteWork.objects.filter(
-                        pk__in=Record.objects.filter().exclude(status='CONFIRMED').values_list('work', flat=True))
+                    query = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year,
+                                                     pk__in=Record.objects.filter().exclude(
+                                                         status='CONFIRMED').values_list('work', flat=True))
                 else:
-                    all = WriteWork.objects.all()
-                    zap = WriteWork.objects.filter(pk__in=Record.objects.all().values_list('work', flat=True))
-                    query = set(all) - set(zap)
+                    all = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year)
+                    zap = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year,
+                                                   pk__in=Record.objects.all().values_list('work', flat=True))
+                    query = list(set(all) - set(zap))
                 queryset = list(set(query) & set(queryset)) if queryset else query
                 empty = False
             if not empty:
                 return queryset
-
 
         if self.request.GET.get('theme') is not None:
             student = Student.objects.get(pk=self.request.session['user_id'])
@@ -129,10 +138,11 @@ class ThemeListView(ListView):
                 .values_list('id', flat=True)
             teachers = Teacher.objects.filter(teacher_id__in=users).values_list('teacher_id', flat=True)
             places = TopicOffer.objects.filter(teacher__in=teachers).values_list('id', flat=True)
-            queryset = WriteWork.objects.filter(teacher_offer__in=places)
+            queryset = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year, teacher_offer__in=places)
             return queryset
         if self.request.GET.get('work_name') is not None:
-            queryset = WriteWork.objects.filter(work_name__icontains=self.request.GET.get('work_name'))
+            queryset = WriteWork.objects.filter(year_of_work=datetime.datetime.now().year,
+                                                work_name__icontains=self.request.GET.get('work_name'))
             return queryset
         return WriteWork.objects.all()
 
@@ -145,10 +155,13 @@ def send_email_record(student, theme):
     password = 'naukma912'
     message = 'На Вашу тему "' + theme.work_name + '" записався студент ' + User.objects.get(pk=student.pk).first_name
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
-        server.quit()
+    try:
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+            server.quit()
+    except smtplib.SMTPRecipientsRefused as e:
+        print(e)
 
 
 def send_email_cancel(student, theme):
@@ -160,7 +173,10 @@ def send_email_cancel(student, theme):
     message = 'З Вашої теми "' + theme.work_name + '" виписався студент ' + User.objects.get(
         pk=student.pk).first_name
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
-        server.quit()
+    try:
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+            server.quit()
+    except smtplib.SMTPRecipientsRefused as e:
+        print(e)

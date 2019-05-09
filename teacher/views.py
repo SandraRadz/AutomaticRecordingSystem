@@ -136,8 +136,11 @@ def send_email(st, w):
     password = 'naukma912'
     message = 'Вітаємо! Вас було затверджено на тему "' + work.work_name + '".'
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
-        server.quit()
+    try:
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+            server.quit()
+    except smtplib.SMTPRecipientsRefused as e:
+        print(e)
     return
