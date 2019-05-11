@@ -8,7 +8,7 @@ import smtplib
 import ssl
 from student.models import Student
 from teacher.forms import NewTheme
-from teacher.models import Teacher, TopicOffer, StudentGroup
+from teacher.models import Teacher, TopicOffer, StudentGroup, BranchOfKnowledge
 from theme.models import WriteWork, Record
 
 
@@ -25,9 +25,9 @@ class TeacherListView(ListView):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('user_id')
         context['user_profile'] = (str(user_id) == str(self.request.session['user_id']))
-        print(user_id)
-        print(self.request.session['user_id'])
-        context['teacher'] = Teacher.objects.get(pk=user_id)
+        teacher = Teacher.objects.get(pk=user_id)
+        context['teacher'] = teacher
+        context['branches'] = BranchOfKnowledge.objects.filter(teacher=teacher)
         context['work_count'] = Teacher.objects.get(pk=user_id)
         context['themes_list'] = WriteWork.objects.all().filter(
             teacher_offer__teacher__teacher_id=user_id)
@@ -56,6 +56,17 @@ class TeacherListView(ListView):
         elif self.request.GET.get('cancel_student') is not None:
             record_id = self.request.GET.get('cancel_student')
             cancel_stud(record_id)
+
+        work_id = self.request.GET.get('work_id')
+        work_name = self.request.GET.get('work_name')
+        en_name = self.request.GET.get('english_work_name')
+        note = self.request.GET.get('note')
+        if work_id and work_name:
+            theme_for_edit = WriteWork.objects.get(pk=work_id)
+            theme_for_edit.work_name = work_name
+            theme_for_edit.english_work_name = en_name
+            theme_for_edit.note = note
+            theme_for_edit.save()
 
         return Teacher.objects.all()
 
