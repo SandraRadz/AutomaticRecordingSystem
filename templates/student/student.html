@@ -9,8 +9,8 @@
     <div class="profile-info">
         <span class="profile-info__avatar"></span>
         <div class="profile-info__list">
-            <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-            <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+            <div class="profile-info__item profile-info__name">{{ student.student_id.first_name }}</div>
+            <div class="profile-info__item profile-info__email">{{ student.student_id.email }}</div>
             {% if student.average_mark %}
             <div class="profile-info__item">Середній бал: {{ student.average_mark }}</div>
             {% endif %}

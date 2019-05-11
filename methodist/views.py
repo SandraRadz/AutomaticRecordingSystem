@@ -19,8 +19,8 @@ class MethodistListView(ListView):
 
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if not self.request.session['role'] == 'methodist':
-            return HttpResponseRedirect('../methodist/')
+        if self.request.session['role'] != 'methodist' or str(self.request.session['user_id']) != str(self.kwargs.get('user_id')):
+            return HttpResponseRedirect('/'+self.request.session['role']+'/'+str(self.request.session['user_id']))
         return super(MethodistListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):

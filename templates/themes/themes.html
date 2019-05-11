@@ -70,7 +70,7 @@
                          data-target="#theme-det-{{ theme.id }}">
                         <div class="theme-item__info">
                             <span>{{ theme.work_name }}</span> - <span
-                                class="theme-item__teacher">{{ theme.teacher_offer.teacher.teacher_id.first_name }}</span>
+                                class="theme-item__teacher"><a href="teacher/{{ theme.teacher_offer.teacher_id }}"> {{ theme.teacher_offer.teacher.teacher_id.first_name }}</a></span>
                         </div>
                         {% if  theme.id in booked_records %}
                             <div class="theme-item__reg_booked">
@@ -119,7 +119,7 @@
                                     {% for record in all_records %}
                                         {% if record.work.id == theme.id %}
                                             <li class="theme-item__field">
-                                                <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
+                                                <div class="theme-item__field-col"><a href="/student/{{ record.student_id}}">{{ record.student.student_id.first_name }}</a></div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                 <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
                                                 <div class="theme-item__field-col">{{ record.get_status_display }}</div>

@@ -19,13 +19,14 @@ class TeacherListView(ListView):
     def get(self, *args, **kwargs):
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if not self.request.session['role'] == 'teacher':
-            return HttpResponseRedirect('../teacher/')
         return super(TeacherListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_id = self.request.session['user_id']
+        user_id = self.kwargs.get('user_id')
+        context['user_profile'] = (str(user_id) == str(self.request.session['user_id']))
+        print(user_id)
+        print(self.request.session['user_id'])
         context['teacher'] = Teacher.objects.get(pk=user_id)
         context['work_count'] = Teacher.objects.get(pk=user_id)
         context['themes_list'] = WriteWork.objects.all().filter(
@@ -110,9 +111,9 @@ def cancel_stud(record_id):
 def createTheme(request):
     if request.method == 'POST':
         form = NewTheme(request.POST)
-
+        user_id = request.session['user_id']
         if form.is_valid():
-            teacher = Teacher.objects.get(pk=request.session['user_id'])
+            teacher = Teacher.objects.get(pk=user_id)
             specialty = form.cleaned_data.get('specialty', '')
             offer = TopicOffer.objects.all().filter(teacher=teacher,
                                                     specialty__specialty__specialty_name=specialty.specialty
@@ -134,7 +135,7 @@ def createTheme(request):
                                                           note=note, teacher_offer=offer,
                                                           previous_version=previous_version)
                 write_work_obj.branch.set(branch)
-                return HttpResponseRedirect('/teacher/')
+                return HttpResponseRedirect('/teacher/'+str(user_id))
     else:
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})

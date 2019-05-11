@@ -9,8 +9,8 @@
         <div class="profile-info">
             <span class="profile-info__avatar"></span>
             <div class="profile-info__list">
-                <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
-                <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                <div class="profile-info__item profile-info__name">{{ methodist.methodist_id.first_name }}</div>
+                <div class="profile-info__item profile-info__email">{{ methodist.methodist_id.email }}</div>
                 <div class="profile-info__item">{{ methodist.department }}</div>
                 {% if  methodist.additional_email %}
                     <div class="profile-info__item">{{ methodist.additional_email }}</div>

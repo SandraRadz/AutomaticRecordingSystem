@@ -126,10 +126,11 @@
                                                 {% for record in all_records %}
                                                     {% if record.work.id == theme.id %}
                                                         <li class="theme-item__field">
-                                                            <div class="theme-item__field-col">{{ record.student.student_id.first_name }}</div>
+                                                            <div class="theme-item__field-col"><a href="/student/{{ record.student_id}}">{{ record.student.student_id.first_name }}</a></div>
                                                             <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                             <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
                                                             <div class="theme-item__field-col">{{ record.get_status_display }}</div>
+                                                            {% if user_profile %}
                                                             {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
                                                                 <form class="theme-item__field-col">
                                                                     <button class="choose_button" name="choose_student"
@@ -147,6 +148,7 @@
                                                             {% else %}
                                                                 <div></div>
                                                             {% endif %}
+                                                                {% endif %}
                                                         </li>
                                                     {% endif %}
                                                 {% endfor %}
@@ -156,17 +158,21 @@
                                     {% endif %}
                                 </div>
                             </div>
+                        {% if user_profile %}
                             <form class="form_class">
                                 <button class="delete_button" name="del_theme" value="{{ theme.id }}"
                                         formmethod="get"><i class="glyphicon glyphicon-remove"></i>
                                 </button>
                             </form>
+                        {% endif %}
                         </div>
                     {% empty %}
                         <div>Ще немає створених тем</div>
                     {% endfor %}
                 </div>
-                <a href="new_theme" class="themes-list__button" >Додати</a>
+            {% if user_profile %}
+                <a href="/teacher/new_theme" class="themes-list__button" >Додати</a>
+            {% endif %}
             </div>
         </div>
     </section>

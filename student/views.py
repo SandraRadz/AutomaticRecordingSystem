@@ -13,11 +13,10 @@ class StudentListView(ListView):
     def get(self, *args, **kwargs):
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if not self.request.session['role'] == 'student':
-            return HttpResponseRedirect('../student/')
         return super(StudentListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(StudentListView, self).get_context_data(**kwargs)
-        context['student'] = Student.objects.get(pk=self.request.session['user_id'])
+        user_id = self.kwargs.get('user_id')
+        context['student'] = Student.objects.get(pk=user_id)
         return context
