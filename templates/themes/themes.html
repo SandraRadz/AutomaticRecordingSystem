@@ -18,7 +18,7 @@
         </div>
         <form>
             <div class="filter-panel">
-            {% if request.session.role != "student" %}
+            {% if request.session.role == "student" %}
                 <div class="filter-item">
                     <span class="filter-item__name">Кафедра</span>
                     <select class="filter-item__dropdown" name="department">

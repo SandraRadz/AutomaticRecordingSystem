@@ -45,52 +45,65 @@ class TeacherListView(ListView):
             theme_id = self.request.GET.get('del_theme')
             theme = WriteWork.objects.get(pk=theme_id)
             offer = theme.teacher_offer
-            offer.fact_count_of_themes = offer.fact_count_of_themes-1
+            offer.fact_count_of_themes = offer.fact_count_of_themes - 1
             offer.save()
             theme.delete()
         elif self.request.GET.get('choose_student') is not None:
             record_id = self.request.GET.get('choose_student')
-            record = Record.objects.get(pk=record_id)
-            work = record.work_id
-            student = record.student_id
-            record.status = 'CONFIRMED'
-            record.save()
-            send_email(student, work)
-
-            other_record_on_theme = Record.objects.all().filter(work_id=work)
-            for o_rec in other_record_on_theme:
-                if o_rec != record:
-                    if o_rec.status != 'BLOCKED':
-                        o_rec.status = 'REJECTED'
-                        o_rec.save()
-
-            other_record_of_student = Record.objects.all().filter(student_id=student)
-            for o_stud in other_record_of_student:
-                if o_stud != record:
-                    o_stud.status = 'BLOCKED'
-                    o_stud.save()
+            choose_student(record_id)
 
         elif self.request.GET.get('cancel_student') is not None:
             record_id = self.request.GET.get('cancel_student')
-            record = Record.objects.get(pk=record_id)
-            work = record.work_id
-            student = record.student_id
-            record.status = 'WAIT'
-            record.save()
-
-            other_record_on_theme = Record.objects.all().filter(work_id=work)
-            for o_rec in other_record_on_theme:
-                if o_rec.status == 'REJECTED' or o_rec.status == 'CONFIRMED':
-                    o_rec.status = 'WAIT'
-                    o_rec.save()
-
-            other_record_of_student = Record.objects.all().filter(student_id=student)
-            for o_stud in other_record_of_student:
-                if o_stud.status == 'BLOCKED':
-                    o_stud.status = 'WAIT'
-                    o_stud.save()
+            cancel_stud(record_id)
 
         return Teacher.objects.all()
+
+
+def choose_student(record_id):
+    record = Record.objects.get(pk=record_id)
+    work = record.work_id
+
+    before_conf_student = Record.objects.all().filter(work_id=work, status='CONFIRMED')
+    if before_conf_student:
+        cancel_stud(before_conf_student[0].id)
+
+    student = record.student_id
+    record.status = 'CONFIRMED'
+    record.save()
+    send_email(student, work)
+
+    other_record_on_theme = Record.objects.all().filter(work_id=work)
+    for o_rec in other_record_on_theme:
+        if o_rec != record:
+            if o_rec.status != 'BLOCKED':
+                o_rec.status = 'REJECTED'
+                o_rec.save()
+
+    other_record_of_student = Record.objects.all().filter(student_id=student)
+    for o_stud in other_record_of_student:
+        if o_stud != record:
+            o_stud.status = 'BLOCKED'
+            o_stud.save()
+
+
+def cancel_stud(record_id):
+    record = Record.objects.get(pk=record_id)
+    work = record.work_id
+    student = record.student_id
+    record.status = 'WAIT'
+    record.save()
+
+    other_record_on_theme = Record.objects.all().filter(work_id=work)
+    for o_rec in other_record_on_theme:
+        if o_rec.status == 'REJECTED' or o_rec.status == 'CONFIRMED':
+            o_rec.status = 'WAIT'
+            o_rec.save()
+
+    other_record_of_student = Record.objects.all().filter(student_id=student)
+    for o_stud in other_record_of_student:
+        if o_stud.status == 'BLOCKED':
+            o_stud.status = 'WAIT'
+            o_stud.save()
 
 
 @csrf_exempt
@@ -118,8 +131,8 @@ def createTheme(request):
                 previous_version = form.cleaned_data.get('previous_version', '')
                 branch = form.cleaned_data.get('branch', '')
                 write_work_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name,
-                                                        note=note, teacher_offer=offer,
-                                                        previous_version=previous_version)
+                                                          note=note, teacher_offer=offer,
+                                                          previous_version=previous_version)
                 write_work_obj.branch.set(branch)
                 return HttpResponseRedirect('/teacher/')
     else:
