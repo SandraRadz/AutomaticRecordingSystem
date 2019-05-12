@@ -68,6 +68,17 @@ class TeacherListView(ListView):
             theme_for_edit.note = note
             theme_for_edit.save()
 
+        teacher_edit_id = self.request.GET.get('teacher_edit_id')
+        s_email = self.request.GET.get('s_email')
+        phone = self.request.GET.get('phone')
+        office = self.request.GET.get('office')
+        if teacher_edit_id:
+            teacher_for_edit = Teacher.objects.get(pk=teacher_edit_id)
+            teacher_for_edit.additional_email = s_email
+            teacher_for_edit.phone = phone
+            teacher_for_edit.office = office
+            teacher_for_edit.save()
+
         return Teacher.objects.all()
 
 
