@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 import smtplib
 import ssl
+import datetime
 from student.models import Student
 from teacher.forms import NewTheme
 from teacher.models import Teacher, TopicOffer, StudentGroup, BranchOfKnowledge
@@ -24,7 +25,7 @@ class TeacherListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('user_id')
-        context['user_profile'] = (str(user_id) == str(self.request.session['user_id']))
+        context['user_profile'] = (int(user_id) == int(self.request.session['user_id']))
         teacher = Teacher.objects.get(pk=user_id)
         context['teacher'] = teacher
         context['branches'] = BranchOfKnowledge.objects.filter(teacher=teacher)
@@ -130,17 +131,19 @@ def cancel_stud(record_id):
 
 
 @csrf_exempt
-def createTheme(request):
+def createTheme(request, spec):
+    request.session['spec'] = spec
     if request.method == 'POST':
         form = NewTheme(request.POST)
         user_id = request.session['user_id']
         if form.is_valid():
             teacher = Teacher.objects.get(pk=user_id)
-            specialty = form.cleaned_data.get('specialty', '')
+            sp_year = datetime.datetime.now().year - int(str(spec).split('-')[1])
+            sp_name = str(spec).split('-')[0]
+            specialty = StudentGroup.objects.all().filter(specialty__specialty_name=sp_name, year_of_entry=sp_year)[0]
             offer = TopicOffer.objects.all().filter(teacher=teacher,
-                                                    specialty__specialty__specialty_name=specialty.specialty
-                                                    .specialty.specialty_name,
-                                                    specialty__year_of_entry=specialty.specialty.year_of_entry)
+                                                    specialty__specialty__specialty_name=sp_name,
+                                                    specialty__year_of_entry=sp_year)
             if offer:
                 offer = offer[0]
             else:
@@ -157,7 +160,7 @@ def createTheme(request):
                                                           note=note, teacher_offer=offer,
                                                           previous_version=previous_version)
                 write_work_obj.branch.set(branch)
-                return HttpResponseRedirect('/teacher/'+str(user_id))
+                return HttpResponseRedirect('/teacher/' + str(user_id))
     else:
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})

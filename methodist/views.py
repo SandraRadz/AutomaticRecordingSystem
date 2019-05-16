@@ -1,5 +1,3 @@
-import calendar
-
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
@@ -19,8 +17,9 @@ class MethodistListView(ListView):
 
         if 'mail' not in self.request.session:
             return HttpResponseRedirect('../authorization/')
-        if self.request.session['role'] != 'methodist' or str(self.request.session['user_id']) != str(self.kwargs.get('user_id')):
-            return HttpResponseRedirect('/'+self.request.session['role']+'/'+str(self.request.session['user_id']))
+        if self.request.session['role'] != 'methodist' or str(self.request.session['user_id']) != str(
+                self.kwargs.get('user_id')):
+            return HttpResponseRedirect('/' + self.request.session['role'] + '/' + str(self.request.session['user_id']))
         return super(MethodistListView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -65,17 +64,33 @@ class MethodistListView(ListView):
                     year_of_entry = year_of_entry + 1
 
             specialty_obj = StudentGroup.objects.filter(year_of_entry=year_of_entry,
-                                                        specialty__specialty_name=specialty, degree=degree)[0]
+                                                        specialty__specialty_name=specialty, degree=degree)
+            if specialty_obj:
+                specialty_obj = specialty_obj[0]
+            else:
+                return HttpResponseRedirect('../theme')
             if not checkAmount(teacher, amount, year):
                 print("too much themes")
                 return HttpResponseRedirect('../theme')
             if not specialty:
                 print("Specialty")
                 return HttpResponseRedirect('../theme')
-            TopicOffer.objects.create(count_of_themes=amount, fact_count_of_themes=0, year_of_study=year,
-                                      teacher=teacher,
-                                      specialty=specialty_obj)
+            topic = checkExistence(year, teacher, specialty_obj)
+            if topic:
+                topic.count_of_themes += int(amount)
+                topic.save()
+            else:
+                TopicOffer.objects.create(count_of_themes=amount, fact_count_of_themes=0, year_of_study=year,
+                                          teacher=teacher,
+                                          specialty=specialty_obj)
         return Methodist.objects.all()
+
+
+def checkExistence(year, teacher, spec):
+    topic = TopicOffer.objects.filter(teacher=teacher, year_of_study=year, specialty=spec)
+    if topic:
+        return topic[0]
+    return None
 
 
 def checkAmount(teacher, amount, year):
@@ -100,5 +115,3 @@ def checkAmount(teacher, amount, year):
     if year == 4 or year == 6:
         return qualif_norm >= qualif_fact + int(amount)
     return cource_norm >= cource_fact + int(amount)
-
-

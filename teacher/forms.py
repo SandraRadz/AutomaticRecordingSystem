@@ -1,6 +1,6 @@
 from django import forms
 
-from teacher.models import BranchOfKnowledge, TopicOffer
+from teacher.models import BranchOfKnowledge
 from theme.models import WriteWork
 
 
@@ -10,7 +10,5 @@ class NewTheme(forms.Form):
     note = forms.CharField(label='Примітка', required=False, widget=forms.Textarea)
     branch = forms.ModelMultipleChoiceField(queryset=BranchOfKnowledge.objects.all(), required=False,
                                             widget=forms.SelectMultiple(attrs={'class': "selectpicker"}))
-    previous_version = forms.ModelChoiceField(queryset=WriteWork.objects.all(), required=False,
-                                              widget=forms.Select(attrs={'class': "selectpicker"}))
-    specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all(), required=True,
-                                       widget=forms.Select(attrs={'class': "selectpicker"}))
+    previous_version = forms.ModelChoiceField(queryset=WriteWork.objects.all(), required=False
+                                              )#,widget=forms.Select(attrs={'class': 'selectpicker'}))

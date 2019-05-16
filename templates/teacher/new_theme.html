@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="container">
-        <form action="/teacher/new_theme" method="post">
+        <form action="/teacher/new_theme/{{ request.session.spec }}" method="post">
             {% csrf_token %}
             <input type="text" class="form-control" placeholder="Назва" maxlength="500" name="work_name"><br><br>
             <input type="text" class="form-control" placeholder="Назва англійською" maxlength="500"
@@ -16,8 +16,6 @@
             {{ form.branch }}<br><br>
             <p>Попередня версія:</p>
             {{ form.previous_version }}<br><br>
-            <p>Спеціальність:</p>
-            {{ form.specialty }}<br><br>
              <input type="submit" class="submit_button themes-list__button" value="Створити">
         </form>
     </div>

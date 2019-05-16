@@ -21,11 +21,11 @@
                     <div class="profile-info__item">Посада: {{ teacher.position }}</div>
                     {% if branches %}
                         <div class="profile-info__item">Галузі:
-                        {% for branch in branches %}
-                            {{ branch }},
-                        {% endfor %}
+                            {% for branch in branches %}
+                                {{ branch }},
+                            {% endfor %}
                         </div>
-                {% endif %}
+                    {% endif %}
                     {% if  teacher.phone %}
                         <div class="profile-info__item">Номер телефону: {{ teacher.phone }}</div>
                     {% endif %}
@@ -36,83 +36,105 @@
                         <div class="profile-info__item">Додаткова пошта: {{ teacher.additional_email }}</div>
                     {% endif %}
 
-                {% if user_profile %}
-<button class="delete_button" data-toggle="modal" data-target="#modalEdit">
-                                    Редагувати профіль
-                                </button>
+                    {% if user_profile %}
+                        <button class="delete_button" data-toggle="modal" data-target="#modalEdit">
+                            Редагувати профіль
+                        </button>
 
-                            <!-- Modal -->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Редагування профілю</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <form action="/teacher/{{ request.session.user_id }}" method="post">
-      <div class="modal-body">
-            {% csrf_token %}
-            <input type="hidden" name="teacher_edit_id" value="{{ request.session.user_id }}" />
-            <input type="text" class="form-control" placeholder="Номер телефону" maxlength="250" name="phone" {% if teacher.phone  %} value="{{ teacher.phone }}" {% endif %}><br><br>
-            <input type="text" class="form-control" placeholder="Додаткова пошта" maxlength="250" name="s_email" {% if teacher.additional_email %} value="{{ teacher.additional_email }}" {% endif %}><br><br>
-            <input type="text" class="form-control" placeholder="Кабінет" maxlength="100" name="office" {% if teacher.office %} value="{{ teacher.office}}" {% endif %}><br><br>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Редагування профілю</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="/teacher/{{ request.session.user_id }}" method="post">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="teacher_edit_id"
+                                                   value="{{ request.session.user_id }}"/>
+                                            <input type="text" class="form-control" placeholder="Номер телефону"
+                                                   maxlength="250" name="phone" {% if teacher.phone %}
+                                                   value="{{ teacher.phone }}" {% endif %}><br><br>
+                                            <input type="text" class="form-control" placeholder="Додаткова пошта"
+                                                   maxlength="250" name="s_email" {% if teacher.additional_email %}
+                                                   value="{{ teacher.additional_email }}" {% endif %}><br><br>
+                                            <input type="text" class="form-control" placeholder="Кабінет"
+                                                   maxlength="100" name="office" {% if teacher.office %}
+                                                   value="{{ teacher.office }}" {% endif %}><br><br>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn-primary" formmethod="get">Зберегти</button>
-      </div>
-        </form>
-    </div>
-  </div>
-</div>
-{% endif %}
-
-                <div class="theme-offer-container">
-                                <div class="theme-item__info-box">
-                                    <span class="theme-item__info-name">Бакалаврські роботи</span>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Спеціальність</th>
-                                            <th scope="col">Кількість тем</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for t in teacher_offer_bach %}
-                                            <tr>
-                                                <th scope="col">{{ t.specialty.specialty.specialty_name }}
-                                                    - {{ t.year_of_study }}</th>
-                                                <th scope="col" style="text-align: center">{{ t.fact_count_of_themes }}/{{ t.count_of_themes }}</th>
-
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="theme-item__info-box">
-                                    <span class="theme-item__info-name">Магістерські роботи</span>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Спеціальність</th>
-                                            <th scope="col">Кількість тем</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for t in teacher_offer_mag %}
-                                            <tr>
-                                                <th scope="col">{{ t.specialty.specialty.specialty_name }}
-                                                    - {{ t.year_of_study }}</th>
-                                                <th scope="col" style="text-align: center">{{ t.fact_count_of_themes }}/ {{ t.count_of_themes }}</th>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button class="btn btn-primary" formmethod="get">Зберегти</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
+                    {% endif %}
+                    {% if user_profile %}
+                        <div class="theme-offer-container">
+                            <div class="theme-item__info-box">
+                                <span class="theme-item__info-name">Бакалаврські роботи</span>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Спеціальність</th>
+                                        <th scope="col">Кількість тем</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for t in teacher_offer_bach %}
+                                        <tr>
+                                            <th scope="col">{{ t.specialty.specialty.specialty_name }}
+                                                - {{ t.year_of_study }}</th>
+                                            <th scope="col"
+                                                style="text-align: center">{{ t.fact_count_of_themes }}/{{ t.count_of_themes }}</th>
+                                            {% if t.fact_count_of_themes < t.count_of_themes %}
+                                                <th scope="col">
+                                                    <a href="new_theme/{{ t.specialty }}"
+                                                       class="themes-list__button">Додати</a>
+                                                </th>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="theme-item__info-box">
+                                <span class="theme-item__info-name">Магістерські роботи</span>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Спеціальність</th>
+                                        <th scope="col">Кількість тем</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for t in teacher_offer_mag %}
+                                        <tr>
+                                            <th scope="col">{{ t.specialty.specialty.specialty_name }}
+                                                - {{ t.year_of_study }}</th>
+                                            <th scope="col"
+                                                style="text-align: center">{{ t.fact_count_of_themes }}/ {{ t.count_of_themes }}</th>
+                                            {% if t.fact_count_of_themes < t.count_of_themes %}
+                                                <th scope="col">
+                                                    <a href="new_theme" class="themes-list__button">Додати</a>
+                                                </th>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>
@@ -121,7 +143,8 @@
                     {% for theme in themes_list %}
                         <div class="theme_container">
                             <div class="theme-item">
-                                <div class="theme-item__header other_theme " data-toggle="collapse" aria-expanded="false"
+                                <div class="theme-item__header other_theme " data-toggle="collapse"
+                                     aria-expanded="false"
                                      data-target="#theme-det-{{ theme.id }}">
                                     <div class="theme-item__info">
                                         <span>{{ theme.work_name }}</span> - <span
@@ -167,29 +190,33 @@
                                                 {% for record in all_records %}
                                                     {% if record.work.id == theme.id %}
                                                         <li class="theme-item__field">
-                                                            <div class="theme-item__field-col"><a href="/student/{{ record.student_id}}">{{ record.student.student_id.first_name }}</a></div>
+                                                            <div class="theme-item__field-col"><a
+                                                                    href="/student/{{ record.student_id }}">{{ record.student.student_id.first_name }}</a>
+                                                            </div>
                                                             <div class="theme-item__field-col">{{ record.student.specialty.year_of_entry }}</div>
                                                             <div class="theme-item__field-col">{{ record.student.specialty.specialty.specialty_name }}</div>
                                                             <div class="theme-item__field-col">{{ record.get_status_display }}</div>
                                                             {% if user_profile %}
-                                                            {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
-                                                                <form class="theme-item__field-col">
-                                                                    <button class="choose_button" name="choose_student"
-                                                                            value="{{ record.id }}"
-                                                                            formmethod="get">Затвердити
-                                                                    </button>
-                                                                </form>
-                                                            {% elif record.status == 'CONFIRMED' %}
-                                                                <form class="theme-item__field-col">
-                                                                    <button class="choose_button" name="cancel_student"
-                                                                            value="{{ record.id }}"
-                                                                            formmethod="get">Виписати
-                                                                    </button>
-                                                                </form>
-                                                            {% else %}
-                                                                <div></div>
-                                                            {% endif %}
+                                                                {% if record.status == 'WAIT' or record.status == 'REJECTED' %}
+                                                                    <form class="theme-item__field-col">
+                                                                        <button class="choose_button"
+                                                                                name="choose_student"
+                                                                                value="{{ record.id }}"
+                                                                                formmethod="get">Затвердити
+                                                                        </button>
+                                                                    </form>
+                                                                {% elif record.status == 'CONFIRMED' %}
+                                                                    <form class="theme-item__field-col">
+                                                                        <button class="choose_button"
+                                                                                name="cancel_student"
+                                                                                value="{{ record.id }}"
+                                                                                formmethod="get">Виписати
+                                                                        </button>
+                                                                    </form>
+                                                                {% else %}
+                                                                    <div></div>
                                                                 {% endif %}
+                                                            {% endif %}
                                                         </li>
                                                     {% endif %}
                                                 {% endfor %}
@@ -199,54 +226,61 @@
                                     {% endif %}
                                 </div>
                             </div>
-                        {% if user_profile %}
-                            <form class="form_class">
-                                <button class="delete_button" name="del_theme" value="{{ theme.id }}"
-                                        formmethod="post"><i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </form>
+                            {% if user_profile %}
+                                <form class="form_class">
+                                    <button class="delete_button" name="del_theme" value="{{ theme.id }}"
+                                            formmethod="get"><i class="glyphicon glyphicon-remove"></i>
+                                    </button>
+                                </form>
 
-                            <button class="delete_button" data-toggle="modal" data-target="#modal{{ theme.id }}">
+                                <button class="delete_button" data-toggle="modal" data-target="#modal{{ theme.id }}">
                                     <i class="fa fa-edit"></i>
                                 </button>
 
-                            <!-- Modal -->
-<div class="modal fade" id="modal{{ theme.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">{{ theme.work_name }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <form action="/teacher/{{ request.session.user_id }}" method="post">
-      <div class="modal-body">
-            {% csrf_token %}
-            <input type="hidden" name="work_id" value="{{ theme.id }}" />
-            <input type="text" class="form-control" placeholder="Назва" maxlength="500" name="work_name" value="{{ theme.work_name }}"><br><br>
-            <input type="text" class="form-control" placeholder="Назва англійською" maxlength="500"
-                   name="english_work_name" value="{{ theme.english_work_name }}"><br><br>
-            <textarea type="text" class="form-control" placeholder="Примітка" name="note">{{ theme.note }}</textarea><br><br>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal{{ theme.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"
+                                                    id="exampleModalCenterTitle">{{ theme.work_name }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="/teacher/{{ request.session.user_id }}" method="post">
+                                                <div class="modal-body">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="work_id" value="{{ theme.id }}"/>
+                                                    <input type="text" class="form-control" placeholder="Назва"
+                                                           maxlength="500" name="work_name"
+                                                           value="{{ theme.work_name }}"><br><br>
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Назва англійською" maxlength="500"
+                                                           name="english_work_name"
+                                                           value="{{ theme.english_work_name }}"><br><br>
+                                                    <textarea type="text" class="form-control" placeholder="Примітка"
+                                                              name="note">{{ theme.note }}</textarea><br><br>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn-primary" formmethod="get">Зберегти</button>
-      </div>
-        </form>
-    </div>
-  </div>
-</div>
-                        {% endif %}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button class="btn btn-primary" formmethod="get">Зберегти</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
                     {% empty %}
                         <div>Ще немає створених тем</div>
                     {% endfor %}
                 </div>
-            {% if user_profile %}
-                <a href="/teacher/new_theme" class="themes-list__button" >Додати</a>
-            {% endif %}
             </div>
         </div>
     </section>

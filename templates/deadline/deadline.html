@@ -7,8 +7,7 @@
 {% block content %}
     {% if request.session.role == "methodist" %}
         <div class="new-date">
-            <form action="/plan/" method="get">
-                {% csrf_token %}
+            <form method="get">
                 <div>Група:</div>
                 <select class="selectpicker" name="group" required="required">
                     <option value="anything">---</option>
